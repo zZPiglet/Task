@@ -1,13 +1,24 @@
 /*
-掌门好老师自动签到，支持Quantumult X、Surge。
-制作者：Piglet
+"掌门好老师"自动签到，支持 Quantumult X（理论上也支持 Surge，未尝试）。
+请先按下述方法进行配置，进入"掌门好老师"，点击左上方"签到"或"📅"日历图标，若弹出"首次写入掌门好老师 Token 成功"即可正常食用，其他提示或无提示请发送日志信息至 issue。
+到 cron 设定时间自动签到时，若弹出"掌门好老师 - 签到成功"即完成签到，其他提示或无提示请发送日志信息至 issue。
+Author：zZPiglet
 
+Quantumult X (App Store:1.0.5+, TestFlight 190+):
 [task_local]
 1 0 * * * ZMTeacher.js
+or remote
+1 0 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/ZMTeacher/ZMTeacher.js
 
 [rewrite_local]
-^https:\/\/teacherapi\.zmlearn\.com\/v1\/teacherApp\/app\/points\/sign url script-request-header ZMTeacher.js
+^https:\/\/teacherapi\.zmlearn\.com\/v1\/teacherApp\/app\/points\/taskCenter url script-request-header ZMTeacher.js
 
+Surge 4.0+:
+[Script]
+cron "1 0 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/ZMTeacher/ZMTeacher.js
+http-request ^https:\/\/teacherapi\.zmlearn\.com\/v1\/teacherApp\/app\/points\/sign script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/ZMTeacher/ZMTeacher.js
+
+All app:
 [mitm]
 hostname = teacherapi.zmlearn.com
 */
