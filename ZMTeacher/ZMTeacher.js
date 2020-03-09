@@ -21,6 +21,8 @@ http-request ^https:\/\/teacherapi\.zmlearn\.com\/v1\/teacherApp\/app\/points\/s
 All app:
 [mitm]
 hostname = teacherapi.zmlearn.com
+
+获取完 Token 后可不注释 rewrite / mitm，Token 更新时会弹窗。若因 mitm 导致 app "网络请求失败，请重试"，可注释掉 mtim。
 */
 
 const CheckinURL = 'https://teacherapi.zmlearn.com/v1/teacherApp/app/points/sign';
@@ -91,7 +93,7 @@ function Checkin() {
                 var msg = "您已连续签到 " + Days + " 天，获得 " + Points + " 彩虹币！ 🌈";
                 $cmp.notify("掌门好老师 - 签到成功！🎉", "", msg)
             } else if (result.code == 1) {
-                $cmp.notify("掌门好老师 - 重复签到!😊", "", result.message)
+                $cmp.notify("掌门好老师 - 重复签到！😊", "", result.message)
             } else if (result.code == 11) {
                 $cmp.notify("掌门好老师 - Token 失效❗️", "", result.message)
             } else {
