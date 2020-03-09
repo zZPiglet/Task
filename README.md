@@ -6,4 +6,6 @@
 
 [@NobyDa](https://github.com/NobyDa)
 
-[@chavy](https://github.com/chavyleung/)
+[@tern](https://github.com/yichahucha)
+
+[@chavy](https://github.com/chavyleung)
