@@ -26,6 +26,8 @@ Author: zZPiglet
 
 ----------
 最新版本：
+- 2020/04/29:
+更新 shareCode
 - 2020/04/29：
 增加自动签到领礼金（礼金可兑换蜂蜜付款时抵扣，或兑换门店满减券），增加自动领取所有任务，增加自动完成除消费、邀请类任务。
 脚本中使用了我的邀请签到 aff（每日最多 5 次 1～6 礼金），若不希望使用，可将 shareCode 改空。
@@ -59,7 +61,7 @@ hostname = h5.bianlifeng.com
 
 
 const version = '/v1'
-const shareCode = '3570061168500686'
+const shareCode = '3570061228571763'
 const homeURL = 'https://h5.bianlifeng.com/meepo/taskCenter/home' + version
 const signInURL = 'https://h5.bianlifeng.com/meepo/taskCenter/today/signIn' + version
 const receiveURL = 'https://h5.bianlifeng.com/meepo/taskCenter/task/receive' + version
@@ -300,6 +302,10 @@ function result() {
             try{
                 datainfo.allpoints = homeobj.data.myPoint
                 datainfo.topDesc = homeobj.data.taskListVo.topDesc
+                if (homeobj.data.signInTaskVo.shareId != shareCode) {
+                    $cmp.log('📌shareCode: ' + homeobj.data.signInTaskVo.shareId)
+                    datainfo.codeStatus = 'change'
+                }
                 resolve()
             } catch (e) {
                 $cmp.notify(cookieName + "结果主页" + e.name + "‼️", JSON.stringify(e), e.message)
@@ -348,7 +354,8 @@ function notify() {
                 }
             }
             subTitle += datainfo.topDesc
-            detail += '账户共有 ' + datainfo.allpoints + ' ' + datainfo.pointUnit + '。'
+            detail += '账户共有 ' + datainfo.allpoints + ' ' + datainfo.pointUnit
+            if (datainfo.codeStatus) detail += '。'
             $cmp.notify(Title, subTitle, detail + errormessage)
             resolve()
         } catch (e) {
