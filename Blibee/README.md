@@ -6,7 +6,7 @@
 
 在这些城市居住并想使用此脚本的可以走我 aff，(可能)会有一些优惠券，当然目前来看新用户优惠活动暂未结束(50 元券包)，但是推广方得到的好像没啥了（写脚本时发现只给 5.9 折门店蒸包折扣券，然而并不吃。。）
 
-> **aff：[短链](http://be3.cc/s/g8dybQm) 或 [原链](https://d.bianlifeng.com/c/a/s4?type=pages&path=%2Fpages%2FdistributeManager%2Findex%3Fp%3D%252Fpages%252FinviteNewUserCity%252Findex%253FshareCode%253D3130073211512230%2526baseCode%253D31%2526floor%253DNaN%2526entrySource%253Dfacecode%26source%3D31&webview=1&url=https%3A%2F%2Fh5.bianlifeng.com%2Fbond%2FinviteCity%2Findex%3FshareCode%3D3130073211512230%26baseCode%3D31%26floor%3DNaN%26entrySource%3Dfacecode&appViewName=InviteNewUserCity&il=true&source=poster_share&defaultNavBar=true)**
+> **aff：[短链](http://be3.cc/s/mhndZwo) 或 [原链](https://d.bianlifeng.com/c/a/s4?type=pages&path=%2Fpages%2FdistributeManager%2Findex%3Fp%3D%252Fpages%252FinviteNewUserCity%252Findex%253FshareCode%253D3130056365815256%2526baseCode%253D31%2526floor%253DNaN%2526entrySource%253Dfacecode%26source%3D31&webview=1&url=https%3A%2F%2Fh5.bianlifeng.com%2Fbond%2FinviteCity%2Findex%3FshareCode%3D3130056365815256%26baseCode%3D31%26floor%3DNaN%26entrySource%3Dfacecode&appViewName=InviteNewUserCity&il=true&source=poster_share&defaultNavBar=true)**
 
 便利蜂 app 或微信小程序"便利蜂"自动签到，支持 Quantumult X（理论上也支持 Surge，未尝试）。
 
