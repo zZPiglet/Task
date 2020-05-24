@@ -79,9 +79,9 @@ function Checkin() {
             try {
                 const result = JSON.parse(data)
                 if (result.state == "success") {
-                    $cmp.notify(CookieName, "签到成功！🎉", "签到获得 " + result.score + " 积分。")
+                    $cmp.notify(CookieName, "签到成功！🎉", "账户共有 " + result.score + " 积分。")
                 } else if (result.state == "signed") {
-                    $cmp.notify(CookieName, "重复签到！🍦", "今日获得 " + result.score + " 积分～")
+                    $cmp.notify(CookieName, "重复签到！🍦", "账户共有 " + result.score + " 积分。")
                 } else {
                     console.log("HaagenDazs failed response : \n" + data)
                     $cmp.notify(CookieName, "签到失败‼️ 详情请见日志。", data)
