@@ -26,7 +26,7 @@ cron "1 0 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/mas
 */
 
 const activity = '7300'
-const batch_id = '1895021'
+const batch_id = '1895023'
 const mianURL = 'https://gsh5act.xiaojukeji.com/dpub_data_api/activities/' + activity + '/'
 const $cmp = compatibility()
 Checkin()
