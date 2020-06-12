@@ -16,6 +16,8 @@
 
 ----------
 ## 版本记录：
+- 2020 / 06 / 13  
+    修正 DiDi_reward.js 通知中领取福利金总额的错误。由于暂时想偷懒所以没有采取 `async`、`await` 的写法，若后续考虑合并至主脚本，会更改写法。
 - 2020 / 06 / 12  
     增加 [`DiDi_reward.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_reward.js) ，用于领取打车后忘领取的福利金。由于暂时不确定此福利金领取期限，建议每天 23:59 执行此脚本。此脚本与主脚本暂时区分为两个脚本，未后续 aff 考虑建议主脚本不要太晚运行。若后期测试打车后福利金领取期限更长，考虑将此脚本合并至主脚本。  
     注：[`DiDi_reward.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_reward.js) 因为最近没有打车所以并未进行任何一次测试，请反馈问题以及时修正。   
