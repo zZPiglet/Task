@@ -25,8 +25,9 @@ Surge 4.0+ & Loon:
 cron "1 0 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_Tianjin.js
 */
 
-const activity = '7300'
-const batch_id = '1895023'
+const activity = '7432'
+const batch_id = ['1895021', '1895021', '1895023', '1895023', '1895023', '1895025', '1895025']
+const coupon_name = [' 6 折快车券', ' 6 折快车券', ' 5 折快车券', ' 5 折快车券', ' 5 折快车券', '立减 10 元券', '立减 10 元券']
 const mianURL = 'https://gsh5act.xiaojukeji.com/dpub_data_api/activities/' + activity + '/'
 const $cmp = compatibility()
 Checkin()
@@ -50,30 +51,27 @@ function Checkin() {
                     if (signinresult.errno == 0){
                         const reward = {
                             url: mianURL + 'reward_coupon',
-                            body: '{"user_token":"' + $cmp.read("DiDi") + '","signin_day":' + day + ',"batch_id":"' + batch_id + '"}'
+                            body: '{"user_token":"' + $cmp.read("DiDi") + '","signin_day":' + day + ',"batch_id":"' + batch_id[day-1] + '"}'
                         }
                         $cmp.post(reward, function (error, response, data) {
                             let rewardresult = JSON.parse(data)
                             if (rewardresult.errno == 0) {
                                 $cmp.log(rewardresult)
-                                let detail = ''
-                                for (let l of rewardresult.coupons) {
-                                    detail += '\n' + l.reserved_a
-                                }
+                                let detail = '获得' + coupon_name[day-1]
                                 $cmp.notify('滴滴出行 - 天天签到', '签到成功！🚕', detail)
                             } else {
                                 $cmp.notify('滴滴出行 - 天天签到', '签到失败‼️ 详情请见日志。', rewardresult.errmsg)
-                                $cmp.log("DiDi_Tianjin failed response : \n" + rewardresult)
+                                $cmp.log("DiDi_Tianjin failed response : \n" + JSON.stringify(rewardresult))
                             }
                         })
                     } else {
                         $cmp.notify('滴滴出行 - 天天签到', '签到失败‼️ 详情请见日志。', signinresult.errmsg)
-                        $cmp.log("DiDi_Tianjin failed response : \n" + signinresult)
+                        $cmp.log("DiDi_Tianjin failed response : \n" + JSON.stringify(signinresult))
                     }
                 })
             } else {
                 $cmp.notify('滴滴出行 - 天天签到', 'Token 未获取或失效❗', '请按脚本开头注释完成配置并首次或重新获取 Token。\n' + getdayresult.errmsg)
-                $cmp.log("DiDi_Tianjin failed response : \n" + getdayresult)
+                $cmp.log("DiDi_Tianjin failed response : \n" + JSON.stringify(getdayresult))
             }
         } else {
             $cmp.notify('滴滴出行 - 天天签到', '签到接口请求失败，详情请见日志。', error)
