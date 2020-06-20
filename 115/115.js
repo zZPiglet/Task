@@ -111,20 +111,22 @@ function Checkin() {
     $cmp.get(oof, function(error, response, data) {
         if (!error) {
             const result = isJSON(data)
-            if (result.error_code == 10021) {
+            if (result && result.error_code == 10021) {
                 subTitle += 'Token 算法失效❗'
                 detail += '请带日志反馈，并请求群内大佬 @wangfei021325 。\n' + result.request
                 $cmp.log('wp115 failed response : \n' + result.request)
-            } else if (result.error_code == 10022) {
+            } else if (result && result.error_code == 10022) {
                 subTitle += '重复签到！🤏'
                 detail += result.error
-            } else if (result.state == true) {
+            } else if (result && result.state == true) {
+                let getspace = result.data.take_state ? result.data.take_size_last : result.data.space
                 subTitle += '签到成功！🎉'
-                detail += '获得空间 ' + result.data.take_size_last + ' MB！🤏'
+                detail += '获得空间 ' + getspace + ' MB！🤏'
+                $cmp.log("wp115 succeed data : \n" + JSON.stringify(result.data))
             } else {
                 subTitle += '未知错误，详情请见日志。'
                 detail += result.error
-                $cmp.log("wp115 failed response : \n" + JSON.stringify(result))
+                $cmp.log("wp115 failed response : \n" + JSON.stringify(result) + "\n" + data)
             }
         } else {
             subTitle += '签到接口请求失败，详情请见日志。'
