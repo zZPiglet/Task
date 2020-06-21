@@ -1,0 +1,178 @@
+{
+  "id": "zZPiglet.app.sub",
+  "name": "zZPiglet 应用订阅",
+  "author": "@zZPiglet",
+  "icon": "https://raw.githubusercontent.com/zZPiglet/Task/master/img/fly.gif",
+  "repo": "https://github.com/zZPiglet/Task",
+  "apps": [
+    {
+      "id": "zZ.DiDi",
+      "name": "滴滴出行",
+      "keys": ["DiDi", "DiDi_city"],
+      "settings": [
+        {
+          "id": "DiDi",
+          "name": "Token",
+          "val": "",
+          "type": "text",
+          "desc": "Token 可同时存在多个，可使用不同日期获取的 Token 进行测试。"
+        },
+        {
+          "id": "DiDi_city",
+          "name": "城市编号",
+          "val": "",
+          "type": "text",
+          "desc": "滴滴出行城市编号，可更改至别的城市进行测试。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/DiDi/README.md",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/didi.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/didi.png"
+      ]
+    },
+    {
+      "id": "zZ.115",
+      "name": "115 网盘自动摇一摇得空间",
+      "keys": ["wp115", "uid115"],
+      "settings": [
+        {
+          "id": "wp115",
+          "name": "Cookie",
+          "val": "",
+          "type": "text",
+          "desc": "Cookie，其中有效数据为 CID、SEID、UID。"
+        },
+        {
+          "id": "uid115",
+          "name": "115 号",
+          "val": "",
+          "type": "text",
+          "desc": "115 -> 相伴 -> 账号名下方即可查看。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/115/115.js",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/115.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/115.png"
+      ]
+    },
+    {
+      "id": "zZ.Blibee",
+      "name": "便利蜂",
+      "keys": ["blibee", "blibee_deviceid", "blibee_token", "blibee_userid"],
+      "settings": [
+        {
+          "id": "blibee",
+          "name": "Cookie",
+          "val": "",
+          "type": "text",
+          "desc": "Cookie，包含设备编号、登陆渠道、Token、用户编号，请谨慎测试，大量非正常请求易封号。"
+        },
+        {
+          "id": "blibee_deviceid",
+          "name": "设备编号",
+          "val": "",
+          "type": "text",
+          "desc": "设备编号 __DEVICEID__，请谨慎测试，大量非正常请求易封号。"
+        },
+        {
+          "id": "blibee_token",
+          "name": "Token",
+          "val": "",
+          "type": "text",
+          "desc": "登陆验证信息 __TOKEN__，请谨慎测试，大量非正常请求易封号。"
+        },
+        {
+          "id": "blibee_userid",
+          "name": "用户编号",
+          "val": "",
+          "type": "text",
+          "desc": "用户编号 __USERID__，此 ID 可当作 shareCode 进行 aff，请谨慎测试，大量非正常请求易封号。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/Blibee/README.md",
+      "icons": [
+        "https://upload.cc/i1/2020/06/22/fXTHjV.png",
+        "https://is2-ssl.mzstatic.com/image/thumb/Purple113/v4/b0/28/f8/b028f8fc-4e79-5b7f-80f4-86e0d5414df0/AppIcon-1x_U007emarketing-0-5-0-0-85-220.png/230x0w.png"
+      ]
+    },
+    {
+      "id": "zZ.Haidilao",
+      "name": "海底捞",
+      "keys": ["hilh", "hilb", "hich"],
+      "settings": [
+        {
+          "id": "hilh",
+          "name": "Token",
+          "val": "",
+          "type": "text",
+          "desc": "用户等级接口登陆验证信息 _HAIDILAO_APP_TOKEN。"
+        },
+        {
+          "id": "hilb",
+          "name": "Body",
+          "val": "",
+          "type": "text",
+          "desc": "用户等级接口请求消息体，包含登陆验证信息（_HAIDILAO_APP_TOKEN）、用户编号（customerID）、国家（country）。"
+        },
+        {
+          "id": "hich",
+          "name": "Cookie",
+          "val": "",
+          "type": "text",
+          "desc": "签到接口登陆验证信息，包含更多信息，可自行修改调试。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/Haidilao/Haidilao.js",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/haidilao.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/haidilao.png"
+      ]
+    },
+    {
+      "id": "zZ.HEYTEA",
+      "name": "微信小程序 - 喜茶GO",
+      "keys": ["HEYTEA"],
+      "settings": [
+        {
+          "id": "HEYTEA",
+          "name": "Authorization",
+          "val": "",
+          "type": "text",
+          "desc": "用户验证信息。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/HEYTEA/HEYTEA.js",
+      "icons": [
+        "https://static.heytea.com/taro_trial/v1/img/home/logo2.png",
+        "http://mmbiz.qpic.cn/mmbiz_png/xMiafHYLl3IZeUpOeGcib8Vc8xeWB2DBFHHl4MXP8NjP7mlnibDzSxwKsdjUeiaLmGxGyo5wCdHDc9nia8ZyT1IC3dg/640?wx_fmt=png&wxfrom=200"
+      ]
+    },
+    {
+      "id": "zZ.Naixue",
+      "name": "微信小程序 - 奈雪点单",
+      "keys": ["Naixue"],
+      "settings": [
+        {
+          "id": "Naixue",
+          "name": "Qm-User-Token",
+          "val": "",
+          "type": "text",
+          "desc": "用户验证信息。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/Naixue/Naixue.js",
+      "icons": [
+        "https://media-exp1.licdn.com/dms/image/C510BAQHu_7r70HPyNw/company-logo_200_200/0?e=2159024400&v=beta&t=uSPKxg2q12x1hyVo71oXGnq4kajpqgRxyh7Dnbdhdjw",
+        "https://scontent-hkt1-1.xx.fbcdn.net/v/t1.0-9/41309086_238026620229313_5772500122441089024_o.jpg?_nc_cat=102&_nc_sid=85a577&_nc_ohc=bNGVEGz1OmwAX9lV98f&_nc_ht=scontent-hkt1-1.xx&oh=fb458fcc0b72acc3874d8cc702271c6d&oe=5F13AE38"
+      ]
+    }
+  ]
+}
