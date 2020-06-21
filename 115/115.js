@@ -43,7 +43,8 @@ const CookieName = '115'
 const CookieKey = 'wp115'
 const UIDKey = 'uid115'
 const reg = /^https?:\/\/proapi\.115\.com\/ios\/user\/takespc\?(.*)&user_id=(\d+)$/
-const today = new Date().getFullYear() + "-" + ("00" + Number(new Date().getMonth() + 1)).substr(-2) + "-" + ("00" + new Date().getDate()).substr(-2)
+const UTC8 = new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000)
+const today = UTC8.getFullYear() + "-" + ("00" + Number(UTC8.getMonth() + 1)).substr(-2) + "-" + ("00" + UTC8.getDate()).substr(-2)
 const $cmp = compatibility()
 
 if ($cmp.isRequest) {
@@ -114,7 +115,7 @@ function Checkin() {
             if (result && result.error_code == 10021) {
                 subTitle += 'Token 算法失效❗'
                 detail += '请带日志反馈，并请求群内大佬 @wangfei021325 。\n' + result.request
-                $cmp.log('wp115 failed response : \n' + result.request)
+                $cmp.log('wp115 failed response : \n' + result.request + '\n' + today)
             } else if (result && result.error_code == 10022) {
                 subTitle += '重复签到！🤏'
                 detail += result.error
