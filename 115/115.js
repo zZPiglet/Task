@@ -38,7 +38,8 @@ hostname = proapi.115.com
 获取完 Cookie 后可不注释 rewrite / hostname，Token 更新时会弹窗。若因 MitM 导致该软件网络不稳定，可注释掉 hostname。
 */
 
-const mainURL = 'https://proapi.115.com/ios/user/takespc?'
+const mainURL = 'http://proapi.115.com/ios/user/takespc?'
+const app_ver = '23.5.1'
 const CookieName = '115'
 const CookieKey = 'wp115'
 const UIDKey = 'uid115'
@@ -102,7 +103,7 @@ function isJSON(str) {
 function Checkin() {
     let subTitle = ''
     let detail = ''
-    let CheckinURL = mainURL + 'format=json&token=' + hex_md5(today+$cmp.read("uid115")+"space_token") + '&user_id=' + $cmp.read("uid115")
+    let CheckinURL = mainURL + 'app_ver=' + app_ver + '&format=json&token=' + hex_md5(today+$cmp.read("uid115")+"space_token") + '&user_id=' + $cmp.read("uid115")
     const oof = {
         url: CheckinURL,
         headers: {
@@ -116,11 +117,17 @@ function Checkin() {
                 subTitle += 'Token 算法失效❗'
                 detail += '请带日志反馈，并请求群内大佬 @wangfei021325 。\n' + result.request
                 $cmp.log('wp115 failed response : \n' + result.request + '\n' + today)
+            } else if (result && result.errno == 99) {
+                subTitle += 'Cookie 失效❗'
+                detail += '请按照脚本开头注释配置后重新获取。'
             } else if (result && result.error_code == 10022) {
                 subTitle += '重复签到！🤏'
                 detail += result.error
             } else if (result && result.state == true) {
                 let getspace = result.data.take_state ? result.data.take_size_last : result.data.space
+                let get_time = result.data.take_state ? new Date(result.data.take_time_last * 1000) : false
+                let shaketime = get_time ? ('00' + get_time.getHours()).substr(-2) + ':' + ('00' + get_time.getMinutes()).substr(-2) : false
+                detail += shaketime ? '今天您在 ' + shaketime + ' 摇奖' : ''
                 subTitle += '签到成功！🎉'
                 detail += '获得空间 ' + getspace + ' MB！🤏'
                 $cmp.log("wp115 succeed data : \n" + JSON.stringify(result.data))
