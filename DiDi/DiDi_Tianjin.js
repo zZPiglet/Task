@@ -25,7 +25,7 @@ Surge 4.0+ & Loon:
 cron "1 0 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_Tianjin.js
 */
 
-const activity = '7432'
+const activity = '7522'
 const batch_id = ['1895021', '1895021', '1895023', '1895023', '1895023', '1895025', '1895025']
 const coupon_name = [' 6 折快车券', ' 6 折快车券', ' 5 折快车券', ' 5 折快车券', ' 5 折快车券', '立减 10 元券', '立减 10 元券']
 const mianURL = 'https://gsh5act.xiaojukeji.com/dpub_data_api/activities/' + activity + '/'
