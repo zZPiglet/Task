@@ -14,7 +14,7 @@
           "id": "DiDi",
           "name": "Token",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "desc": "Token 可同时存在多个，可使用不同日期获取的 Token 进行测试。"
         },
         {
@@ -41,7 +41,7 @@
           "id": "wp115",
           "name": "Cookie",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "desc": "Cookie，其中有效数据为 CID、SEID、UID。"
         },
         {
@@ -52,7 +52,7 @@
           "desc": "115 -> 相伴 -> 账号名下方即可查看。"
         }
       ],
-      "author": "@zZPiglet",
+      "author": "@wangfei021325, @zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/blob/master/115/115.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/115.png",
@@ -68,7 +68,7 @@
           "id": "blibee",
           "name": "Cookie",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "desc": "Cookie，包含设备编号、登陆渠道、Token、用户编号，请谨慎测试，大量非正常请求易封号。"
         },
         {
@@ -82,7 +82,7 @@
           "id": "blibee_token",
           "name": "Token",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "desc": "登陆验证信息 __TOKEN__，请谨慎测试，大量非正常请求易封号。"
         },
         {
@@ -109,21 +109,35 @@
           "id": "hilh",
           "name": "Token",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "desc": "用户等级接口登陆验证信息 _HAIDILAO_APP_TOKEN。"
         },
         {
-          "id": "hilb",
-          "name": "Body",
+          "id": "@hilb._HAIDILAO_APP_TOKEN",
+          "name": "Body._HAIDILAO_APP_TOKEN",
+          "val": "",
+          "type": "textarea",
+          "desc": "用户等级接口请求消息体，登陆验证信息，此部分应与 Token 中 _HAIDILAO_APP_TOKEN= 之后值一致。"
+        },
+        {
+          "id": "@hilb.customerId",
+          "name": "Body.customerId",
           "val": "",
           "type": "text",
-          "desc": "用户等级接口请求消息体，包含登陆验证信息（_HAIDILAO_APP_TOKEN）、用户编号（customerID）、国家（country）。"
+          "desc": "用户等级接口请求消息体，用户编号。"
+        },
+        {
+          "id": "@hilb.country",
+          "name": "Body.country",
+          "val": "",
+          "type": "text",
+          "desc": "用户等级接口请求消息体，国家。"
         },
         {
           "id": "hich",
           "name": "Cookie",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "desc": "签到接口登陆验证信息，包含更多信息，可自行修改调试。"
         }
       ],
@@ -143,7 +157,7 @@
           "id": "HEYTEA",
           "name": "Authorization",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "desc": "用户验证信息。"
         }
       ],
@@ -163,7 +177,7 @@
           "id": "Naixue",
           "name": "Qm-User-Token",
           "val": "",
-          "type": "text",
+          "type": "textarea",
           "desc": "用户验证信息。"
         }
       ],
