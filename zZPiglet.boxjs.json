@@ -34,7 +34,7 @@
     },
     {
       "id": "zZ.115",
-      "name": "115 网盘自动摇一摇得空间",
+      "name": "115 网盘",
       "keys": ["wp115", "uid115"],
       "settings": [
         {
@@ -146,6 +146,33 @@
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/haidilao.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/haidilao.png"
+      ]
+    },
+    {
+      "id": "zZ.Oclean",
+      "name": "欧可林",
+      "keys": ["Oclean", "Oclean_mini"],
+      "settings": [
+        {
+          "id": "Oclean",
+          "name": "Shop-Member",
+          "val": "",
+          "type": "text",
+          "desc": "用户验证信息，由 app 注册绑定生成。"
+        },
+        {
+          "id": "Oclean_mini",
+          "name": "openId",
+          "val": "",
+          "type": "text",
+          "desc": "用户验证信息，由微信小程序生成。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/tree/master/Oclean",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Oclean.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/Oclean.png"
       ]
     },
     {
