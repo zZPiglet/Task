@@ -177,7 +177,7 @@
     },
     {
       "id": "zZ.CMB_688",
-      "name": "招商银行688、188",
+      "name": "招商银行 - 688、188",
       "keys": ["CMB_wait_688", "CMB_wait_188", "CMB_wait_out"],
       "settings": [
         {
@@ -185,21 +185,21 @@
           "name": "等待跳转至 688 时间",
           "val": "",
           "type": "text",
-          "desc": "从余额宝转入通知到招行 688 通知之间间隔时间，单位为秒"
+          "desc": "从「余额宝转入」通知到「招行 688」通知之间间隔时间，单位为秒，不填默认 15 秒"
         },
         {
           "id": "CMB_wait_188",
           "name": "等待跳转至 188 时间",
           "val": "",
           "type": "text",
-          "desc": "从招行 688 通知到招行 188 通知之间间隔时间，单位为秒"
+          "desc": "从「招行 688」通知到「招行 188」通知之间间隔时间，单位为秒，不填默认 15 秒"
         },
         {
           "id": "CMB_wait_out",
           "name": "等待跳转至余额宝转出时间",
           "val": "",
           "type": "text",
-          "desc": "从招行 188 通知到余额宝转出通知之间间隔时间，单位为秒"
+          "desc": "从「招行 188」通知到「余额宝转出」通知之间间隔时间，单位为秒，不填默认 15 秒"
         }
       ],
       "author": "@zZPiglet",
@@ -207,6 +207,26 @@
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/cmbchina.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/cmbchina.png"
+      ]
+    },
+    {
+      "id": "zZ.Alipay",
+      "name": "支付宝 - 积分能量",
+      "keys": ["Alipay_wait_mayi"],
+      "settings": [
+        {
+          "id": "Alipay_wait_mayi",
+          "name": "等待跳转至收能量时间",
+          "val": "",
+          "type": "text",
+          "desc": "从「领积分」通知到「收能量」通知之间间隔时间，单位为秒，不填默认 8 秒"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/tree/master/Alipay/Alipay.js",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/alipay.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/alipay.png"
       ]
     },
     {
