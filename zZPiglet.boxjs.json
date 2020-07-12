@@ -176,6 +176,40 @@
       ]
     },
     {
+      "id": "zZ.CMB_688",
+      "name": "招商银行688、188",
+      "keys": ["CMB_wait_688", "CMB_wait_188", "CMB_wait_out"],
+      "settings": [
+        {
+          "id": "CMB_wait_688",
+          "name": "等待跳转至 688 时间",
+          "val": "",
+          "type": "text",
+          "desc": "从余额宝转入通知到招行 688 通知之间间隔时间，单位为秒"
+        },
+        {
+          "id": "CMB_wait_188",
+          "name": "等待跳转至 188 时间",
+          "val": "",
+          "type": "text",
+          "desc": "从招行 688 通知到招行 188 通知之间间隔时间，单位为秒"
+        },
+        {
+          "id": "CMB_wait_out",
+          "name": "等待跳转至余额宝转出时间",
+          "val": "",
+          "type": "text",
+          "desc": "从招行 188 通知到余额宝转出通知之间间隔时间，单位为秒"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/tree/master/CMB/CMB_688.js",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/cmbchina.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/cmbchina.png"
+      ]
+    },
+    {
       "id": "zZ.HEYTEA",
       "name": "微信小程序 - 喜茶GO",
       "keys": ["HEYTEA"],
