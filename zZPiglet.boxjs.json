@@ -230,26 +230,6 @@
       ]
     },
     {
-      "id": "zZ.HEYTEA",
-      "name": "微信小程序 - 喜茶GO",
-      "keys": ["HEYTEA"],
-      "settings": [
-        {
-          "id": "HEYTEA",
-          "name": "Authorization",
-          "val": "",
-          "type": "textarea",
-          "desc": "用户验证信息。"
-        }
-      ],
-      "author": "@zZPiglet",
-      "repo": "https://github.com/zZPiglet/Task/blob/master/HEYTEA/HEYTEA.js",
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/HEYTEA.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/HEYTEA.png"
-      ]
-    },
-    {
       "id": "zZ.Naixue",
       "name": "微信小程序 - 奈雪点单",
       "keys": ["Naixue"],
