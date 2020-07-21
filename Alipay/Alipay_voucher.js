@@ -1,18 +1,26 @@
 /*
 qx(tf 1.0.11(316)) 及 loon(tf 2.1.1(163)) 及更新版本可用。
-半自动提醒 115 摇一摇得空间。
-0 23 * * *  （挑一个玩手机的时间）
-到时候点击通知即可跳转至 115 主界面，摇一摇领取空间。
+半自动提醒支付宝抢消费券，请在所在城市有消费券的时候使用。
+
+qx:
+0 0 8,12 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/Alipay/Alipay_voucher.js
+
+loon:
+cron "1 0 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Alipay/Alipay_voucher.js
+
+shortcut:
+https://www.icloud.com/shortcuts/2c37e7de80a24a6cbe9ca80e96337e1f
+
+到时候点击通知即可跳转至支付宝消费券。
 
 自不用 by zZPiglet
 */
 
 const $ = new cmp()
 
-let wp115 = "wx9b74cc2b355eef5f://"
-//let wp115 = "oof.disk://"
+let voucher = "alipays://platformapi/startapp?appId=2021001162654785"
 
-$.notify("115", "", "点击跳转摇一摇领空间啦", wp115)
+$.notify("支付宝", "", "点击跳转抢消费券啦", voucher)
 
 $done()
 
