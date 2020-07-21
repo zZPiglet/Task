@@ -51,8 +51,8 @@ const groupURL = mainURL + 'group?gid='
 // const circleURL = mainURL + 'circle' // 好友圈，待做，🐦  
 // const timelineURL = mainURL + 'friends //时间线，待做，🐦
 
-const $ = new API('Weibo', true)
-$.debug = $.read('debug') || false
+const $ = new API('Weibo')
+$.debug = [true, 'true'].includes($.read('debug')) || false
 const CookieKey = 'WeiboNotice'
 const reg = /SUB=(\S*);/
 
@@ -74,7 +74,7 @@ if ($.client == 'Safari') {
 
 $.interval = Number($.read('interval') || 1000)
 
-$.update = [false, 'false'].includes($.debug) ? $.read('update') || 0 : 0
+$.update = $.debug ? 0 : $.read('update') || 0
 $.log('update time:' + $.update)
 
 if ($.isRequest) {
