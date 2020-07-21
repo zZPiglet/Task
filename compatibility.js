@@ -1,9 +1,10 @@
 function API(name = "untitled", debug = false) {
-    class wrapper {
+    return new class {
         constructor(name, debug) {
             this.name = name;
             this.debug = debug;
 
+            this.isRequest = typeof $request != "undefined"
             this.isQX = typeof $task != "undefined";
             this.isLoon = typeof $loon != "undefined";
             this.isSurge = typeof $httpClient != "undefined" && !this.isLoon;
@@ -25,7 +26,7 @@ function API(name = "untitled", debug = false) {
                 }
             })();
             this.initCache();
-            this.log(`INITIAL CACHE:\n${JSON.stringify(this.cache)}`);
+
 
             const delay = (t, v) =>
                 new Promise(function (resolve) {
@@ -87,10 +88,10 @@ function API(name = "untitled", debug = false) {
 
         // initialize cache
         initCache() {
-            if (this.isQX) return JSON.parse($prefs.valueForKey(this.name) || "{}");
+            if (this.isQX) this.cache = JSON.parse($prefs.valueForKey(this.name) || "{}");
             if (this.isLoon || this.isSurge)
-                return JSON.parse($persistentStore.read(this.name) || "{}");
-
+                this.cache = JSON.parse($persistentStore.read(this.name) || "{}");
+ 
             if (this.isNode) {
                 // create a json for root cache
                 let fpath = "root.json";
@@ -123,7 +124,7 @@ function API(name = "untitled", debug = false) {
         // store cache
         persistCache() {
             const data = JSON.stringify(this.cache);
-            this.log(`FLUSHING DATA:\n${data}`);
+            
             if (this.isQX) $prefs.setValueForKey(data, this.name);
             if (this.isLoon || this.isSurge) $persistentStore.write(data, this.name);
             if (this.isNode) {
@@ -143,7 +144,7 @@ function API(name = "untitled", debug = false) {
         }
 
         write(data, key) {
-            this.log(`SET ${key} = ${JSON.stringify(data)}`);
+            this.log(`SET ${key}`);
             if (key.indexOf('#') !== -1) {
                 key = key.substr(1)
                 if (this.isSurge & this.isLoon) {
@@ -166,7 +167,7 @@ function API(name = "untitled", debug = false) {
             if (key.indexOf('#') !== -1) {
                 key = key.substr(1)
                 if (this.isSurge & this.isLoon) {
-                    $persistentStore.read(data, key);
+                    return $persistentStore.read(key);
                 }
                 if (this.isQX) {
                     return $prefs.valueForKey(key);
@@ -201,8 +202,8 @@ function API(name = "untitled", debug = false) {
 
         // notification
         notify(title = name, subtitle = '', content = '', open_url, media_url) {
-            const content_Surge = content + (open_url == undefined ? "" : `\n跳转链接：${open_url}`) + (media_url == undefined ? "" : `\n多媒体链接：${media_url}`);
-            const content_Loon = content + (media_url == undefined ? "" : `\n多媒体链接：${media_url}`);
+            const content_Surge = content + (open_url == undefined ? "" : `\n\n跳转链接：${open_url}`) + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
+            const content_Loon = content + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
 
             if (this.isQX) $notify(title, subtitle, content, {"open-url": open_url, "media-url": media_url});
             if (this.isSurge) $notification.post(title, subtitle, content_Surge);
@@ -238,8 +239,10 @@ function API(name = "untitled", debug = false) {
         }
 
         done(value = {}) {
-            if (this.isQX || this.isLoon || this.isSurge) {
-                $done(value);
+            if (this.isQX) {
+                this.isRequest ? $done(value) : null;
+            } else if (this.isLoon || this.isSurge) {
+                this.isRequest ? $done(value) : $done();
             } else if (this.isNode && !this.isJSBox) {
                 if (typeof $context !== 'undefined') {
                     $context.headers = value.headers;
@@ -248,6 +251,6 @@ function API(name = "untitled", debug = false) {
                 }
             }
         }
-    }
-    return new wrapper(name, debug);
+    }(name, debug);
+    
 }
