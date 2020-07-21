@@ -15,13 +15,15 @@
           "name": "Token",
           "val": "",
           "type": "textarea",
+          "autoGrow": true,
+          "rows": 7,
           "desc": "Token 可同时存在多个，可使用不同日期获取的 Token 进行测试。"
         },
         {
           "id": "DiDi_city",
           "name": "城市编号",
           "val": "",
-          "type": "text",
+          "type": "number",
           "desc": "滴滴出行城市编号，可更改至别的城市进行测试。"
         }
       ],
@@ -42,6 +44,8 @@
           "name": "Cookie",
           "val": "",
           "type": "textarea",
+          "autoGrow": true, 
+          "rows": 7,
           "desc": "Cookie，其中有效数据为 CID、SEID、UID。"
         },
         {
@@ -60,6 +64,85 @@
       ]
     },
     {
+      "id": "zZ.Weibo",
+      "name": "微博通知",
+      "keys": ["@Weibo.WeiboNotice", "@Weibo.interval", "@Weibo.Group", "@Weibo.Weibo_uids", "@Weibo.Weibo_nicknames", "@Weibo.chooseClient"],
+      "settings": [
+        {
+          "id": "@Weibo.debug",
+          "name": "测试环境，如未出现特殊报错等问题请保持关闭。",
+          "val": false,
+          "type": "boolean"
+        },
+        {
+          "id": "@Weibo.interval",
+          "name": "间隔",
+          "val": "",
+          "type": "number",
+          "placeholder": "1000", 
+          "desc": "运行时多通知之间时间间隔，单位为毫秒，不填默认为 1000 毫秒。"
+        },
+        {
+          "id": "@Weibo.WeiboNotice",
+          "name": "Cookie",
+          "val": "",
+          "type": "textarea",
+          "rows": 2,
+          "autoGrow": true, 
+          "desc": "微博 Cookie，若抓包填入，只需填入 Cookie 中「SUB=」后至「;」中间的值。"
+        },
+        {
+          "id": "@Weibo.Group",
+          "name": "通知分组",
+          "val": ["Special"],
+          "type": "checkboxes",
+          "desc": "选择需要通知的分组",
+          "items": [
+            { "key": "Special", "label": "特别关注" },
+            { "key": "Spider", "label": "指定用户" }
+          ]
+        },
+        {
+          "id": "@Weibo.Weibo_uids",
+          "name": "用户 ID",
+          "val": "",
+          "type": "textarea",
+          "placeholder": "1111681197,\n7099422177", 
+          "autoGrow": true, 
+          "rows": 2,
+          "desc": "填入需订阅的用户 uid，如不填入 uid 及昵称请取消上一项「指定用户」勾选。以英文逗号分隔多个 uid，可加回车。微博 uid 的获取方法：如「来去之间」微博主页为「https://weibo.com/wflanker」，需查看页面源码，找到「$CONFIG['oid'] = '1111681197'」即可得知 uid 为「1111681197」，切记不是「$CONFIG['uid']」，或直接访问手机端，其主页为「https://m.weibo.cn/u/1111681197?uid=1111681197」亦可得知。再如「外交部发言人办公室」微博主页为「https://weibo.com/u/7099422177」，则其 uid 为「7099422177」。"
+        },
+        {
+          "id": "@Weibo.Weibo_nicknames",
+          "name": "用户昵称",
+          "val": "",
+          "type": "textarea",
+          "placeholder": "央视新闻,\n搜狐娱乐", 
+          "autoGrow": true, 
+          "rows": 2,
+          "desc": "填入需订阅的用户昵称，如不填入 uid 及昵称请取消上一项「指定用户」勾选。以英文逗号分隔多个昵称，可加回车。请勿重复填写。"
+        },
+        {
+          "id": "@Weibo.chooseClient",
+          "name": "客户端",
+          "val": "Safari",
+          "type": "radios",
+          "desc": "选择点击跳转的客户端，如需加入想要的客户端，请提供该客户端打开指定微博的 URL Scheme，反馈至 @zZPiglet_bot，或提交 issue，或进行 PR。",
+          "items": [
+            { "key": "Safari", "label": "Safari" },
+            { "key": "Sinaweibo", "label": "微博" },
+            { "key": "Weibointernational", "label": "微博国际版" }
+          ]
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/Weibo/Weibo.js",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/weibo.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/weibo.png"
+      ]
+    },
+    {
       "id": "zZ.Blibee",
       "name": "便利蜂",
       "keys": ["blibee", "blibee_deviceid", "blibee_token", "blibee_userid"],
@@ -69,6 +152,8 @@
           "name": "Cookie",
           "val": "",
           "type": "textarea",
+          "autoGrow": true,
+          "rows": 7,
           "desc": "Cookie，包含设备编号、登陆渠道、Token、用户编号，请谨慎测试，大量非正常请求易封号。"
         },
         {
@@ -83,6 +168,8 @@
           "name": "Token",
           "val": "",
           "type": "textarea",
+          "autoGrow": true,
+          "rows": 5,
           "desc": "登陆验证信息 __TOKEN__，请谨慎测试，大量非正常请求易封号。"
         },
         {
@@ -110,6 +197,8 @@
           "name": "Token",
           "val": "",
           "type": "textarea",
+          "autoGrow": true,
+          "rows": 3,
           "desc": "用户等级接口登陆验证信息 _HAIDILAO_APP_TOKEN。"
         },
         {
@@ -117,6 +206,8 @@
           "name": "Body._HAIDILAO_APP_TOKEN",
           "val": "",
           "type": "textarea",
+          "autoGrow": true,
+          "rows": 2,
           "desc": "用户等级接口请求消息体，登陆验证信息，此部分应与 Token 中 _HAIDILAO_APP_TOKEN= 之后值一致。"
         },
         {
@@ -138,6 +229,8 @@
           "name": "Cookie",
           "val": "",
           "type": "textarea",
+          "autoGrow": true,
+          "rows": 7,
           "desc": "签到接口登陆验证信息，包含更多信息，可自行修改调试。"
         }
       ],
@@ -184,21 +277,21 @@
           "id": "CMB_wait_688",
           "name": "等待跳转至 688 时间",
           "val": "",
-          "type": "text",
+          "type": "number",
           "desc": "从「余额宝转入」通知到「招行 688」通知之间间隔时间，单位为秒，不填默认 15 秒"
         },
         {
           "id": "CMB_wait_188",
           "name": "等待跳转至 188 时间",
           "val": "",
-          "type": "text",
+          "type": "number",
           "desc": "从「招行 688」通知到「招行 188」通知之间间隔时间，单位为秒，不填默认 15 秒"
         },
         {
           "id": "CMB_wait_out",
           "name": "等待跳转至余额宝转出时间",
           "val": "",
-          "type": "text",
+          "type": "number",
           "desc": "从「招行 188」通知到「余额宝转出」通知之间间隔时间，单位为秒，不填默认 15 秒"
         }
       ],
@@ -218,7 +311,7 @@
           "id": "Alipay_wait_mayi",
           "name": "等待跳转至收能量时间",
           "val": "",
-          "type": "text",
+          "type": "number",
           "desc": "从「领积分」通知到「收能量」通知之间间隔时间，单位为秒，不填默认 8 秒"
         }
       ],
@@ -239,6 +332,8 @@
           "name": "Qm-User-Token",
           "val": "",
           "type": "textarea",
+          "autoGrow": true,
+          "rows": 2,
           "desc": "用户验证信息。"
         }
       ],
