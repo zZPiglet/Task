@@ -29,6 +29,16 @@
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/blob/master/DiDi/README.md",
+      "scripts": [
+        {
+          "name": "滴滴出行",
+          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js"
+        },
+        {
+          "name": "遗忘的福利金",
+          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_reward.js"
+        }
+      ],
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/didi.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/didi.png"
@@ -58,6 +68,7 @@
       ],
       "author": "@wangfei021325, @zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/blob/master/115/115.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/115/115.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/115.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/115.png"
@@ -82,6 +93,13 @@
           "placeholder": "1000", 
           "desc": "运行时多通知之间时间间隔，单位为毫秒，不填默认为 1000 毫秒。"
         },
+        {
+          "id": "@Weibo.update",
+          "name": "时间戳",
+          "val": "",
+          "type": "number", 
+          "desc": "上次运行时保存的时间戳，十三位。"
+        }, 
         {
           "id": "@Weibo.WeiboNotice",
           "name": "Cookie",
@@ -137,6 +155,7 @@
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/blob/master/Weibo/Weibo.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Weibo/Weibo.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/weibo.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/weibo.png"
@@ -182,6 +201,7 @@
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/blob/master/Blibee/README.md",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Blibee/Blibee.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/Blibee.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/Blibee.png"
@@ -236,6 +256,7 @@
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/blob/master/Haidilao/Haidilao.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Haidilao/Haidilao.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/haidilao.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/haidilao.png"
@@ -263,6 +284,32 @@
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/tree/master/Oclean",
+      "scripts": [
+        {
+          "name": "欧可林 app",
+          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Oclean/Oclean.js"
+        },
+        {
+          "name": "欧可林 app 早红包",
+          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Oclean/Oclean_red_envelope_am.js"
+        },
+        {
+          "name": "欧可林 app 晚红包",
+          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Oclean/Oclean_red_envelope_pm.js"
+        },
+        {
+          "name": "欧可林 小程序",
+          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Oclean/Oclean_mini.js"
+        },
+        {
+          "name": "欧可林 小程序 早红包",
+          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Oclean/Oclean_mini_red_envelope_am.js"
+        },
+        {
+          "name": "欧可林 小程序 晚红包",
+          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Oclean/Oclean_mini_red_envelope_pm.js"
+        }
+      ],
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/Oclean.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/Oclean.png"
@@ -297,6 +344,7 @@
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/tree/master/CMB/CMB_688.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/CMB/CMB_688.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/cmbchina.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/cmbchina.png"
@@ -317,6 +365,7 @@
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/tree/master/Alipay/Alipay.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Alipay/Alipay.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/alipay.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/alipay.png"
@@ -339,6 +388,7 @@
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/blob/master/Naixue/Naixue.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Naixue/Naixue.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/Naixue.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/Naixue.png"
