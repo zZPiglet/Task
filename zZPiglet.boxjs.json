@@ -162,6 +162,77 @@
       ]
     },
     {
+      "id": "zZ.heybox",
+      "name": "小黑盒",
+      "keys": ["@heybox.pkey", "@heybox.lang", "@heybox.os_t", "@heybox.os_v", "@heybox.v", "@heybox.d_id", "@heybox.h_id"],
+      "settings": [
+        {
+          "id": "@heybox.debug",
+          "name": "测试环境，如未出现特殊报错等问题请保持关闭。",
+          "val": false,
+          "type": "boolean"
+        },
+        {
+          "id": "@heybox.pkey",
+          "name": "pkey",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 2,
+          "desc": "Cookie，有效值为 pkey。"
+        },
+        {
+          "id": "@heybox.lang",
+          "name": "lang",
+          "val": "",
+          "type": "text",
+          "desc": "语言"
+        },
+        {
+          "id": "@heybox.os_t",
+          "name": "os_type",
+          "val": "",
+          "type": "text",
+          "desc": "系统类型"
+        },
+        {
+          "id": "@heybox.os_v",
+          "name": "os_version",
+          "val": "",
+          "type": "text",
+          "desc": "系统版本"
+        },
+        {
+          "id": "@heybox.v",
+          "name": "lang",
+          "val": "",
+          "type": "text",
+          "desc": "小黑盒版本"
+        },
+        {
+          "id": "@heybox.d_id",
+          "name": "device_id",
+          "val": "",
+          "type": "text",
+          "desc": "设备编号"
+        },
+        {
+          "id": "@heybox.h_id",
+          "name": "heybox_id",
+          "val": "",
+          "type": "text",
+          "desc": "用户编号，在‘我’ - 玩家名称旁的齿轮⚙️按钮处可查看。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/heybox/heybox.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/heybox/heybox.js",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/heybox.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/heybox.png"
+      ]
+    },
+    {
       "id": "zZ.Blibee",
       "name": "便利蜂",
       "keys": ["blibee", "blibee_deviceid", "blibee_token", "blibee_userid"],
