@@ -47,10 +47,10 @@ const cookiereg = /pkey=(.*);/
 
 if ($.isRequest) {
     GetCookie()
-    $.done
+    $.done({ body: $request.body })
 } else {
     Checkin()
-    $.done
+    $.done()
 }
 
 function GetCookie() {
@@ -92,7 +92,7 @@ function Checkin() {
     let time = Math.round(new Date().getTime()/1000).toString()
     let sign = '/task/sign'
     let hkey = hex_md5(hex_md5(sign + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let signURL = mainURL + sign + '?lang=' + $.read('lang') + '&os_type=' + $.read('os_t') + '&os_version=' + $.read('os_v') + '&_time=' + time + '&version=' + $.read('v') + '&device_id=' + $.read('d_id') + '&heybox_id=' + $.read('h_id') + '&hkey=' + hkey
+    let signURL = mainURL + sign + '/?lang=' + $.read('lang') + '&os_type=' + $.read('os_t') + '&os_version=' + $.read('os_v') + '&_time=' + time + '&version=' + $.read('v') + '&device_id=' + $.read('d_id') + '&heybox_id=' + $.read('h_id') + '&hkey=' + hkey
     $.log(signURL)
     $.get({
         url: signURL,

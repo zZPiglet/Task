@@ -80,7 +80,7 @@ $.info('update time: ' + $.read('update'))
 
 if ($.isRequest) {
     GetCookie()
-    $.done
+    $.done({ body: $request.body })
 } else {
     !(async () => {
         if (!$.read(CookieKey)) {
