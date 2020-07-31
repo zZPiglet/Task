@@ -8,6 +8,11 @@
     {
       "id": "zZ.DiDi",
       "name": "滴滴出行",
+      "descs_html": [
+        "<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js\">滴滴出行</a>及<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_reward.js\">遗忘的福利金</a>分别为自动每日签到领取福利金及自动领取打车后忘记开的福利金红包的脚本。",
+        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js\">脚本注释</a>进行配置，然后进入\"滴滴出行\"，若弹出\"首次写入滴滴出行 Token 成功\"即可正常食用。",
+        "若无法通过上述方法获取 Token，可使用<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_ticket.js\">此脚本脚本</a>获取 Token，并按照此脚本注释进行配置。"
+      ],
       "keys": ["DiDi", "DiDi_city"],
       "settings": [
         {
@@ -47,6 +52,10 @@
     {
       "id": "zZ.115",
       "name": "115 网盘",
+      "descs_html": [
+        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/115/115.js\">脚本注释</a>进行配置，然后进入\"115\"并摇一摇，若弹出\"首次写入 115 Cookie 成功\"即可正常食用。",
+        "请注意：此<font class=\"red--text\">摇一摇</font>指摇手机。"
+      ],
       "keys": ["wp115", "uid115"],
       "settings": [
         {
@@ -77,6 +86,14 @@
     {
       "id": "zZ.Weibo",
       "name": "微博通知",
+      "descs_html": [
+        "请先进入<a href=\"https://m.weibo.cn\">手机网页版微博</a>并登陆按，再按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Weibo/Weibo.js\">脚本注释</a>进行配置，然后回到网页刷新即可获取 Cookie。",
+        "请注意：一定要<font class=\"red--text\">先登录</font>，否则获取的为游客 Cookie，无法通知「特别关注」及有查看限制的微博。",
+        "运行后通知为「上一次」运行到「本次」运行之间的微博，其中「第零次」运行及「测试环境」默认为「很久很久很久···」以前（时间戳为0），所以第一次运行为接口返回的所有信息，之后有新微博才会通知。",
+        "需要注意的是：即便因配置错误运行之后有错误信息，此次运行时间戳也已经记录，若想还原到「第零次」的状态，请清空下面的时间戳。",
+        "注意：「特别管组」、「用户 ID」、「用户昵称」三者的通知均<font class=\"red--text\">独立</font>，请勿填写重复，以避免通知重复。",
+        "若有希望添加的点击跳转的客户端，请提供该客户端打开指定微博的 URL Scheme，反馈至 <a href=\"https://t.me/zZPiglet_bot\">@zZPiglet_bot</a>。"
+      ],
       "keys": ["@Weibo.WeiboNotice", "@Weibo.interval", "@Weibo.Group", "@Weibo.Weibo_uids", "@Weibo.Weibo_nicknames", "@Weibo.chooseClient"],
       "settings": [
         {
@@ -164,6 +181,10 @@
     {
       "id": "zZ.heybox",
       "name": "小黑盒",
+      "descs_html": [
+        "小黑盒签到及任务获取的奖励积攒之后可以兑换 Steam 游戏，您可以使用我的邀请码进行<a href=\"https://api.xiaoheihe.cn/game/invite_friend_web_share/?heybox_id=21530787\">注册</a>，邀请码：21530787",
+        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/heybox/heybox.js\">脚本注释</a>进行配置，然后进入\"小黑盒\" - \"我\"，若弹出\"首次写入 heybox Cookie 成功\"即可正常食用。"
+      ],
       "keys": ["@heybox.pkey", "@heybox.lang", "@heybox.os_t", "@heybox.os_v", "@heybox.v", "@heybox.d_id", "@heybox.h_id"],
       "settings": [
         {
@@ -204,7 +225,7 @@
         },
         {
           "id": "@heybox.v",
-          "name": "lang",
+          "name": "version",
           "val": "",
           "type": "text",
           "desc": "小黑盒版本"
@@ -235,6 +256,11 @@
     {
       "id": "zZ.Blibee",
       "name": "便利蜂",
+      "descs_html": [
+        "便利蜂便利店目前开店城市：北京市、天津市、南京市、常州市、嘉兴市、上海市、无锡市、苏州市、金华市、深圳市、合肥市、扬州市、宁波市、廊坊市、济南市、青岛市、温州市、杭州市。门店主要分布于北京、天津、上海、南京等8个大中城市在内的华北、华东都市圈，并正在加速完成对这两大城市群的高密度渗透。",
+        "在这些城市居住并想使用此脚本的可以走我 aff 下载便利蜂：<a href=\"http://be3.cc/s/mhndZwo\">短链</a>或<a href=\"https://d.bianlifeng.com/c/a/s4?type=pages&path=%2Fpages%2FdistributeManager%2Findex%3Fp%3D%252Fpages%252FinviteNewUserCity%252Findex%253FshareCode%253D3130056365815256%2526baseCode%253D31%2526floor%253DNaN%2526entrySource%253Dfacecode%26source%3D31&webview=1&url=https%3A%2F%2Fh5.bianlifeng.com%2Fbond%2FinviteCity%2Findex%3FshareCode%3D3130056365815256%26baseCode%3D31%26floor%3DNaN%26entrySource%3Dfacecode&appViewName=InviteNewUserCity&il=true&source=poster_share&defaultNavBar=true\">原链</a>",
+        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Blibee/Blibee.js\">脚本注释</a>进行配置，然后进入\"便利蜂\"，点击\"签到赚礼金\"，若弹出\"首次写入便利蜂 Cookie 成功\"即可正常食用。"
+      ],
       "keys": ["blibee", "blibee_deviceid", "blibee_token", "blibee_userid"],
       "settings": [
         {
@@ -281,6 +307,10 @@
     {
       "id": "zZ.Haidilao",
       "name": "海底捞",
+      "descs_html": [
+        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Haidilao/Haidilao.js\">脚本注释</a>进行配置，然后进入\"海底捞\"app，手动签到一次或点击\"签到\"，若弹出\"首次写入海底捞等级 Token 成功\"及\"首次写入海底捞签到 Cookie 成功\"即可正常食用。",
+        "需要注意的是，有两条重写，一条为获取用户基本信息的，一条为签到的。两者独立互不影响，故即使没有获取到基础信息的，依旧可以签到，只是会有部分错误及 undefined。两次通知应该分别在进入\"我的\"及\"签到\"处通知。"
+      ],
       "keys": ["hilh", "hilb", "hich"],
       "settings": [
         {
@@ -336,6 +366,11 @@
     {
       "id": "zZ.Oclean",
       "name": "欧可林",
+      "descs_html": [
+        "使用 app 请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Oclean/Oclean.js\">脚本注释</a>进行配置，然后进入\"欧可林\"并点击\"活动\"，若弹出\"首次写入欧可林 Cookie 成功\"即可正常食用。",
+        "使用小程序请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Oclean/Oclean_mini.js\">脚本注释</a>进行配置，然后进入微信小程序\"欧可林商城\"并点击\"每日任务\"，若弹出\"首次写入欧可林商城 Cookie 成功\"即可正常食用。",
+        "app 和小程序选择一个使用即可，两者获取的奖励一致。欧可林有早、晚积分红包脚本，请搭配使用，抢红包脚本基本均处于超时状态，故要么无通知要么通知超时，无影响。若抢红包脚本发出正常通知，请反馈通知及日志至 <a href=\"https://t.me/zZPiglet_bot\">@zZPiglet_bot</a>。"
+      ],
       "keys": ["Oclean", "Oclean_mini"],
       "settings": [
         {
@@ -384,6 +419,30 @@
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/Oclean.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/Oclean.png"
+      ]
+    },
+    {
+      "id": "zZ.Naixue",
+      "name": "微信小程序 - 奈雪点单",
+      "desc_html": "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Naixue/Naixue.js\">脚本注释</a>进行配置，然后进入\"奈雪点单\"小程序，若弹出\"首次写入奈雪の茶 Token 成功\"即可正常食用，请先手动执行一次脚本后再回到小程序，点击\"我的\"进行授权登陆查看签到积分是否增加。",
+      "keys": ["Naixue"],
+      "settings": [
+        {
+          "id": "Naixue",
+          "name": "Qm-User-Token",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 2,
+          "desc": "用户验证信息。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/Naixue/Naixue.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Naixue/Naixue.js",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Naixue.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/Naixue.png"
       ]
     },
     {
@@ -440,29 +499,6 @@
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/alipay.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/alipay.png"
-      ]
-    },
-    {
-      "id": "zZ.Naixue",
-      "name": "微信小程序 - 奈雪点单",
-      "keys": ["Naixue"],
-      "settings": [
-        {
-          "id": "Naixue",
-          "name": "Qm-User-Token",
-          "val": "",
-          "type": "textarea",
-          "autoGrow": true,
-          "rows": 2,
-          "desc": "用户验证信息。"
-        }
-      ],
-      "author": "@zZPiglet",
-      "repo": "https://github.com/zZPiglet/Task/blob/master/Naixue/Naixue.js",
-      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/Naixue/Naixue.js",
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Naixue.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/Naixue.png"
       ]
     }
   ]
