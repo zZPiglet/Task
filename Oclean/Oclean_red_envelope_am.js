@@ -48,12 +48,13 @@ function Lottery() {
                 detail += result.Message
                 $cmp.log("Oclean failed response : \n" + JSON.stringify(result))
             }
+            $cmp.notify(CookieName, subTitle, detail)
         } else {
-            subTitle += '抽奖接口请求失败，详情请见日志。'
-            detail += error
+            //subTitle += '签到接口请求失败，详情请见日志。'
+            //detail += error
             $cmp.log("Oclean failed response : \n" + error)
         }
-        $cmp.notify(CookieName, subTitle, detail)
+        //$cmp.notify(CookieName, subTitle, detail)
     })
 }
 
