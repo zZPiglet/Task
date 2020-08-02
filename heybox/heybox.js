@@ -44,6 +44,7 @@ $.debug = [true, 'true'].includes($.read('debug')) || false
 const mainURL = 'https://api.xiaoheihe.cn'
 const urlreg = /https:\/\/api\.xiaoheihe\.cn\/account\/home_v\d\/\?lang=(.*)&os_type=(.*)&os_version=(.*)&_time=\d{10}&version=(.*)&device_id=(.*)&heybox_id=(\d+)&hkey=/
 const cookiereg = /pkey=(.*);/
+$.interval = Number($.read('interval') || 600)
 $.subTitle = ''
 $.detail = ''
 $.errmsg = '\n'
@@ -205,6 +206,7 @@ async function Award() {
                 },
                 body: 'award_type=1&link_id=' + $.linkids[l]
             })
+                .delay($.interval)
                 .then((resp) => {
                     $.log('Award [' + $.linkids[l] + ']: ' + JSON.stringify(resp.body))
                     let obj = JSON.parse(resp.body)
