@@ -183,7 +183,8 @@
       "name": "小黑盒",
       "descs_html": [
         "小黑盒签到及任务获取的奖励积攒之后可以兑换 Steam 游戏，您可以使用我的邀请码进行<a href=\"https://api.xiaoheihe.cn/game/invite_friend_web_share/?heybox_id=21530787\">注册</a>，邀请码：21530787",
-        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/heybox/heybox.js\">脚本注释</a>进行配置，然后进入\"小黑盒\" - \"我\"，若弹出\"首次写入 heybox Cookie 成功\"即可正常食用。"
+        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/heybox/heybox.js\">脚本注释</a>进行配置，然后进入\"小黑盒\" - \"我\"，若弹出\"首次写入 heybox Cookie 成功\"即可正常食用。",
+        "请注意：不要在脚本执行前手动对首页中文章进行点赞。若仍出现「点赞完成失败：操作已经完成」，可尝试加大点赞间隔，若依旧无法解决，请反馈至 <a href=\"https://t.me/zZPiglet_bot\">@zZPiglet_bot</a>。"
       ],
       "keys": ["@heybox.pkey", "@heybox.lang", "@heybox.os_t", "@heybox.os_v", "@heybox.v", "@heybox.d_id", "@heybox.h_id"],
       "settings": [
@@ -192,6 +193,14 @@
           "name": "测试环境，如未出现特殊报错等问题请保持关闭。",
           "val": false,
           "type": "boolean"
+        },
+        {
+          "id": "@heybox.interval",
+          "name": "点赞间隔",
+          "val": "",
+          "type": "number",
+          "placeholder": "600", 
+          "desc": "点赞之间的时间间隔，单位为毫秒，不填默认为 600 毫秒。"
         },
         {
           "id": "@heybox.pkey",
