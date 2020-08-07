@@ -41,6 +41,7 @@ hostname = api.xiaoheihe.cn
 
 const $ = new API('heybox')
 $.debug = [true, 'true'].includes($.read('debug')) || false
+const ERR = MYERR()
 const mainURL = 'https://api.xiaoheihe.cn'
 const urlreg = /https:\/\/api\.xiaoheihe\.cn\/account\/home_v\d\/\?lang=(.*)&os_type=(.*)&os_version=(.*)&_time=\d{10}&version=(.*)&device_id=(.*)&heybox_id=(\d+)&hkey=/
 const cookiereg = /pkey=(.*);/
@@ -74,7 +75,7 @@ if ($.isRequest) {
         }
     })().catch((err) => {
         if (err instanceof ERR.CookieError) {
-            $.notify("小黑盒 - Cookie 错误", "", err.message, 'heybox://')
+            $.notify("小黑盒 - Cookie 错误", "", err.message, 'heybox://%7B%22protocol_type%22%3A%22openWindow%22%2C%22full_screen%22%3Afalse%2C%0A%20%20%20%20%22webview%22%3A%7B%22url%22%3A%22https%3A%2F%2Fapi.xiaoheihe.cn%2Faccount%2Fhome_v2%22%2C%22bg%22%3A%22FFFFFF%22%2C%0A%20%20%20%20%22loading%22%3Atrue%2C%22pull%22%3Afalse%2C%22refresh%22%3Afalse%7D%7D')
         } else {
             $.notify("小黑盒 - 出现错误", "", err.message)
             $.error(err)
@@ -176,8 +177,8 @@ function Getnews() {
             if (obj.status == 'ok') {
                 let links = obj.result.links
                 $.linkids = []
-                for (let l = 1; l < 6; l++) {
-                    $.linkids.push(links[l].linkid)
+                for (let l of links) {
+                    if (l.linkid) $.linkids.push(l.linkid)
                 }
             } else {
                 $.errmsg += '\n文章拉取失败：' + obj.msg
@@ -189,15 +190,17 @@ function Getnews() {
 }
 
 async function Award() {
+    $.log('getnewsCnt: ' + $.linkids.length)
     $.log($.linkids)
     if ($.linkids) {
-        let path = '/bbs/app/profile/award/link'
-        let time = Math.round(new Date().getTime()/1000).toString()
-        let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-        let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
-        $.log('award: ' + mainURL + path + param)
         $.awardMsg = ''
+        let likedCnt = 0
         for (let l = 0; l < 5; l++) {
+            let path = '/bbs/app/profile/award/link'
+            let time = Math.round(new Date().getTime()/1000).toString()
+            let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
+            let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+            $.log('award: ' + mainURL + path + param + '\nlinkid[' + l + ']: ' + $.linkids[l])
             await $.post({
                 url: mainURL + path + param,
                 headers: {
@@ -210,11 +213,43 @@ async function Award() {
                 .then((resp) => {
                     $.log('Award [' + $.linkids[l] + ']: ' + JSON.stringify(resp.body))
                     let obj = JSON.parse(resp.body)
-                    if (obj.msg) $.awardMsg += '\n点赞完成失败：[' + $.linkids[l] + '] ' + obj.msg
+                    if (obj.msg) {
+                        $.awardMsg += '\n点赞完成失败：[' + $.linkids[l] + '] ' + obj.msg
+                    } else {
+                        likedCnt += 1
+                    }
                 })
                 .catch((err) => {
                     throw err
                 })
+        }
+        if (likedCnt < 5) {
+            $.log('进入替补点赞队列')
+            $.awardMsg = ''
+            for (let l = 5; l< $.linkids.length; l++) {
+                let path = '/bbs/app/profile/award/link'
+                let time = Math.round(new Date().getTime()/1000).toString()
+                let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
+                let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+                $.log('award: ' + mainURL + path + param + '\nlinkid[' + l + ']: ' + $.linkids[l])
+                await $.post({
+                    url: mainURL + path + param,
+                    headers: {
+                        'Cookie': 'pkey=' + $.pkey,
+                        'Referer': 'http://api.maxjia.com/'
+                    },
+                    body: 'award_type=1&link_id=' + $.linkids[l]
+                })
+                    .delay($.interval)
+                    .then((resp) => {
+                        $.log('Award [' + $.linkids[l] + ']: ' + JSON.stringify(resp.body))
+                        let obj = JSON.parse(resp.body)
+                        if (obj.msg) $.awardMsg += '\n点赞完成失败：[' + $.linkids[l] + '] ' + obj.msg
+                    })
+                    .catch((err) => {
+                        throw err
+                    })
+            }
         }
     }
 }
@@ -322,6 +357,20 @@ function GetCookie() {
     } else {
         $.notify("写入" + $.name + "Cookie 失败‼️", "", "配置错误, 无法读取请求头, ")
     }
+}
+
+
+function MYERR() {
+    class CookieError extends Error {
+        constructor(message) {
+            super(message);
+            this.name = "CookieError";
+        }
+    }
+  
+    return {
+        CookieError,
+    };
 }
 
 // md5
