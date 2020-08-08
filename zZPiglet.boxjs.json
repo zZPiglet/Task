@@ -98,9 +98,10 @@
       "settings": [
         {
           "id": "@Weibo.debug",
-          "name": "测试环境，如未出现特殊报错等问题请保持关闭。",
+          "name": "测试环境",
           "val": false,
-          "type": "boolean"
+          "type": "boolean",
+          "desc": "如未出现特殊报错等问题请保持关闭。"
         },
         {
           "id": "@Weibo.interval",
@@ -190,9 +191,10 @@
       "settings": [
         {
           "id": "@heybox.debug",
-          "name": "测试环境，如未出现特殊报错等问题请保持关闭。",
+          "name": "测试环境",
           "val": false,
-          "type": "boolean"
+          "type": "boolean",
+          "desc": "如未出现特殊报错等问题请保持关闭。"
         },
         {
           "id": "@heybox.interval",
@@ -311,6 +313,70 @@
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/Blibee.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/Blibee.png"
+      ]
+    },
+    {
+      "id": "zZ.Douban",
+      "name": "电影日历",
+      "descs_html": [
+        "由于官方取消了 APIKey 的申请，请自行解决此问题：<ol><li>网上找别人之前申请的（关键字：<font class=\"red--text\">豆瓣 API Key</font>）</li> <li>下载 app 自行抓包 / 重写获取本机上的</li></ol>",
+        "若选择利用重写获得，请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js\">脚本注释</a>进行配置，进入  widget 界面（iOS 13 负一屏），添加「豆瓣·电影日历」，并重新进入此界面使其刷新获取内容，若弹出\"首次写入 MovieCalendar APIKey 成功\"即可正常食用，其他提示或无提示请使用其他方法获取 APIKey。",
+        "注意：重试次数请勿填写过大，会导致<font class=\"red--text\">内存爆炸</font>💥！"
+      ],
+      "keys": ["@MovieCalendar.apikey", "@MovieCalendar.time", "@MovieCalendar.choosePic", "@MovieCalendar.chooseClient"],
+      "settings": [
+        {
+          "id": "@MovieCalendar.debug",
+          "name": "测试环境",
+          "val": false,
+          "type": "boolean",
+          "desc": "如未出现特殊报错等问题请保持关闭。"
+        },
+        {
+          "id": "@MovieCalendar.time",
+          "name": "重试次数",
+          "val": "",
+          "type": "number",
+          "placeholder": "10", 
+          "desc": "运行时接口失败的重试次数，不填默认为 10，请谨慎填写，过大会爆内存。"
+        },
+        {
+          "id": "@MovieCalendar.apikey",
+          "name": "APIKey",
+          "val": "",
+          "type": "text", 
+          "desc": "豆瓣获取接口的 APIKey，请自行获取。"
+        }, 
+        {
+          "id": "@MovieCalendar.choosePic",
+          "name": "多媒体",
+          "val": "poster",
+          "type": "radios",
+          "desc": "选择通知中的多媒体。",
+          "items": [
+            { "key": "poster", "label": "电影剧照" },
+            { "key": "cover", "label": "电影海报" },
+            { "key": "trailer", "label": "预告片" }
+          ]
+        },
+        {
+          "id": "@MovieCalendar.chooseClient",
+          "name": "客户端",
+          "val": "Safari",
+          "type": "radios",
+          "desc": "选择点击跳转的客户端。",
+          "items": [
+            { "key": "Safari", "label": "Safari" },
+            { "key": "douban", "label": "豆瓣" }
+          ]
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/MovieCalendar/MovieCalendar.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/MovieCalendar_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/MovieCalendar.png"
       ]
     },
     {
