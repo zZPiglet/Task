@@ -94,7 +94,8 @@ function Sign() {
         url: mainURL + path + param,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
-            'Referer': 'http://api.maxjia.com/'
+            'Referer': 'http://api.maxjia.com/',
+            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -119,7 +120,8 @@ function Sharenormal() {
         url: mainURL + path + param + normal,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
-            'Referer': 'http://api.maxjia.com/'
+            'Referer': 'http://api.maxjia.com/',
+            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -144,7 +146,8 @@ function Sharecomment() {
         url: mainURL + path + param + comment,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
-            'Referer': 'http://api.maxjia.com/'
+            'Referer': 'http://api.maxjia.com/',
+            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -168,7 +171,8 @@ function Getnews() {
         url: mainURL + path + param,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
-            'Referer': 'http://api.maxjia.com/'
+            'Referer': 'http://api.maxjia.com/',
+            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -205,7 +209,8 @@ async function Award() {
                 url: mainURL + path + param,
                 headers: {
                     'Cookie': 'pkey=' + $.pkey,
-                    'Referer': 'http://api.maxjia.com/'
+                    'Referer': 'http://api.maxjia.com/',
+                    'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
                 },
                 body: 'award_type=1&link_id=' + $.linkids[l]
             })
@@ -236,7 +241,8 @@ async function Award() {
                     url: mainURL + path + param,
                     headers: {
                         'Cookie': 'pkey=' + $.pkey,
-                        'Referer': 'http://api.maxjia.com/'
+                        'Referer': 'http://api.maxjia.com/',
+                        'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
                     },
                     body: 'award_type=1&link_id=' + $.linkids[l]
                 })
@@ -264,7 +270,8 @@ function Tasklist() {
         url: mainURL + path + param,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
-            'Referer': 'http://api.maxjia.com/'
+            'Referer': 'http://api.maxjia.com/',
+            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
