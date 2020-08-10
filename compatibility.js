@@ -189,7 +189,7 @@ function API(name = "untitled", debug = false) {
                     $persistentStore.write(null, key);
                 }
                 if (this.isQX) {
-                    $prefs.setValueForKey(null, key);
+                    $prefs.removeValueForKey(key);
                 }
                 if (this.isNode) {
                     delete this.root[key];
