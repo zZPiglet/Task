@@ -101,8 +101,8 @@ if ($.isRequest) {
         if (err instanceof ERR.CookieError) {
             $.notify("微博通知 - Cookie 错误", "", err.message, 'https://m.weibo.cn')
         } else {
-            $.notify("微博通知 - 出现错误", "", err.message)
-            $.error(err)
+            $.notify("微博通知 - 出现错误", "", JSON.stringify(err))
+            $.error(JSON.stringify(err))
         }
     }).finally($.done())
 }
@@ -264,7 +264,6 @@ async function getSpiderMessage() {
                     }
                 })
                 .catch((err) => {
-                    $.error(err)
                     throw err
                 })
         }

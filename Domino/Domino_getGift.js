@@ -41,8 +41,8 @@ const gift = {
     if (err instanceof ERR.RequestBodyError) {
         $.notify("达美乐 - 奖励", "缺失信息", err.message);
     } else {
-        $.notify("达美乐 - 奖励", "出现错误", err);
-        $.error(err);
+        $.notify("达美乐 - 奖励", "出现错误", JSON.stringify(err));
+        $.error(JSON.stringify(err));
     }
 }).finally($.done())
 

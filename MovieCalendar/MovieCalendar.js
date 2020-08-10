@@ -92,8 +92,8 @@ if ($.isRequest) {
         } else if (err instanceof ERR.bodyError) {
             $.notify("电影日历 - 返回错误", "", err.message);
         } else {
-            $.notify("电影日历 - 出现错误", "", err.message);
-            $.error(err);
+            $.notify("电影日历 - 出现错误", "", JSON.stringify(err));
+            $.error(JSON.stringify(err));
         }
     }).finally($.done())
 }
