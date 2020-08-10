@@ -32,7 +32,7 @@ http-request ^https?:\/\/dominos0724\.shjimang\.com\/Ajax\/GetSmsCode requires-b
 // 由于请求是 http，故可不用填写 MitM，如抓包发现自己设备的请求为 https，请加上 MitM
 All app:
 [mitm]
-hostname = frodo.douban.com
+hostname = dominos0724.shjimang.com
 
 获取完 RequestBody 因 MitM 导致该软件网络不稳定，需注释掉 hostname。
 */
