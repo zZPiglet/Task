@@ -29,7 +29,7 @@ lite edition: notify modified by @vopacc
 
 Quantumult X:
 [task_local]
-0 * * * * https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js, tag=电影日历
+0 7 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js, tag=电影日历
 
 [rewrite_local]
 ^https:\/\/frodo\.douban\.com\/api\/v\d\/calendar\/today url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
@@ -37,7 +37,7 @@ Quantumult X:
 
 Surge & Loon:
 [Script]
-cron "0 * * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
+cron "0 7 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
 http-request ^https:\/\/frodo\.douban\.com\/api\/v\d\/calendar\/today script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
 
 All app:
@@ -68,7 +68,7 @@ if ($.client == "Safari") {
 } else if ($.client == "douban") {
     $.openlink = "douban://douban.com/movie/";
 }
-$.log($.client+" "+$.pic)
+$.diylink = $.read("diylink") || "http://boxjs.com/app/zZ.Douban"; 
 
 if ($.isRequest) {
     getAPIKey();
@@ -171,6 +171,7 @@ async function notify() {
         } else if ($.pic == "trailer") {
             imgurl = $.trailer;
         }
+        if ($.client = "diy") openurl = $.diylink; 
         $.notify(Title, subTitle, detail, openurl, imgurl)
     } else {
         $.notify("电影日历 - 出现错误", "", "接口返回错误，超出重试次数。")
