@@ -45,7 +45,7 @@ const gift = {
     } else if (err instanceof ERR.SMSCodeError) {
         $.notify("达美乐 - 奖励", "无验证码", err.message); 
     } else if (err instanceof ERR.BodyError) {
-        $.notify("达美乐 - 奖励", "响应错误", err.message + "\n请查看日志并反馈。"); 
+        $.notify("达美乐 - 奖励", "响应错误", err.message); 
     } else {
         $.notify("达美乐 - 奖励", "出现错误", JSON.stringify(err));
         $.error(JSON.stringify(err));
@@ -70,9 +70,13 @@ function getGift() {
             let obj = JSON.parse(resp.body);
             if (obj.Code == "1000") {
                 $.giftcode = obj.Data.Id;
+            } else if (obj.Code == "1001") {
+                throw new ERR.BodyError(obj.Msg + "\n请检查 BoxJs 中验证码是否正确或删除重填。");
+            } else if (obj.Code == "1001.4") {
+                throw new ERR.BodyError(obj.Msg);
             } else {
                 $.error("getGift ERROR: " + JSON.stringify(resp.body));
-                throw new ERR.BodyError("❌ 获取奖励返回错误。");
+                throw new ERR.BodyError("❌ 获取奖励返回错误，请查看日志并反馈。\n" + JSON.stringify(resp.body));
             }
         })
         .catch((err) => {
@@ -101,7 +105,7 @@ function getGiftCode() {
                 $.delete("smscode");
             } else {
                 $.error("getGiftCode ERROR: " + JSON.stringify(resp.body));
-                throw new ERR.BodyError("❌ 激活奖励返回错误。");
+                throw new ERR.BodyError("❌ 激活奖励返回错误，请查看日志并反馈。\n" + JSON.stringify(resp.body));
             }
         })
         .catch((err) => {
