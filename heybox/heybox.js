@@ -3,10 +3,6 @@
 请先按下述方法进行配置，进入"小黑盒" - "我"，若弹出"首次写入 heybox Cookie 成功"即可正常食用，其他提示或无提示请发送日志信息至 issue。
 到 cron 设定时间自动签到时，若弹出"小黑盒 - 签到成功"即完成签到，其中「✓」表示成功，「○」表示重复，「✗」表示失败，其他提示或无提示请发送日志信息至 issue。
 
-小黑盒签到及任务获取的奖励积攒之后可以兑换 steam 游戏，您可以使用我的邀请码进行注册：
-https://api.xiaoheihe.cn/game/invite_friend_web_share/?heybox_id=21530787
-邀请码：21530787
-
 ⚠️免责声明：
 1. 此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，本人对此不承担任何保证责任。
 2. 由于此脚本仅用于学习研究，您必须在下载后 24 小时内将所有内容从您的计算机或手机或任何存储设备中完全删除，若违反规定引起任何事件本人对此均不负责。
@@ -59,10 +55,9 @@ if ($.isRequest) {
         $.lang = $.read('lang')
         $.os_t = $.read('os_t')
         $.os_v = $.read('os_v')
-        $.v = $.read('v')
         $.d_id = $.read('d_id')
         $.h_id = $.read('h_id')
-        if (!$.pkey || !$.lang || !$.os_t || !$.os_v || !$.v || !$.d_id || !$.h_id) {
+        if (!$.pkey || !$.lang || !$.os_t || !$.os_v || !$.d_id || !$.h_id) {
             throw new ERR.CookieError("❌ 未获取或填写Cookie")
         } else {
             await Sign()
@@ -71,7 +66,7 @@ if ($.isRequest) {
             await Getnews()
             await Award()
             await Tasklist()
-            await $.notify('小黑盒 🎮', $.subTitle, $.detail + $.errmsg)
+            await $.notify('小黑盒｜存活测试｜封号警告⚠️', $.subTitle, '⚠️⚠️⚠️使用脚本有封号风险，请自行斟酌判断。\n' + $.detail + $.errmsg)
         }
     })().catch((err) => {
         if (err instanceof ERR.CookieError) {
@@ -87,7 +82,7 @@ function Sign() {
     let path = '/task/sign'
     let time = Math.round(new Date().getTime()/1000).toString()
     let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('Cookie: pkey=' + $.pkey)
     $.log('sign: ' + mainURL + path + param)
     return $.get({
@@ -95,7 +90,8 @@ function Sign() {
         headers: {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
-            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'Accept-Language': $.lang,
+            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -114,14 +110,15 @@ function Sharenormal() {
     let normal = '&share_plat=WechatSession&shared_type=normal'
     let time = Math.round(new Date().getTime()/1000).toString()
     let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('sharenormal: ' + mainURL + path + param + normal)
     return $.get({
         url: mainURL + path + param + normal,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
-            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'Accept-Language': $.lang,
+            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -140,14 +137,15 @@ function Sharecomment() {
     let comment = '&share_plat=WechatSession&shared_type=BBSComment'
     let time = Math.round(new Date().getTime()/1000).toString()
     let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('sharecomment: ' + mainURL + path + param + comment)
     return $.get({
         url: mainURL + path + param + comment,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
-            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'Accept-Language': $.lang,
+            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -165,14 +163,15 @@ function Getnews() {
     let path = '/bbs/app/feeds/news'
     let time = Math.round(new Date().getTime()/1000).toString()
     let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('getnews: ' + mainURL + path + param)
     return $.get({
         url: mainURL + path + param,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
-            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'Accept-Language': $.lang,
+            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -203,14 +202,15 @@ async function Award() {
             let path = '/bbs/app/profile/award/link'
             let time = Math.round(new Date().getTime()/1000).toString()
             let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-            let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+            let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
             $.log('award: ' + mainURL + path + param + '\nlinkid[' + l + ']: ' + $.linkids[l])
             await $.post({
                 url: mainURL + path + param,
                 headers: {
                     'Cookie': 'pkey=' + $.pkey,
                     'Referer': 'http://api.maxjia.com/',
-                    'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+                    'Accept-Language': $.lang,
+                    'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
                 },
                 body: 'award_type=1&link_id=' + $.linkids[l]
             })
@@ -235,14 +235,15 @@ async function Award() {
                 let path = '/bbs/app/profile/award/link'
                 let time = Math.round(new Date().getTime()/1000).toString()
                 let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-                let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+                let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
                 $.log('award: ' + mainURL + path + param + '\nlinkid[' + l + ']: ' + $.linkids[l])
                 await $.post({
                     url: mainURL + path + param,
                     headers: {
                         'Cookie': 'pkey=' + $.pkey,
                         'Referer': 'http://api.maxjia.com/',
-                        'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+                        'Accept-Language': $.lang,
+                        'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
                     },
                     body: 'award_type=1&link_id=' + $.linkids[l]
                 })
@@ -264,14 +265,15 @@ function Tasklist() {
     let path = '/task/list'
     let time = Math.round(new Date().getTime()/1000).toString()
     let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + $.v + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('tasklist: ' + mainURL + path + param)
     return $.get({
         url: mainURL + path + param,
         headers: {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
-            'User-Agent': 'xiaoheihe/' + $.v + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'Accept-Language': $.lang,
+            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -337,16 +339,14 @@ function GetCookie() {
         let lang = urlreg.exec($request.url)[1]
         let os_t = urlreg.exec($request.url)[2]
         let os_v = urlreg.exec($request.url)[3]
-        let v = urlreg.exec($request.url)[4]
         let d_id = urlreg.exec($request.url)[5]
         let h_id = urlreg.exec($request.url)[6]
         if ($.read('pkey') != (undefined || null)) {
-            if ($.read('pkey') != pkey || $.read('lang') != lang || $.read('os_t') != os_t || $.read('os_v') != os_v || $.read('v') != v || $.read('d_id') != d_id || $.read('h_id') != h_id) {
+            if ($.read('pkey') != pkey || $.read('lang') != lang || $.read('os_t') != os_t || $.read('os_v') != os_v || $.read('d_id') != d_id || $.read('h_id') != h_id) {
                 $.write(pkey, 'pkey')
                 $.write(lang, 'lang')
                 $.write(os_t, 'os_t')
                 $.write(os_v, 'os_v')
-                $.write(v, 'v')
                 $.write(d_id, 'd_id')
                 $.write(h_id, 'h_id')
                 $.notify("更新 " + $.name + " Cookie 成功 🎉", "", "")
@@ -356,7 +356,6 @@ function GetCookie() {
             $.write(lang, 'lang')
             $.write(os_t, 'os_t')
             $.write(os_v, 'os_v')
-            $.write(v, 'v')
             $.write(d_id, 'd_id')
             $.write(h_id, 'h_id')
             $.notify("首次写入 " + $.name + " Cookie 成功 🎉", "", "")
