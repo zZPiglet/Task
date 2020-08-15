@@ -37,6 +37,7 @@ hostname = mall.oclean.com
 */
 
 const CheckinURL = 'https://mall.oclean.com/API/VshopProcess.ashx?action=SignIn&SignInSource=5&clientType=5&client=5&openId='
+const DrawURL = 'https://mall.oclean.com/API/VshopProcess.ashx?action=ActivityDraw&ActivityId=9&clientType=5&client=5&openId='
 const CookieName = '欧可林商城'
 const CookieKey = 'Oclean_mini'
 const reg = /https:\/\/mall\.oclean\.com\/API\/VshopProcess\.ashx\?action=TaskHome&clientType=5&client=5&openId=(.*)&/
@@ -81,6 +82,21 @@ function Checkin() {
     const oclean_mini = {
         url: CheckinURL + $cmp.read("Oclean_mini")
     }
+    const oclean_mini_draw = {
+        url: DrawURL + $cmp.read("Oclean_mini")
+    }
+    $cmp.get(oclean_mini_draw, function(error, response, data) {
+        if (!error) {
+            const result = JSON.parse(data)
+            if (result.Status == "OK" || result.Data.AwardGrade) {
+                $cmp.log("Oclean_mini draw succeed response : \n" + result.Data.Msg + '：' + result.Data.AwardSubName + '\n一等奖可能是未中奖。。')
+            } else {
+                $cmp.log("Oclean_mini draw failed response : \n" + JSON.stringify(result))
+            }
+        } else {
+            $cmp.log("Oclean_mini draw failed response : \n" + error)
+        }
+    })
     $cmp.get(oclean_mini, function(error, response, data) {
         if (!error) {
             const result = JSON.parse(data)

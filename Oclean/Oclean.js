@@ -37,6 +37,7 @@ hostname = mall.oclean.com
 */
 
 const CheckinURL = 'https://mall.oclean.com/API/VshopProcess.ashx'
+const DrawURL = 'https://mall.oclean.com/api/VshopProcess.ashx?action=ActivityDraw'
 const CookieName = '欧可林'
 const CookieKey = 'Oclean'
 const reg = /Shop-Member=(\S*);/
@@ -85,6 +86,25 @@ function Checkin() {
         },
         body: 'action=SignIn&SignInSource=2&clientType=2'
     }
+    const oclean_draw = {
+        url: DrawURL,
+        headers: {
+            "Cookie": 'Shop-Member=' + $cmp.read("Oclean"),
+        },
+        body: 'ActivityId=9&clientType=2'
+    }
+    $cmp.post(oclean_draw, function(error, response, data) {
+        if (!error) {
+            const result = JSON.parse(data)
+            if (result.Status == "OK" || result.Data.AwardGrade) {
+                $cmp.log("Oclean draw succeed response : \n" + result.Data.Msg + '：' + result.Data.AwardSubName + '\n一等奖可能是未中奖。。')
+            } else {
+                $cmp.log("Oclean draw failed response : \n" + JSON.stringify(result))
+            }
+        } else {
+            $cmp.log("Oclean draw failed response : \n" + error)
+        }
+    })
     $cmp.post(oclean, function(error, response, data) {
         if (!error) {
             const result = JSON.parse(data)
