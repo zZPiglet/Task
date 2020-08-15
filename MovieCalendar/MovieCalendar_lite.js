@@ -68,7 +68,8 @@ if ($.client == "Safari") {
 } else if ($.client == "douban") {
     $.openlink = "douban://douban.com/movie/";
 }
-$.diylink = $.read("diylink") || "http://boxjs.com/app/zZ.Douban"; 
+const boxhost = $.read("#boxjs_host") || "http://boxjs.com";
+$.diylink = $.read("diylink") || boxhost + "/app/zZ.Douban"; 
 
 if ($.isRequest) {
     getAPIKey();
@@ -89,7 +90,7 @@ if ($.isRequest) {
         }
     })().catch((err) => {
         if (err instanceof ERR.APIKeyError) {
-            $.notify("电影日历 - APIKey 错误", "", err.message, "http://boxjs.com/app/zZ.Douban");
+            $.notify("电影日历 - APIKey 错误", "", err.message, boxhost + "/app/zZ.Douban");
         } else if (err instanceof ERR.bodyError) {
             $.notify("电影日历 - 返回错误", "", err.message);
         } else {
@@ -174,7 +175,7 @@ async function notify() {
         if ($.client = "diy") openurl = $.diylink; 
         $.notify(Title, subTitle, detail, openurl, imgurl)
     } else {
-        $.notify("电影日历 - 出现错误", "", "接口返回错误，超出重试次数。")
+        $.notify("电影日历 - 出现错误", "", "接口返回错误，超出重试次数。\n或签名加密错误，请等待解决。")
     }
 }
 

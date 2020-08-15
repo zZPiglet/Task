@@ -1,7 +1,7 @@
 /*
 "达美乐比萨" 微信公众号 "优惠｜咨询" - "有奖游戏" 半自动获取奖励（省略玩游戏一步），支持 Quantumult X（理论上也支持 Surge、Loon，未尝试）。
 请先按下述方法进行配置，进入微信公众号"达美乐比萨" - "优惠｜咨询" - "有奖游戏"，正常游戏一次并获取验证码，若弹出"首次写入 Domino RequestBody 成功"即可正常食用，其他提示或无提示请发送日志信息至 issue。
-运行前请先在 BoxJs 中设置自己使用的 BoxJs 地址。（如 http://boxjs.com 或 https://8.8.8.8 或 http://1.1.1.1 或 127.0.0.1:9999）
+运行前请先在 BoxJs 中订阅 https://raw.githubusercontent.com/zZPiglet/Task/master/zZPiglet.boxjs.json
 到 cron 设定时间自动签到时，若弹出"达美乐 - 点击填写验证码"表示成功，请点击通知跳转至 BoxJs 填写验证码并保存，再手动执行「获取奖励」脚本即可，其他提示或无提示请发送日志信息至 issue。
 
 ⚠️免责声明：
@@ -39,7 +39,7 @@ hostname = dominos0724.shjimang.com
 
 const $ = new API("Domino");
 $.debug = [true, "true"].includes($.read("debug")) || false;
-$.boxlink = $.read("boxlink") || "http://boxjs.com";
+$.boxlink = $.read("#boxjs_host") || "http://boxjs.com";
 const reg = /OpenId=(\w*)/
 
 if ($.isRequest) {
