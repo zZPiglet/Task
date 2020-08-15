@@ -55,12 +55,11 @@
       "descs_html": [
         "<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js\">获取验证码</a>及<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getGift.js\">获取奖励</a>分别为达美乐公众号小游戏自动获取验证码及领取奖励的脚本。",
         "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js\">脚本注释</a>进行配置，然后进入微信公众号\"达美乐比萨\" - \"优惠｜咨询\" - \"有奖游戏\"，正常游戏一次并获取验证码，若弹出\"首次写入 Domino RequestBody 成功\"即可正常食用。",
-        "运行前请先在 BoxJs 中设置自己使用的 BoxJs 地址。（如 http://boxjs.com 或 https://8.8.8.8 或 http://1.1.1.1 或 http://127.0.0.1:9999，切记不要有后面的\"/\"及之后的内容），否则<font class=\"red--text\">无法正确跳转</font>。",
         "由于验证码有效期仅 10 分钟，cron 请设置为<font class=\"red--text\">一定使用手机</font>的时间。",
         "到达 cron 设置时间之后，请点击通知跳转至此界面填写验证码并<font class=\"red--text\">保存设置</font>，确保设置保存之后点击「获取奖励」进行奖励的领取。",
         "由于每日可进行 <font class=\"red--text\">3</font> 次游戏，可设置 3 次 cron，或 1 次 cron 至进入此界面后手动重复两次流程。(请勿操作过快，操作过快验证码会报错。)"
       ],
-      "keys": ["@Domino.boxlink", "@Domino.openid", "@Domino.phonenum", "@Domino.sec", "@Domino.score"],
+      "keys": ["@Domino.openid", "@Domino.phonenum", "@Domino.sec", "@Domino.score"],
       "settings": [
         {
           "id": "@Domino.debug",
@@ -75,14 +74,6 @@
           "val": "",
           "type": "number",
           "desc": "填写短信中验证码，并保存设置！"
-        },
-        {
-          "id": "@Domino.boxlink",
-          "name": "BoxJs 链接",
-          "val": "",
-          "type": "text",
-          "placeholder": "http://boxjs.com", 
-          "desc": "请填写自己使用的 BoxJs 地址。（如 http://boxjs.com 或 https://8.8.8.8 或 http://1.1.1.1 或 http://127.0.0.1:9999）"
         },
         {
           "id": "@Domino.score",
