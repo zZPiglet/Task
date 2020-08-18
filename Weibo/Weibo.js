@@ -76,9 +76,10 @@ if ($.client == 'Safari') {
 
 $.interval = Number($.read('interval') || 1000)
 
-$.update = $.debug ? 0 : Number($.read('update') || 0)
+$.realupdate = Number($.read('update') || 0)
+$.update = $.debug ? 0 : $.realupdate
 $.log('debug update time: ' + $.update)
-$.info('update time: ' + $.read('update'))
+$.info('update time: ' + $.realupdate)
 
 if ($.isRequest) {
     GetCookie()
@@ -99,8 +100,11 @@ if ($.isRequest) {
             }
         }
     })().catch((err) => {
+        $.write($.realupdate, 'update')
         if (err instanceof ERR.CookieError) {
             $.notify("微博通知 - Cookie 错误", "", err.message, 'https://m.weibo.cn')
+        } else if (err instanceof ERR.BoxError) {
+            $.notify("微博通知 - 信息填写错误", "", err.message, boxhost + '/app/zZ.Weibo')
         } else {
             $.notify("微博通知 - 出现错误", "", JSON.stringify(err))
             $.error(JSON.stringify(err))
@@ -236,7 +240,8 @@ async function getUid() {
                     if (obj.ok) {
                         $.uids.push(obj.data.cards[1].card_group[0].user.id.toString())
                     } else {
-                        $.notify('微博通知 - 微博昵称填写有误', '', '请在 BoxJs 检查填写的微博昵称是否正确', boxhost + '/app/zZ.Weibo')
+                        $.error(resp.body)
+                        throw new ERR.BoxError("微博昵称填写有误，请在 BoxJs 检查填写的微博昵称是否正确。\n若未新加入昵称且之前无错，可能是接口返回错误，请反馈日志")
                     }
                 })
                 .catch((err) => {
@@ -261,7 +266,8 @@ async function getSpiderMessage() {
                     if (obj) {
                         ParseWeibo(obj)
                     } else {
-                        $.notify('微博通知 - uid 填写有误', '', '请在 BoxJs 检查填写的 uid 是否正确', boxhost + '/app/zZ.Weibo')
+                        $.error(resp.body)
+                        throw new ERR.BoxError("uid 填写有误，请在 BoxJs 检查填写的 uid 是否正确。\n若未新加入 uid 且之前无错，可能是接口返回错误，请反馈日志")
                     }
                 })
                 .catch((err) => {
@@ -269,7 +275,7 @@ async function getSpiderMessage() {
                 })
         }
     } else {
-        $.notify('微博通知 - 填写信息不全', '', '请在 BoxJs 填写需要关注人微博 uid，或取消针对个人的勾选！', boxhost + '/app/zZ.Weibo')
+        throw new ERR.BoxError("填写信息不全，请在 BoxJs 填写需要关注人微博 uid，或取消针对个人的勾选！")
     }
 }
 
@@ -297,9 +303,17 @@ function MYERR() {
             this.name = "CookieError";
         }
     }
+
+    class BoxError extends Error {
+        constructor(message) {
+            super(message);
+            this.name = "BoxError";
+        }
+    }
   
     return {
         CookieError,
+        BoxError,
     };
 }
 
