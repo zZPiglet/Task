@@ -398,8 +398,10 @@ function encode(p, t) {
     }
     count = Math.round(enc.length / 3);
     let enc2 = new Array(count);
-    for (let i = 0; i < count; i++)
+    for (let i = 0; i <= count; i++)
         enc2[i] = enc[3 * i];
+    if (enc2[enc2.length - 1] == undefined)
+        enc2.pop()
     enc = enc2.concat(("0x" + t.toString(16)).split(""));
     count = enc.length - 1;
     for (i = 0; i < count; i++) {
