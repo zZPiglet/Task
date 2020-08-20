@@ -81,8 +81,8 @@ if ($.isRequest) {
 function Sign() {
     let path = '/task/sign'
     let time = Math.round(new Date().getTime()/1000).toString()
-    let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let hkey = hex_md5(encode(path , time).replace('x', '')).substr(0,10)
+    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.121' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('Cookie: pkey=' + $.pkey)
     $.log('sign: ' + mainURL + path + param)
     return $.get({
@@ -91,7 +91,7 @@ function Sign() {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
             'Accept-Language': $.lang,
-            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'User-Agent': 'xiaoheihe/' + '1.3.121' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -109,8 +109,8 @@ function Sharenormal() {
     let path = '/task/shared'
     let normal = '&share_plat=WechatSession&shared_type=normal'
     let time = Math.round(new Date().getTime()/1000).toString()
-    let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let hkey = hex_md5(encode(path , time).replace('x', '')).substr(0,10)
+    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.121' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('sharenormal: ' + mainURL + path + param + normal)
     return $.get({
         url: mainURL + path + param + normal,
@@ -118,7 +118,7 @@ function Sharenormal() {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
             'Accept-Language': $.lang,
-            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'User-Agent': 'xiaoheihe/' + '1.3.121' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -136,8 +136,8 @@ function Sharecomment() {
     let path = '/task/shared'
     let comment = '&share_plat=WechatSession&shared_type=BBSComment'
     let time = Math.round(new Date().getTime()/1000).toString()
-    let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let hkey = hex_md5(encode(path , time).replace('x', '')).substr(0,10)
+    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.121' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('sharecomment: ' + mainURL + path + param + comment)
     return $.get({
         url: mainURL + path + param + comment,
@@ -145,7 +145,7 @@ function Sharecomment() {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
             'Accept-Language': $.lang,
-            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'User-Agent': 'xiaoheihe/' + '1.3.121' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -162,8 +162,8 @@ function Sharecomment() {
 function Getnews() {
     let path = '/bbs/app/feeds/news'
     let time = Math.round(new Date().getTime()/1000).toString()
-    let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let hkey = hex_md5(encode(path , time).replace('x', '')).substr(0,10)
+    let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.121' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('getnews: ' + mainURL + path + param)
     return $.get({
         url: mainURL + path + param,
@@ -171,7 +171,7 @@ function Getnews() {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
             'Accept-Language': $.lang,
-            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'User-Agent': 'xiaoheihe/' + '1.3.121' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -201,8 +201,8 @@ async function Award() {
         for (let l = 0; l < 5; l++) {
             let path = '/bbs/app/profile/award/link'
             let time = Math.round(new Date().getTime()/1000).toString()
-            let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-            let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+            let hkey = hex_md5(encode(path , time).replace('x', '')).substr(0,10)
+            let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.121' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
             $.log('award: ' + mainURL + path + param + '\nlinkid[' + l + ']: ' + $.linkids[l])
             await $.post({
                 url: mainURL + path + param,
@@ -210,7 +210,7 @@ async function Award() {
                     'Cookie': 'pkey=' + $.pkey,
                     'Referer': 'http://api.maxjia.com/',
                     'Accept-Language': $.lang,
-                    'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+                    'User-Agent': 'xiaoheihe/' + '1.3.121' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
                 },
                 body: 'award_type=1&link_id=' + $.linkids[l]
             })
@@ -234,8 +234,8 @@ async function Award() {
             for (let l = 5; l< $.linkids.length; l++) {
                 let path = '/bbs/app/profile/award/link'
                 let time = Math.round(new Date().getTime()/1000).toString()
-                let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-                let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+                let hkey = hex_md5(encode(path , time).replace('x', '')).substr(0,10)
+                let param = '?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.121' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
                 $.log('award: ' + mainURL + path + param + '\nlinkid[' + l + ']: ' + $.linkids[l])
                 await $.post({
                     url: mainURL + path + param,
@@ -243,7 +243,7 @@ async function Award() {
                         'Cookie': 'pkey=' + $.pkey,
                         'Referer': 'http://api.maxjia.com/',
                         'Accept-Language': $.lang,
-                        'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+                        'User-Agent': 'xiaoheihe/' + '1.3.121' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
                     },
                     body: 'award_type=1&link_id=' + $.linkids[l]
                 })
@@ -264,8 +264,8 @@ async function Award() {
 function Tasklist() {
     let path = '/task/list'
     let time = Math.round(new Date().getTime()/1000).toString()
-    let hkey = hex_md5(hex_md5(path + '/bfhdkud_time=' + time).replace(/a|0/g, 'app')).substr(0,10)
-    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.119' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
+    let hkey = hex_md5(encode(path , time).replace('x', '')).substr(0,10)
+    let param = '/?lang=' + $.lang + '&os_type=' + $.os_t + '&os_version=' + $.os_v + '&_time=' + time + '&version=' + '1.3.121' + '&device_id=' + $.d_id + '&heybox_id=' + $.h_id + '&hkey=' + hkey
     $.log('tasklist: ' + mainURL + path + param)
     return $.get({
         url: mainURL + path + param,
@@ -273,7 +273,7 @@ function Tasklist() {
             'Cookie': 'pkey=' + $.pkey,
             'Referer': 'http://api.maxjia.com/',
             'Accept-Language': $.lang,
-            'User-Agent': 'xiaoheihe/' + '1.3.119' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
+            'User-Agent': 'xiaoheihe/' + '1.3.121' + ' (iPhone; ' + $.os_t + ' ' + $.os_v + '; Scale/3.00)'
         }
     })
         .then((resp) => {
@@ -377,6 +377,44 @@ function MYERR() {
     return {
         CookieError,
     };
+}
+
+//encode by Chr_
+function encode(p, t) {
+    let str = p + "//Z1q/Gb/R///+9xZ561TtoHjPrv2ew0Ln8vZnI5oObw+++oa3zw++1yd7wMqU/eNKahfmji5/xDu7EuCQfjaRk4TBKXrnhrlnkz@%$^&*(-_-)hahaha(-_-)_time=" + t;
+    let enc = str.split("");
+    let count = enc.length - 1
+    for (let i = 0; i < count; i++) {
+        let m = 0;
+        while (m < count - i) {
+            let t1 = enc[m];
+            let t2 = enc[m + 1];
+            if (t1 > t2) {
+                enc[m] = t2;
+                enc[m + 1] = t1;
+            }
+            m++;
+        }
+    }
+    count = Math.round(enc.length / 3);
+    let enc2 = new Array(count);
+    for (let i = 0; i < count; i++)
+        enc2[i] = enc[3 * i];
+    enc = enc2.concat(("0x" + t.toString(16)).split(""));
+    count = enc.length - 1;
+    for (i = 0; i < count; i++) {
+        m = 0;
+        while (m < count - i) {
+            t1 = enc[m];
+            t2 = enc[m + 1];
+            if (t1 > t2) {
+                enc[m] = t2;
+                enc[m + 1] = t1;
+            }
+            m++;
+        }
+    }
+    return (enc.join(""));
 }
 
 // md5
