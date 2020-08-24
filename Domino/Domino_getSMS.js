@@ -40,7 +40,7 @@ hostname = dominos0724.shjimang.com
 const $ = new API("Domino");
 $.debug = [true, "true"].includes($.read("debug")) || false;
 $.boxlink = $.read("#boxjs_host") || "http://boxjs.com";
-const reg = /OpenId=(\w*)/
+const reg = /OpenId=((\w|-)*)/
 
 if ($.isRequest) {
     getRequestBody();
