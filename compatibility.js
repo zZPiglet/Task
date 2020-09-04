@@ -202,11 +202,28 @@ function API(name = "untitled", debug = false) {
         // notification
         notify(title = name, subtitle = '', content = '', open_url, media_url) {
             const content_Surge = content + (open_url == undefined ? "" : `\n\n跳转链接：${open_url}`) + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
-            const content_Loon = content + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
 
-            if (this.isQX) $notify(title, subtitle, content, {"open-url": open_url, "media-url": media_url});
             if (this.isSurge) $notification.post(title, subtitle, content_Surge);
-            if (this.isLoon) $notification.post(title, subtitle, content_Loon, open_url);
+            if (this.isQX) {
+                let opts = {};
+                if (open_url) opts["open-url"] = open_url;
+                if (media_url) opts["media-url"] = media_url;
+                if(JSON.stringify(opts) == '{}') {
+                    $notify(title, subtitle, content);
+                } else {
+                    $notify(title, subtitle, content, opts);
+                }
+            } 
+            if (this.isLoon) {
+                let opts = {};
+                if (open_url) opts["openUrl"] = open_url;
+                if (media_url) opts["mediaUrl"] = media_url;
+                if(JSON.stringify(opts) == '{}') {
+                    $notification.post(title, subtitle, content);
+                } else {
+                    $notification.post(title, subtitle, content, opts);
+                }
+            }
             if (this.isNode) {
                 if (this.isJSBox) {
                     const push = require("push");
