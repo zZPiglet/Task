@@ -590,6 +590,30 @@
       ]
     },
     {
+      "id": "zZ.umetrip",
+      "name": "航旅纵横(pro)",
+      "desc_html": "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/umetrip/umetrip.js\">脚本注释</a>进行配置，然后进入\"航旅纵横(Pro)\" - \"出行有礼\" - \"每日签到\"，若弹出\"首次写入 umetrip id 成功\"即可正常食用。",
+      "keys": ["@umetrip.id"],
+      "settings": [
+        {
+          "id": "@umetrip.id",
+          "name": "rsid",
+          "val": "",
+          "type": "text",
+          "autoGrow": true,
+          "rows": 2,
+          "desc": "用户验证信息。若抓包填入请填写 rsid 中「$$」之前的部分。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/blob/master/umetrip/umetrip.js",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/umetrip/umetrip.js",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/umetrip.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/umetrip.png"
+      ]
+    },
+    {
       "id": "zZ.Naixue",
       "name": "微信小程序 - 奈雪点单",
       "desc_html": "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Naixue/Naixue.js\">脚本注释</a>进行配置，然后进入\"奈雪点单\"小程序，若弹出\"首次写入奈雪の茶 Token 成功\"即可正常食用，请先手动执行一次脚本后再回到小程序，点击\"我的\"进行授权登陆查看签到积分是否增加。",
