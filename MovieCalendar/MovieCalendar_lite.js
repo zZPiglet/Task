@@ -73,7 +73,7 @@ $.diylink = $.read("diylink") || boxhost + "/app/zZ.Douban";
 
 if ($.isRequest) {
     getAPIKey();
-    $.done({ body: $request.body });
+    $.done({});
 } else {
     !(async () => {
         $.apikey = $.read("apikey");

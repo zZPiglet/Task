@@ -44,7 +44,7 @@ $.detail = "";
 
 if ($.isRequest) {
     getId();
-    $.done({ body: $request.body });
+    $.done({});
 } else {
     !(async () => {
         $.id = $.read("id");

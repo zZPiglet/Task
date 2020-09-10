@@ -44,7 +44,7 @@ const reg = /OpenId=((\w|-)*)/
 
 if ($.isRequest) {
     getRequestBody();
-    $.done({ body: $request.body });
+    $.done({});
 } else {
     $.openid = $.read("openid");
     $.phonenum = $.read("phonenum");
