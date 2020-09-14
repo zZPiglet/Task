@@ -51,8 +51,9 @@ if ($.isRequest) {
     $.done({ body: $request.body })
 } else {
     !(async () => {
-        $.v = $.read('v') || '1.3.121'
-        $.v = $.v > '1.3.121' ? $.v : '1.3.121'
+        //$.v = $.read('v') || '1.3.121'
+        //$.v = $.v > '1.3.121' ? $.v : '1.3.121'
+        $.v = '1.3.123'
         $.pkey = $.read('pkey')
         $.lang = $.read('lang')
         $.os_t = $.read('os_t')
