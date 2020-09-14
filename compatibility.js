@@ -201,14 +201,21 @@ function API(name = "untitled", debug = false) {
 
         // notification
         notify(title = name, subtitle = '', content = '', open_url, media_url) {
-            const content_Surge = content + (open_url == undefined ? "" : `\n\n跳转链接：${open_url}`) + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
-
-            if (this.isSurge) $notification.post(title, subtitle, content_Surge);
+            if (this.isSurge) {
+                let content_Surge = content + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
+                let opts = {};
+                if (open_url) opts["url"] = open_url;
+                if(JSON.stringify(opts) == "{}") {
+                    $notification.post(title, subtitle, content_Surge);
+                } else {
+                    $notification.post(title, subtitle, content_Surge, opts);
+                }
+            }
             if (this.isQX) {
                 let opts = {};
                 if (open_url) opts["open-url"] = open_url;
                 if (media_url) opts["media-url"] = media_url;
-                if(JSON.stringify(opts) == '{}') {
+                if(JSON.stringify(opts) == "{}") {
                     $notify(title, subtitle, content);
                 } else {
                     $notify(title, subtitle, content, opts);
@@ -218,21 +225,22 @@ function API(name = "untitled", debug = false) {
                 let opts = {};
                 if (open_url) opts["openUrl"] = open_url;
                 if (media_url) opts["mediaUrl"] = media_url;
-                if(JSON.stringify(opts) == '{}') {
+                if(JSON.stringify(opts) == "{}") {
                     $notification.post(title, subtitle, content);
                 } else {
                     $notification.post(title, subtitle, content, opts);
                 }
             }
             if (this.isNode) {
+                let content_Node = content + (open_url == undefined ? "" : `\n\n跳转链接：${open_url}`) + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
                 if (this.isJSBox) {
                     const push = require("push");
                     push.schedule({
                         title: title,
-                        body: subtitle ? subtitle + "\n" + content : content,
+                        body: subtitle ? subtitle + "\n" + content_Node : content_Node,
                     });
                 } else {
-                    console.log(`${title}\n${subtitle}\n${content_Surge}\n\n`);
+                    console.log(`${title}\n${subtitle}\n${content_Node}\n\n`);
                 }
             }
         }

@@ -1,5 +1,5 @@
 /*
-qx(tf 1.0.11(316)) 、 loon(tf 2.1.1(163)) 及更新版本可用。
+qx(tf 1.0.11(316)) 、 loon(tf 2.1.1(163))、 surge(tf 4.10.0(1807)) 及更新版本可用。
 半自动提醒完成招行便民刮刮乐活动。
 0 23 * * *  （挑一个玩手机的时间）
 到时候点击通知即可跳转至招行便民刮刮乐界面，完成签到刮奖即可。
@@ -24,9 +24,8 @@ function compatibility() {
         if (_isLoon) return $persistentStore.read(key)
     }
     this.notify = (title, subtitle, message, url) => {
-        imessage_ = message + (url == undefined ? "" : `\n跳转链接：${url}`)
         if (_isLoon) $notification.post(title, subtitle, message, url)
-        if (_isQuanX) $notify(title, subtitle, message, {"open-url" : url})
-        if (_isSurge) $notification.post(title, subtitle, content_)
+        if (_isQuanX) $notify(title, subtitle, message, { "open-url": url })
+        if (_isSurge) $notification.post(title, subtitle, message, { url: url })
     }
 }

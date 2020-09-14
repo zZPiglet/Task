@@ -1,12 +1,12 @@
 /*
-qx(tf 1.0.11(316)) 及 loon(tf 2.1.1(163)) 及更新版本可用。
+qx(tf 1.0.11(316)) 及 loon(tf 2.1.1(163))、 surge(tf 4.10.0(1807))  及更新版本可用。
 半自动提醒支付宝抢消费券，请在所在城市有消费券的时候使用。
 
 qx:
-0 0 8,12 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/Alipay/Alipay_voucher.js
+52 59 9 * * 0,5,6 https://raw.githubusercontent.com/zZPiglet/Task/master/Alipay/Alipay_voucher.js
 
 loon:
-cron "1 0 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Alipay/Alipay_voucher.js
+cron "52 59 9 * * 0,5,6" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Alipay/Alipay_voucher.js
 
 shortcut:
 https://www.icloud.com/shortcuts/2c37e7de80a24a6cbe9ca80e96337e1f
@@ -29,9 +29,8 @@ function cmp() {
     _isLoon = typeof $loon != "undefined"
     _isSurge = typeof $httpClient != "undefined" && !_isLoon
     this.notify = (title, subtitle, message, url) => {
-        message_ = message + (url == undefined ? "" : `\n跳转链接：${url}`)
         if (_isLoon) $notification.post(title, subtitle, message, url)
-        if (_isQuanX) $notify(title, subtitle, message, {"open-url" : url})
-        if (_isSurge) $notification.post(title, subtitle, content_)
+        if (_isQuanX) $notify(title, subtitle, message, { "open-url": url })
+        if (_isSurge) $notification.post(title, subtitle, message, { url: url })
     }
 }

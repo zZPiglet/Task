@@ -1,5 +1,5 @@
 /*
-qx(tf 1.0.11(316)) 、 loon(tf 2.1.1(163)) 及更新版本可用。
+qx(tf 1.0.11(316)) 、 loon(tf 2.1.1(163))、 surge(tf 4.10.0(1807))  及更新版本可用。
 半自动提醒完成招行消费 188、688 抽奖活动。
 0 23 * * *  （挑一个玩手机的时间）
 到时候点击通知即可按步骤跳转支付宝余额宝（可选）、招行对应活动页，完成转账及抽奖即可。
@@ -47,9 +47,8 @@ function compatibility() {
         if (_isLoon) return $persistentStore.read(key)
     }
     this.notify = (title, subtitle, message, url) => {
-        imessage_ = message + (url == undefined ? "" : `\n跳转链接：${url}`)
         if (_isLoon) $notification.post(title, subtitle, message, url)
-        if (_isQuanX) $notify(title, subtitle, message, {"open-url" : url})
-        if (_isSurge) $notification.post(title, subtitle, content_)
+        if (_isQuanX) $notify(title, subtitle, message, { "open-url": url })
+        if (_isSurge) $notification.post(title, subtitle, message, { url: url })
     }
 }
