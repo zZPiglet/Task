@@ -1,5 +1,5 @@
 /*
-此脚本为 Domino_getSMS.js 后续「获取奖励」脚本，请勿单独使用。
+使用方法参考：https://github.com/zZPiglet/Task/blob/master/Domino/README.md
 
 ⚠️免责声明：
 1. 此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，本人对此不承担任何保证责任。
@@ -19,31 +19,43 @@ $.debug = [true, "true"].includes($.read("debug")) || false;
 $.openid = $.read("openid");
 $.phonenum = $.read("phonenum");
 $.sec = $.read("sec");
-$.smscode = $.read("smscode");
-$.score = Number($.read("score") || 400);
+//$.smscode = $.read("smscode");
+$.score = Number($.read("score") || 180);
 
 const gift = {
-    "1": "一等奖：免费 9″ 手拍扇贝大虾豪华比萨 1 个（共6000个）（需任意消费）",
-    "2": "二等奖：半价 9″ 手拍扇贝大虾豪华比萨 1 个（共8000个）（需任意消费）",
-    "3": "三等奖：买任意比萨送咖喱牛腩焗饭一份（共20000份）",
-    "4": "四等奖：买任意比萨送酥嫩狭雪鱼粒一份（共50000份）",
-    "5": "五等奖：买任意比萨送免费洋葱黄金圈一份（人人有礼，未获得 1-4 等奖的参与者均可得）"
+    "1": "一等奖：免费 9″ 手拍台式香溢烤肠比萨 1 个（共3000个）（需任意消费）",
+    "2": "二等奖：半价 9″ 手拍台式香溢烤肠比萨 1 个（共5000个）（需任意消费）",
+    "3": "三等奖：免费椰香咖喱鸡肉意面一份（需购买任意比萨后使用） （共20000份）",
+    "4": "四等奖：免费酥香嫩鱼块一份（需购买任意比萨后使用） （共50000）",
+    "5": "五等奖：免费黄金薯角一份（需购买任意比萨后使用）（人人有礼，未获得1-4等奖的参与者均可得）"
 }
 
 !(async () => {
     if (!$.phonenum || !$.sec || !$.openid) {
-        throw new ERR.RequestBodyError("❌ 请按 Domino_getSMS.js 脚本开头配置获取信息。");
-    } else if (!$.smscode) {
-        throw new ERR.SMSCodeError("❌ 验证码未填写或未保存。");
+        throw new ERR.RequestBodyError("❌ 请按 Domino_getGift.js 脚本开头配置获取信息。");
+    //} else if (!$.smscode) {
+    //    throw new ERR.SMSCodeError("❌ 验证码未填写或未保存。");
     } else {
-        await getGift();
-        await getGiftCode();
+        $.detail = "";
+        $.last = false;
+        $.times = 0;
+        while (!$.last && $.times < 3) {
+            $.flag = false;
+            await getRank();
+            if ($.flag) {
+                await getGift();
+                await getGiftCode();
+            } else {
+                throw new ERR.BodyError("❌ 信息错误，请重新按 README.md 获取。");
+            }
+        }
+        await $.notify("达美乐 - 奖励", "领取成功 🍕", "长按查看所有奖励：" + $.detail)
     }
 })().catch((err) => {
     if (err instanceof ERR.RequestBodyError) {
         $.notify("达美乐 - 奖励", "缺失信息", err.message);
-    } else if (err instanceof ERR.SMSCodeError) {
-        $.notify("达美乐 - 奖励", "无验证码", err.message); 
+    //} else if (err instanceof ERR.SMSCodeError) {
+    //    $.notify("达美乐 - 奖励", "无验证码", err.message); 
     } else if (err instanceof ERR.BodyError) {
         $.notify("达美乐 - 奖励", "响应错误", err.message); 
     } else {
@@ -52,18 +64,35 @@ const gift = {
     }
 }).finally($.done())
 
+function getRank() {
+    return $.post({
+        url: "http://dominos0915.shjimang.com/Ajax/GetRank",
+        headers: {
+            "Cookie": "Web2006=controller=Home&action=Default&OpenId=" + $.openid + "&m=" + $.phonenum
+        },
+        body: 'score=' + $.score + '&sec=' + $.sec
+    })
+        .then((resp) => {
+            $.log("getRank: " + JSON.stringify(resp.body));
+            let obj = JSON.parse(resp.body);
+            if (obj.Code == "1000") {
+                $.flag = true;
+            } else {
+                $.flag =  false;
+            }
+        })
+        .catch((err) => {
+            throw err;
+        })
+}
 
 function getGift() {
     return $.post({
-        url: "http://dominos0724.shjimang.com/Ajax/GetGift",
+        url: "http://dominos0915.shjimang.com/Ajax/GetGiftD",
         headers: {
-            "Content-Type": "application/json",
-            "Cookie": "Web2005=controller=Home&action=Default&OpenId=" + $.openid + "&id=",
-            "Host": "dominos0724.shjimang.com",
-            "Origin": "http://dominos0724.shjimang.com",
-            "Referer": "http://dominos0724.shjimang.com/Home/Default?utm_source=weixin&utm_campaign=0724%E6%89%87%E8%B4%9D&utm_channel=%E5%85%AC%E4%BC%97%E5%8F%B7&utm_content=%E8%8F%9C%E5%8D%95"
+            "Cookie": "Web2006=controller=Home&action=Default&OpenId=" + $.openid + "&m=" + $.phonenum + "&id="
         },
-        body: '{"sec":"' + $.sec + '","code":"' + $.smscode + '","mobile":' + $.phonenum + ',"score":' + $.score + '}'
+        body: 'sec=' + $.sec + '&mobile=' + $.phonenum
     })
         .then((resp) => {
             $.log("getGift: " + JSON.stringify(resp.body));
@@ -73,7 +102,9 @@ function getGift() {
             } else if (obj.Code == "1001") {
                 throw new ERR.BodyError(obj.Msg + "\n请检查 BoxJs 中验证码是否正确或删除重填。");
             } else if (obj.Code == "1001.4") {
-                throw new ERR.BodyError(obj.Msg);
+                $.last = true;
+                $.detail += "今天领取次数用完啦～"
+                throw new ERR.BodyError("今天领取次数用完啦～");
             } else {
                 $.error("getGift ERROR: " + JSON.stringify(resp.body));
                 throw new ERR.BodyError("❌ 获取奖励返回错误，请查看日志并反馈。\n" + JSON.stringify(resp.body));
@@ -86,23 +117,19 @@ function getGift() {
 
 function getGiftCode() {
     return $.post({
-        url: "http://dominos0724.shjimang.com/Ajax/GetGiftCode",
+        url: "http://dominos0915.shjimang.com/Ajax/GetGiftCode",
         headers: {
-            "Content-Type": "application/json",
-            "Cookie": "Web2005=controller=Home&action=Default&OpenId=" + $.openid,
-            "Host": "dominos0724.shjimang.com",
-            "Origin": "http://dominos0724.shjimang.com",
-            "Referer": "http://dominos0724.shjimang.com/Home/Default?utm_source=weixin&utm_campaign=0724%E6%89%87%E8%B4%9D&utm_channel=%E5%85%AC%E4%BC%97%E5%8F%B7&utm_content=%E8%8F%9C%E5%8D%95"
+            "Cookie": "Web2006=controller=Home&action=Default&OpenId=" + $.openid + "&m=" + $.phonenum
         },
-        body: '{"id":"' + $.giftcode + '"}'
+        body: 'id=' + $.giftcode
     })
         .then((resp) => {
             $.log("getGiftCode: " + JSON.stringify(resp.body));
             let obj = JSON.parse(resp.body);
             if (obj.Code == "1000") {
                 let id = obj.Data.GiftId;
-                $.notify("达美乐 - 奖励", "领取成功", "恭喜您获得" + gift[id]);
-                $.delete("smscode");
+                $.detail += "\n【" + Number($.times + 1) + "】 恭喜您获得" + gift[id];
+                $.times += 1;
             } else {
                 $.error("getGiftCode ERROR: " + JSON.stringify(resp.body));
                 throw new ERR.BodyError("❌ 激活奖励返回错误，请查看日志并反馈。\n" + JSON.stringify(resp.body));
@@ -120,12 +147,14 @@ function MYERR() {
             this.name = "RequestBodyError";
         }
     };
+    /*
     class SMSCodeError extends Error {
         constructor(message) {
             super(message);
             this.name = "SMSCodeError";
         }
     };
+    */
     class BodyError extends Error {
         constructor(message) {
             super(message);
@@ -135,7 +164,7 @@ function MYERR() {
   
     return {
         RequestBodyError,
-        SMSCodeError,
+    //    SMSCodeError,
         BodyError,
     };
 }

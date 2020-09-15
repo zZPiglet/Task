@@ -1,8 +1,5 @@
 /*
-"达美乐比萨" 微信公众号 "优惠｜咨询" - "有奖游戏" 半自动获取奖励（省略玩游戏一步），支持 Quantumult X（理论上也支持 Surge、Loon，未尝试）。
-请先按下述方法进行配置，进入微信公众号"达美乐比萨" - "优惠｜咨询" - "有奖游戏"，正常游戏一次并获取验证码，若弹出"首次写入 Domino RequestBody 成功"即可正常食用，其他提示或无提示请发送日志信息至 issue。
-运行前请先在 BoxJs 中订阅 https://raw.githubusercontent.com/zZPiglet/Task/master/zZPiglet.boxjs.json
-到 cron 设定时间自动签到时，若弹出"达美乐 - 点击填写验证码"表示成功，请点击通知跳转至 BoxJs 填写验证码并保存，再手动执行「获取奖励」脚本即可，其他提示或无提示请发送日志信息至 issue。
+使用方法参考：https://github.com/zZPiglet/Task/blob/master/Domino/README.md
 
 ⚠️免责声明：
 1. 此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，本人对此不承担任何保证责任。
@@ -14,33 +11,11 @@
 7. 所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
 
 Author：zZPiglet
-
-Quantumult X:
-[task_local]
-0 0 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js, tag=达美乐
-; cron 时间请设置为使用手机的时间，验证码有效期为 10 分钟。
-
-[rewrite_local]
-^https?:\/\/dominos0724\.shjimang\.com\/Ajax\/GetSmsCode url script-request-body https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js
-
-
-Surge & Loon:
-[Script]
-cron "0 0 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js
-http-request ^https?:\/\/dominos0724\.shjimang\.com\/Ajax\/GetSmsCode requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js
-
-// 由于请求是 http，故可不用填写 MitM，如抓包发现自己设备的请求为 https，请加上 MitM
-All app:
-[mitm]
-hostname = dominos0724.shjimang.com
-
-获取完 RequestBody 因 MitM 导致该软件网络不稳定，需注释掉 hostname。
 */
 
 const $ = new API("Domino");
 $.debug = [true, "true"].includes($.read("debug")) || false;
 $.boxlink = $.read("#boxjs_host") || "http://boxjs.com";
-const reg = /OpenId=((\w|-)*)/
 
 if ($.isRequest) {
     getRequestBody();
@@ -59,15 +34,11 @@ if ($.isRequest) {
 
 function getSMS() {
     $.post({
-        url: "http://dominos0724.shjimang.com/Ajax/GetSmsCode",
+        url: "http://dominos0915.shjimang.com/Ajax/GetSmsCode",
         headers: {
-            "Content-Type": "application/json",
-            "Cookie": "Web2005=controller=Home&action=Default&OpenId=" + $.openid,
-            "Host": "dominos0724.shjimang.com",
-            "Origin": "http://dominos0724.shjimang.com",
-            "Referer": "http://dominos0724.shjimang.com/Home/Default?utm_source=weixin&utm_campaign=0724%E6%89%87%E8%B4%9D&utm_channel=%E5%85%AC%E4%BC%97%E5%8F%B7&utm_content=%E8%8F%9C%E5%8D%95"
+            "Cookie": "Web2006=controller=Home&action=Default&OpenId=" + $.openid
         },
-        body: '{"mobile":' + $.phonenum + ',"sec":"' + $.sec + '"}'
+        body: 'mobile=' + $.phonenum + '&sec=' + $.sec
     })
         .then((resp) => {
             $.log("getSMS: " + JSON.stringify(resp.body));
@@ -87,11 +58,12 @@ function getSMS() {
 }
 
 function getRequestBody() {
+    const reg = /OpenId=((\w|-)*)/;
+    const regBody = /mobile=(\d{11})&sec=(.*)/
     if ($request && $request.method == "POST" && $request.url.indexOf("GetSmsCode") >= 0) {
         let openidValue = reg.exec($request.headers['Cookie'])[1];
-        let RequestBodyValue = JSON.parse($request.body);
-        let phonenumValue = RequestBodyValue.mobile;
-        let secValue = RequestBodyValue.sec;
+        let phonenumValue = regBody.exec($request.body)[1];
+        let secValue = regBody.exec($request.body)[2];
         if ($.read("openid") != (undefined || null)) {
             if ($.read("openid") != openidValue || $.read("phonenum") != phonenumValue || $.read("sec") != secValue) {
                 $.write(openidValue, "openid");
