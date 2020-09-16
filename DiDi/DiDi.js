@@ -55,7 +55,7 @@ const mainURL = 'https://bosp-api.xiaojukeji.com/wechat/benefit/public/index?'
 const TokenName = '滴滴出行'
 const TokenKey = 'DiDi'
 const CityKey = 'DiDi_city'
-const reg = /^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?(.*)location_cityid=(\d*)&(.*)ticket=(.*)&/
+const reg = /^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?.*city=(\d*)&.*ticket=(.*)&/
 const source_id = ['WTZs7tfSPrADJ8uLRVMOKA%253D%253D', 'DRKV%252BEcE4Gqn%252BH1mKz2HQg%253D%253D']
 const today = new Date().getFullYear() + "-" + ("00" + Number(new Date().getMonth() + 1)).substr(-2) + "-" + ("00" + new Date().getDate()).substr(-2)
 const $cmp = compatibility()
@@ -71,8 +71,8 @@ if ($cmp.isRequest) {
 function GetToken() {
     if ($request) {
         const requrl = $request.url
-        let TokenValue = decodeURIComponent(reg.exec(requrl)[4])
-        let CityValue = reg.exec(requrl)[2]
+        let TokenValue = decodeURIComponent(reg.exec(requrl)[2])
+        let CityValue = reg.exec(requrl)[1]
         $cmp.write(CityValue, CityKey)
         if ($cmp.read(TokenKey) != (undefined || null)) {
             if ($cmp.read(TokenKey) != TokenValue) {
