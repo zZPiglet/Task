@@ -8,15 +8,8 @@ Quantumult X:
 # 知乎
 ^https:\/\/link\.zhihu\.com\/\?target= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
 
-Surge:
-[Script]
-# 简书
-Jianshu = type=http-request,pattern=^https:\/\/links\.jianshu\.com\/go\?to=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-# 知乎
-Zhihu = type=http-request,pattern=^https:\/\/link\.zhihu\.com\/\?target=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-
 [mitm]
-hostname = links.jianshu.com, lins.zhihu.com
+hostname = links.jianshu.com, link.zhihu.com
 */
 
 const jianshur = /https:\/\/links\.jianshu\.com\/go\?to=(.*)/
