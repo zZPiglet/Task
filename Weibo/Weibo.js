@@ -105,8 +105,8 @@ if ($.isRequest) {
         } else if (err instanceof ERR.BoxError) {
             $.notify("微博通知 - 信息填写错误", "", err.message, boxhost + '/app/zZ.Weibo')
         } else {
-            $.notify("微博通知 - 出现错误", "", JSON.stringify(err))
-            $.error(JSON.stringify(err))
+            $.notify("微博通知 - 出现错误", "", err)
+            $.error(err)
         }
     }).finally($.done())
 }
