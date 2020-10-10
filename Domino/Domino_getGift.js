@@ -67,8 +67,8 @@ const giftname = {
     } else if (err instanceof ERR.BodyError) {
         $.notify("达美乐 - 奖励", "响应错误", err.message); 
     } else {
-        $.notify("达美乐 - 奖励", "出现错误", JSON.stringify(err));
-        $.error(JSON.stringify(err));
+        $.notify("达美乐 - 奖励", "出现错误", JSON.stringify(err, Object.getOwnPropertyNames(err)));
+        $.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
     }
 }).finally($.done())
 

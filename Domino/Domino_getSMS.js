@@ -52,8 +52,8 @@ function getSMS() {
             }
         })
         .catch((err) => {
-            $.notify("达美乐 - 验证码", "发送错误", JSON.stringify(err));
-            $.error(JSON.stringify(err));
+            $.notify("达美乐 - 验证码", "发送错误", JSON.stringify(err, Object.getOwnPropertyNames(err)));
+            $.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
         })
 }
 

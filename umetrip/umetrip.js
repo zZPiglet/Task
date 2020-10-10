@@ -61,8 +61,8 @@ if ($.isRequest) {
         } else if (err instanceof ERR.SignError) {
             $.notify("航旅纵横 - 出现错误", "", err.message);
         } else {
-            $.notify("航旅纵横 - 未知错误", "", JSON.stringify(err));
-            $.error(JSON.stringify(err));
+            $.notify("航旅纵横 - 未知错误", "", JSON.stringify(err, Object.getOwnPropertyNames(err)));
+            $.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
         }
     }).finally($.done())
 }

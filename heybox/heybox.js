@@ -75,8 +75,8 @@ if ($.isRequest) {
         if (err instanceof ERR.CookieError) {
             $.notify("小黑盒 - Cookie 错误", "", err.message, 'heybox://%7B%22protocol_type%22%3A%22openWindow%22%2C%22full_screen%22%3Afalse%2C%0A%20%20%20%20%22webview%22%3A%7B%22url%22%3A%22https%3A%2F%2Fapi.xiaoheihe.cn%2Faccount%2Fhome_v2%22%2C%22bg%22%3A%22FFFFFF%22%2C%0A%20%20%20%20%22loading%22%3Atrue%2C%22pull%22%3Afalse%2C%22refresh%22%3Afalse%7D%7D')
         } else {
-            $.notify("小黑盒 - 出现错误", "", JSON.stringify(err))
-            $.error(JSON.stringify(err))
+            $.notify("小黑盒 - 出现错误", "", JSON.stringify(err, Object.getOwnPropertyNames(err)))
+            $.error(JSON.stringify(err, Object.getOwnPropertyNames(err)))
         }
     }).finally($.done())
 }
