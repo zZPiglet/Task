@@ -11,8 +11,8 @@ Jianshunoredirect2 = type=http-request,pattern=^https:\/\/www\.jianshu\.com\/go-
 # 知乎
 # Zhihunoredirect = type=http-request,pattern=^https:\/\/link\.zhihu\.com\/\?target=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
 # 微博
-Weibonoredirect = type=http-request,pattern=^https?:\/\/weibo\.cn\/sinaurl\?toasturl=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+Weibonoredirect = type=http-request,pattern=^https?:\/\/weibo\.cn\/sinaurl\?(u|toasturl)=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
 Weibonoredirect2 = type=http-response,pattern=^https?:\/\/(sinaurl|t)\.cn\/,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
 
 [MITM]
-hostname = %APPEND% links.jianshu.com, www.jianshu.com, link.zhihu.com, sinaurl.cn
+hostname = %APPEND% links.jianshu.com, www.jianshu.com, link.zhihu.com, weibo.cn, sinaurl.cn
