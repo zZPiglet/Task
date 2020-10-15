@@ -147,7 +147,7 @@ function API(name = "untitled", debug = false) {
             this.log(`SET ${key}`);
             if (key.indexOf('#') !== -1) {
                 key = key.substr(1)
-                if (this.isSurge & this.isLoon) {
+                if (this.isSurge || this.isLoon) {
                     $persistentStore.write(data, key);
                 }
                 if (this.isQX) {
@@ -166,7 +166,7 @@ function API(name = "untitled", debug = false) {
             this.log(`READ ${key}`);
             if (key.indexOf('#') !== -1) {
                 key = key.substr(1)
-                if (this.isSurge & this.isLoon) {
+                if (this.isSurge || this.isLoon) {
                     return $persistentStore.read(key);
                 }
                 if (this.isQX) {
@@ -184,7 +184,7 @@ function API(name = "untitled", debug = false) {
             this.log(`DELETE ${key}`);
             if (key.indexOf('#') !== -1) {
                 key = key.substr(1)
-                if (this.isSurge & this.isLoon) {
+                if (this.isSurge || this.isLoon) {
                     $persistentStore.write(null, key);
                 }
                 if (this.isQX) {
