@@ -2,7 +2,10 @@
 #!desc=Skip the redirect page.
 
 [URL Rewrite]
+# 知乎
 ^https:\/\/link\.zhihu\.com\/\?target=(https?)?(%3A|:)?(\/\/|%2F%2F)?(.*?)(&source.*)?$ http://$4 302
+# 115
+^https?:\/\/home\.115\.com\/go\?(https?:\/\/)?(.*) http://$2 302
 
 [Script]
 # 简书
@@ -15,4 +18,4 @@ Weibonoredirect = type=http-request,pattern=^https?:\/\/weibo\.cn\/sinaurl\?(u|t
 Weibonoredirect2 = type=http-response,pattern=^https?:\/\/(sinaurl|t)\.cn\/,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
 
 [MITM]
-hostname = %APPEND% links.jianshu.com, www.jianshu.com, link.zhihu.com, weibo.cn, sinaurl.cn
+hostname = %APPEND% links.jianshu.com, www.jianshu.com, link.zhihu.com, weibo.cn, sinaurl.cn, home.115.com
