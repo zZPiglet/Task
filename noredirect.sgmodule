@@ -14,8 +14,9 @@ Jianshunoredirect2 = type=http-request,pattern=^https:\/\/www\.jianshu\.com\/go-
 # 知乎
 # Zhihunoredirect = type=http-request,pattern=^https:\/\/link\.zhihu\.com\/\?target=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
 # 微博
-Weibonoredirect = type=http-request,pattern=^https?:\/\/weibo\.cn\/sinaurl\?(u|toasturl)=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-Weibonoredirect2 = type=http-response,pattern=^https?:\/\/(sinaurl|t)\.cn\/,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+Weibonoredirect = type=http-request,pattern=^https?:\/\/weibo\.cn\/sinaurl\?(.*&)?(u|toasturl|goto)=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+Weibonoredircet2 = type=http-request,pattern=^https:\/\/shop\.sc\.weibo\.com\/h5\/jump\/error\?(.*&)?url=(.*),script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+Weibonoredirect3 = type=http-response,pattern=^https?:\/\/(sinaurl|t)\.cn\/,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
 
 [MITM]
-hostname = %APPEND% links.jianshu.com, www.jianshu.com, link.zhihu.com, weibo.cn, sinaurl.cn, home.115.com
+hostname = %APPEND% links.jianshu.com, www.jianshu.com, link.zhihu.com, weibo.cn, sinaurl.cn, home.115.com, shop.sc.weibo.com
