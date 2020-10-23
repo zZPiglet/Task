@@ -263,9 +263,7 @@ function API(name = "untitled", debug = false) {
         }
 
         done(value = {}) {
-            if (this.isQX) {
-                this.isRequest ? $done(value) : null;
-            } else if (this.isLoon || this.isSurge) {
+            if (this.isQX || this.isLoon || this.isSurge) {
                 this.isRequest ? $done(value) : $done();
             } else if (this.isNode && !this.isJSBox) {
                 if (typeof $context !== 'undefined') {
