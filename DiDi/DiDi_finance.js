@@ -37,6 +37,11 @@ $.detail = "";
 	} else {
 		await getActId();
 		await signIn();
+		while ($.fbroken) {
+			await restart();
+			await signIn();
+		}
+		await $.notify("滴滴金融", $.subTitle, $.detail);
 	}
 })()
 	.catch((err) => {
@@ -80,7 +85,8 @@ function signIn() {
 		body: '{"token":"' + $.token + '","activityId":"' + $.actId + '","clientId":1}',
 	})
 		.then((resp) => {
-			$.log("signIn: " + JSON.stringify(resp.body));
+			$.fbroken = false;
+			$.log("execute: " + JSON.stringify(resp.body));
 			let obj = JSON.parse(resp.body);
 			if (obj.errorCode == 0) {
 				let serialTimes = obj.data.serialSignInTimes;
@@ -100,12 +106,34 @@ function signIn() {
 						"。";
 				}
 			} else if (obj.errorCode == 500000) {
-				$.subTitle += "签到重复";
-				$.detail += obj.errorMsg;
+				if (obj.errorMsg == "今天已经签到过了") {
+					$.subTitle += "签到重复";
+					$.detail += obj.errorMsg;
+				} else if (obj.errorMsg == "断签") {
+					$.fbroken = true;
+				} else {
+					throw new ERR.BodyError(obj.errorMsg);
+				}
 			} else {
 				throw new ERR.BodyError(JSON.stringify(resp.body));
 			}
-			$.notify("滴滴金融", $.subTitle, $.detail);
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+function restart() {
+	return $.post({
+		url:
+			"https://manhattan.webapp.xiaojukeji.com/marvel/api/manhattan-signin-task/signIn/restart",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: '{"token":"' + $.token + '","activityId":"' + $.actId + '","clientId":1}',
+	})
+		.then((resp) => {
+			$.log("restart: " + JSON.stringify(resp.body));
 		})
 		.catch((err) => {
 			throw err;
