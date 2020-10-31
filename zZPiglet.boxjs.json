@@ -238,7 +238,8 @@
           "items": [
             { "key": "Safari", "label": "Safari" },
             { "key": "Sinaweibo", "label": "微博" },
-            { "key": "Weibointernational", "label": "微博国际版" }
+            { "key": "Weibointernational", "label": "微博国际版" },
+            { "key": "VVebo", "label": "VVebo" }
           ]
         }
       ],

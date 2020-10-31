@@ -71,6 +71,8 @@ if ($.client == 'Safari') {
     $.openlink = 'sinaweibo://detail?mblogid='
 } else if ($.client == 'Weibointernational') {
     $.openlink = 'weibointernational://detail?mblogid='
+} else if ($.client == 'VVebo') {
+    $.openlink = 'vvebo://status?id='
 }
 
 $.interval = Number($.read('interval') || 1000)
