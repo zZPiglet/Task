@@ -79,7 +79,7 @@ const giftname = {
 			$.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
 		}
 	})
-	.finally($.done());
+	.finally(() => $.done());
 
 function getRank() {
 	return $.post({

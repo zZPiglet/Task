@@ -95,7 +95,7 @@ if ($.isRequest) {
             $.notify("电影日历 - 出现错误", "", JSON.stringify(err, Object.getOwnPropertyNames(err)));
             $.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
         }
-    }).finally($.done())
+    }).finally(() => $.done())
 }
 
 function getCalendar() {

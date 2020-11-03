@@ -64,8 +64,7 @@ if ($cmp.isRequest) {
     GetToken()
     $cmp.done()
 } else {
-    Checkin()
-    $cmp.done()
+    Checkin().then(() => $cmp.done())
 }
 
 function GetToken() {

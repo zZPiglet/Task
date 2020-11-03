@@ -58,7 +58,7 @@ $.detail = "";
 			$.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
 		}
 	})
-	.finally($.done());
+	.finally(() => $.done());
 
 function getActId() {
 	return $.get({
