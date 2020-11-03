@@ -237,7 +237,7 @@ async function getUid() {
                 }
             })
                 .then((resp) => {
-                    let obj = JSON.parse(resp.body)
+                    let obj = isJSON(resp.body)
                     if (obj.ok) {
                         $.uids.push(obj.data.cards[1].card_group[0].user.id.toString())
                     } else {
