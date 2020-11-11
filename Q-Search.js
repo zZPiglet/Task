@@ -36,6 +36,12 @@ const engineData = {
 	tre: "https://translate.google.com/#view=home&op=translate&sl=auto&tl=en&text=%@",
 	// Google 译至日
 	trj: "https://translate.google.com/#view=home&op=translate&sl=auto&tl=ja&text=%@",
+	// DeepL 译至中
+	dlc: "https://www.deepl.com/translator#auto/zh/%@",
+	// DeepL 译至英
+	dle: "https://www.deepl.com/translator#auto/en/%@",
+	// DeepL 译至日
+	dlj: "https://www.deepl.com/translator#auto/ja/%@",
 	// 少数派站内搜索
 	sspai: "https://sspai.com/search/post/%@",
 	// Google 搜索少数派

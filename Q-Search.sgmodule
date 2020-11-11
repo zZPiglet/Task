@@ -35,6 +35,15 @@
 # trj xxx (Google 译至日)
 ^https:\/\/duckduckgo.com\/\?q=trj(\+|%20)([^&]+).+ https://translate.google.com/#view=home&op=translate&sl=auto&tl=ja&text=$2 302
 
+# dlc xxx (DeepL 译至中)
+^https:\/\/duckduckgo.com\/\?q=dlc(\+|%20)([^&]+).+ https://www.deepl.com/translator#auto/zh/$2 302
+
+# dle xxx (DeepL 译至英)
+^https:\/\/duckduckgo.com\/\?q=dle(\+|%20)([^&]+).+ https://www.deepl.com/translator#auto/en/$2 302
+
+# dlj xxx (DeepL 译至日)
+^https:\/\/duckduckgo.com\/\?q=dlj(\+|%20)([^&]+).+ https://www.deepl.com/translator#auto/ja/$2 302
+
 # sspai xxx (少数派站内搜索)
 ^https:\/\/duckduckgo.com\/\?q=sspai(\+|%20)([^&]+).+ https://sspai.com/search/post/$2 302
 
