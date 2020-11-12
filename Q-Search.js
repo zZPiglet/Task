@@ -68,8 +68,6 @@ const engineData = {
 	gd: "https://www.google.com/search?q=%22Google+Drive%22+%@",
 	// t.me/gdurl 搜索 Google Drive 资源
 	tgd: "https://t.me/s/gdurl?q=%@",
-	// https://zhao.pp.ua 搜索 Google Drive 资源
-	zgd: "https://zhao.pp.ua/?q=%@",
 	// DuckDuckGo
 	ddg: "https://duckduckgo.com/?ia=about&q=%@",
 	// Google

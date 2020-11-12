@@ -83,9 +83,6 @@
 # tgd xxx (t.me/gdurl 搜索 Google Drive 资源)
 ^https:\/\/duckduckgo.com\/\?q=tgd(\+|%20)([^&]+).+ https://t.me/s/gdurl?q=$2 302
 
-# zgd xxx (https://zhao.pp.ua 搜索 Google Drive 资源)
-^https:\/\/duckduckgo.com\/\?q=zgd(\+|%20)([^&]+).+ https://zhao.pp.ua/?q=$2 302
-
 # ddg xxx (还原 DuckDuckGo)
 ^https:\/\/duckduckgo.com\/\?q=ddg(\+|%20)([^&]+).+ https://duckduckgo.com/?ia=about&q=$2 302
 
