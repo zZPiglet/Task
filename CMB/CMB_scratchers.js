@@ -9,11 +9,10 @@ qx(tf 1.0.11(316)) 、 loon(tf 2.1.1(163))、 surge(tf 4.10.0(1807)) 及更新�
 
 const $ = new compatibility()
 
-const cmb_scratchers = "cmbmobilebank://cmbls/functionjump?action=gocorpno&corpno=100891&shorturl=https%3A%2F%2Fcmb-scratchers.weijuju.com%2Fapp%2Findex"
-
-$.notify("招商银行-招牌便民刮刮乐", "", "点击跳转去签到刮奖啦", cmb_scratchers)
-
-$done()
+!(async () => {
+    const cmb_scratchers = "cmbmobilebank://cmbls/functionjump?action=gocorpno&corpno=100891&shorturl=https%3A%2F%2Fcmb-scratchers.weijuju.com%2Fapp%2Findex"
+    $.notify("招商银行-招牌便民刮刮乐", "", "点击跳转去签到刮奖啦", cmb_scratchers)
+})().finally(() => $done())
 
 function compatibility() {
     _isQuanX = typeof $task != "undefined"

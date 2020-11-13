@@ -9,12 +9,11 @@ qx(tf 1.0.11(316)) 、 loon(tf 2.1.1(163))、 surge(tf 4.10.0(1807)) 及更新�
 
 const $ = new compatibility();
 
-const cmb_catbank =
+!(async () => {
+    const cmb_catbank =
 	"cmbmobilebank://cmbls/functionjump?action=gocorpno&corpno=840156&cmb_app_trans_parms_start=here&appflag=0&shorturl=https%3a%2f%2ft.cmbchina.com%2fQzy2a2";
-
-$.notify("招商银行-小麦存钱罐", "", "点击跳转去抽奖啦", cmb_catbank);
-
-$done();
+	$.notify("招商银行-小麦存钱罐", "", "点击跳转去抽奖啦", cmb_catbank);
+})().finally(() => $done())
 
 function compatibility() {
 	_isQuanX = typeof $task != "undefined";

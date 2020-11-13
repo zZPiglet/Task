@@ -34,10 +34,9 @@ delay().then(function(){
     return delay($.wait_out)
 }).then(function (){
     $.notify("招商银行-688、188活动", "步骤 4：余额宝转回招行卡 688", "点击跳转去余额宝转出", transfer_out)
-})
+}).finally(() => $done())
 
 
-$done()
 function compatibility() {
     _isQuanX = typeof $task != "undefined"
     _isLoon = typeof $loon != "undefined"

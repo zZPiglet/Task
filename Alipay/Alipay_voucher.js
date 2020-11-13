@@ -18,11 +18,10 @@ https://www.icloud.com/shortcuts/2c37e7de80a24a6cbe9ca80e96337e1f
 
 const $ = new cmp()
 
-let voucher = "alipays://platformapi/startapp?appId=2021001162654785"
-
-$.notify("支付宝", "", "点击跳转抢消费券啦", voucher)
-
-$done()
+!(async () => {
+    let voucher = "alipays://platformapi/startapp?appId=2021001162654785"
+    $.notify("支付宝", "", "点击跳转抢消费券啦", voucher)
+})().finally(() => $done())
 
 function cmp() {
     _isQuanX = typeof $task != "undefined"

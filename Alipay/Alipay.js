@@ -9,17 +9,22 @@ qx(tf 1.0.11(316)) 、 loon(tf 2.1.1(163))、 surge(tf 4.10.0(1807)) 及更新�
 */
 
 const $ = new compatibility()
-const delay = $.read('Alipay_wait_mayi') * 1000 || 8000
+const d = $.read('Alipay_wait_mayi') * 1000 || 8000
 const point = "alipays://platformapi/startapp?appId=20000160&url=/www/myPoints.html"
 const mayi = "alipay://platformapi/startapp?appId=60000002"
 
-$.notify("支付宝", "", "领积分啦", point)
+let delay = function(s){
+    return new Promise(function(resolve,reject){
+        setTimeout(resolve,s)
+    })
+}
 
-setTimeout(() => {
+delay().then(function(){
+    $.notify("支付宝", "", "领积分啦", point)
+    return delay(d)
+}).then(function(){
     $.notify("支付宝", "", "收能量啦", mayi)
-}, delay)
-
-$done()
+}).finally(() => $done())
 
 function compatibility() {
     _isQuanX = typeof $task != "undefined"

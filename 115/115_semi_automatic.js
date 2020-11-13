@@ -9,12 +9,11 @@ qx(tf 1.0.11(316)) 、 loon(tf 2.1.1(163))、 surge(tf 4.10.0(1807)) 及更新�
 
 const $ = new cmp()
 
-let wp115 = "wx9b74cc2b355eef5f://"
-//let wp115 = "oof.disk://"
-
-$.notify("115", "", "点击跳转摇一摇领空间啦", wp115)
-
-$done()
+!(async () => {
+    let wp115 = "wx9b74cc2b355eef5f://"
+    //let wp115 = "oof.disk://"
+    $.notify("115", "", "点击跳转摇一摇领空间啦", wp115)
+})().finally(() => $done())
 
 function cmp() {
     _isQuanX = typeof $task != "undefined"
