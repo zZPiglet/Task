@@ -33,13 +33,13 @@ const TokenName = '掌门好老师';
 const TokenKey = 'zmteacher';
 const $cmp = compatibility();
 
-if ($cmp.isRequest) {
-    GetToken()
-    $cmp.end()
-} else {
-    Checkin()
-    $cmp.end()
-}
+!(async () => {
+    if ($cmp.isRequest) {
+        GetToken()
+    } else {
+        await Checkin()
+    }
+})().finally(() => $cmp.done())
 
 function GetToken() {
     if ($request.headers['token']) {
@@ -67,6 +67,7 @@ function GetToken() {
 }
 
 function Checkin() {
+    return new Promise((resolve, reject) => {
     const ZMT = {
         url: CheckinURL,
         headers: {
@@ -110,7 +111,9 @@ function Checkin() {
         } else {
             $cmp.notify("掌门好老师 - 签到接口请求失败", "", error)
         }
+        resolve()
     })
+  })
 }
 
 function compatibility() {

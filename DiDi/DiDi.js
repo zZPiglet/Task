@@ -60,13 +60,13 @@ const source_id = ['WTZs7tfSPrADJ8uLRVMOKA%253D%253D', 'DRKV%252BEcE4Gqn%252BH1m
 const today = new Date().getFullYear() + "-" + ("00" + Number(new Date().getMonth() + 1)).substr(-2) + "-" + ("00" + new Date().getDate()).substr(-2)
 const $cmp = compatibility()
 
-if ($cmp.isRequest) {
+!(async () => {
+  if ($cmp.isRequest) {
     GetToken()
-    $cmp.done()
-} else {
-    Checkin()
-    $cmp.done()
-}
+  } else {
+      await Checkin()  
+  }
+})().finally(() => $cmp.done())
 
 function GetToken() {
     if ($request) {
@@ -118,6 +118,7 @@ function isJSON(str) {
 }
 
 function Checkin() {
+  return new Promise((resolve, reject) => {
     let subTitle = ''
     let detail = ''
     let CheckinURL = mainURL + 'city_id=' + $cmp.read("DiDi_city")
@@ -168,7 +169,9 @@ function Checkin() {
             $cmp.log("DiDi failed response : \n" + error)
         }
         $cmp.notify(TokenName, subTitle, detail)
+        resolve()
     })
+  })
 }
 
 function compatibility(){const e="undefined"!=typeof $request,t="undefined"!=typeof $httpClient,r="undefined"!=typeof $task,n="undefined"!=typeof $app&&"undefined"!=typeof $http,o="function"==typeof require&&!n,s=(()=>{if(o){const e=require("request");return{request:e}}return null})(),i=(e,s,i)=>{r&&$notify(e,s,i),t&&$notification.post(e,s,i),o&&a(e+s+i),n&&$push.schedule({title:e,body:s?s+"\n"+i:i})},u=(e,n)=>r?$prefs.setValueForKey(e,n):t?$persistentStore.write(e,n):void 0,d=e=>r?$prefs.valueForKey(e):t?$persistentStore.read(e):void 0,l=e=>(e&&(e.status?e.statusCode=e.status:e.statusCode&&(e.status=e.statusCode)),e),f=(e,i)=>{r&&("string"==typeof e&&(e={url:e}),e.method="GET",$task.fetch(e).then(e=>{i(null,l(e),e.body)},e=>i(e.error,null,null))),t&&$httpClient.get(e,(e,t,r)=>{i(e,l(t),r)}),o&&s.request(e,(e,t,r)=>{i(e,l(t),r)}),n&&("string"==typeof e&&(e={url:e}),e.header=e.headers,e.handler=function(e){let t=e.error;t&&(t=JSON.stringify(e.error));let r=e.data;"object"==typeof r&&(r=JSON.stringify(e.data)),i(t,l(e.response),r)},$http.get(e))},p=(e,i)=>{r&&("string"==typeof e&&(e={url:e}),e.method="POST",$task.fetch(e).then(e=>{i(null,l(e),e.body)},e=>i(e.error,null,null))),t&&$httpClient.post(e,(e,t,r)=>{i(e,l(t),r)}),o&&s.request.post(e,(e,t,r)=>{i(e,l(t),r)}),n&&("string"==typeof e&&(e={url:e}),e.header=e.headers,e.handler=function(e){let t=e.error;t&&(t=JSON.stringify(e.error));let r=e.data;"object"==typeof r&&(r=JSON.stringify(e.data)),i(t,l(e.response),r)},$http.post(e))},a=e=>console.log(e),y=(t={})=>{e?$done(t):$done()};return{isQuanX:r,isSurge:t,isJSBox:n,isRequest:e,notify:i,write:u,read:d,get:f,post:p,log:a,done:y}}

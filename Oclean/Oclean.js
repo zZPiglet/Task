@@ -43,13 +43,13 @@ const CookieKey = 'Oclean'
 const reg = /Shop-Member=(\S*);/
 const $cmp = compatibility()
 
-if ($cmp.isRequest) {
-    GetCookie()
-    $cmp.done()
-} else {
-    Checkin()
-    $cmp.done()
-}
+!(async () => {
+    if ($cmp.isRequest) {
+        GetCookie()
+    } else {
+        await Checkin()
+    }
+})().finally(() => $cmp.done())
 
 function GetCookie() {
     if ($request && reg.exec($request.headers['Cookie'])[1]) {
@@ -76,7 +76,7 @@ function GetCookie() {
     }
 }
 
-function Checkin() {
+async function Checkin() {
     let subTitle = ''
     let detail = ''
     const oclean = {
@@ -93,44 +93,50 @@ function Checkin() {
         },
         body: 'ActivityId=9&clientType=2'
     }
-    $cmp.post(oclean_draw, function(error, response, data) {
-        if (!error) {
-            const result = JSON.parse(data)
-            if (result.Status == "OK" || result.Data.AwardGrade) {
-                $cmp.log("Oclean draw succeed response : \n" + result.Data.Msg + '：' + result.Data.AwardSubName + '\n一等奖可能是未中奖。。')
+    await new Promise((resolve, reject) => {
+        $cmp.post(oclean_draw, function(error, response, data) {
+            if (!error) {
+                const result = JSON.parse(data)
+                if (result.Status == "OK" || result.Data.AwardGrade) {
+                    $cmp.log("Oclean draw succeed response : \n" + result.Data.Msg + '：' + result.Data.AwardSubName + '\n一等奖可能是未中奖。。')
+                } else {
+                    $cmp.log("Oclean draw failed response : \n" + JSON.stringify(result))
+                }
             } else {
-                $cmp.log("Oclean draw failed response : \n" + JSON.stringify(result))
+                $cmp.log("Oclean draw failed response : \n" + error)
             }
-        } else {
-            $cmp.log("Oclean draw failed response : \n" + error)
-        }
+            resolve()
+        })
     })
-    $cmp.post(oclean, function(error, response, data) {
-        if (!error) {
-            const result = JSON.parse(data)
-            if (result.Status == "OK" && result.Code == 1) {
-                subTitle += '签到成功！🦷'
-                let todayget = result.Data.points
-                let total = result.Data.integral
-                detail += '签到获得 ' + todayget + ' 积分，账户共有 ' + total + ' 积分。'
-            } else if (result.Status == "OK" && result.Code == 2) {
-                subTitle += '重复签到！🥢'
-                let total = result.Data.integral
-                detail += '账户共有 ' + total + ' 积分。'
-            } else if (result.Status == "NO") {
-                subTitle += 'Cookie 失效或未获取'
-                detail += '请按照脚本开头注释获取 Cookie。'
+    await new Promise((resolve, reject) => { 
+        $cmp.post(oclean, function(error, response, data) {
+            if (!error) {
+                const result = JSON.parse(data)
+                if (result.Status == "OK" && result.Code == 1) {
+                    subTitle += '签到成功！🦷'
+                    let todayget = result.Data.points
+                    let total = result.Data.integral
+                    detail += '签到获得 ' + todayget + ' 积分，账户共有 ' + total + ' 积分。'
+                } else if (result.Status == "OK" && result.Code == 2) {
+                    subTitle += '重复签到！🥢'
+                    let total = result.Data.integral
+                    detail += '账户共有 ' + total + ' 积分。'
+                } else if (result.Status == "NO") {
+                    subTitle += 'Cookie 失效或未获取'
+                    detail += '请按照脚本开头注释获取 Cookie。'
+                } else {
+                    subTitle += '未知错误，详情请见日志。'
+                    detail += result.Message
+                    $cmp.log("Oclean failed response : \n" + JSON.stringify(result))
+                }
             } else {
-                subTitle += '未知错误，详情请见日志。'
-                detail += result.Message
-                $cmp.log("Oclean failed response : \n" + JSON.stringify(result))
+                subTitle += '签到接口请求失败，详情请见日志。'
+                detail += error
+                $cmp.log("Oclean failed response : \n" + error)
             }
-        } else {
-            subTitle += '签到接口请求失败，详情请见日志。'
-            detail += error
-            $cmp.log("Oclean failed response : \n" + error)
-        }
-        $cmp.notify(CookieName, subTitle, detail)
+            $cmp.notify(CookieName, subTitle, detail)
+            resolve()
+        })
     })
 }
 

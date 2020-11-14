@@ -36,16 +36,13 @@ const appid = 'wxab7430e6e8b9a4ab'
 const cardNo = '405831385964130305'
 const $cmp = compatibility()
 
-if ($cmp.isRequest) {
-    GetToken()
-    $cmp.done()
-} else {
-    if (aff) {
-        Affiliate()
+!(async () => {
+    if ($cmp.isRequest) {
+        GetToken()
+    } else {
+        await Checkin()
     }
-    Checkin()
-    $cmp.done()
-}
+})().finally(() => $cmp.done())
 
 function GetToken() {
     if ($request.headers['Qm-User-Token']) {
@@ -72,33 +69,8 @@ function GetToken() {
     }
 }
 
-function Affiliate() {
-    const commonheaders = {
-        "Content-Type": "application/json",
-        "Qm-From": "wechat",
-        "Qm-User-Token": $cmp.read("Naixue"),
-    }
-    const detail = {
-        url: 'https://webapi.qmai.cn/web/marketing/old_newer/detail?user_id=' + cardNo + '&appid=' + appid,
-        headers: commonheaders
-    }
-    $cmp.get(detail, function (error, response, data) {
-        const obj = JSON.parse(data)
-        const user_str = obj.data.user_str
-        const old_new_activties_id = obj.data.old_rules[0].old_new_activties_id
-        const user = {
-            url: 'https://webapi.qmai.cn/web/marketing/old_newer/user',
-            headers: commonheaders,
-            body: '{"user_str":"' + user_str + '","old_new_activties_id":' + old_new_activties_id + ',"appid":"' + appid + '"}'
-        }
-        $cmp.post(user, function (error, response, data) {
-            const thx = JSON.parse(data)
-            $cmp.log(thx.message)
-        })
-    })
-}
-
 function Checkin() {
+    return new Promise((resolve, reject) => {
     const nxdc = {
         url: CheckinURL,
         headers: {
@@ -123,7 +95,9 @@ function Checkin() {
         } else {
             $cmp.notify(TokenName,  "签到接口请求失败，详情请见日志。", error)
         }
+        resolve()
     })
+  })
 }
 
 function compatibility(){const e="undefined"!=typeof $request,t="undefined"!=typeof $httpClient,r="undefined"!=typeof $task,n="undefined"!=typeof $app&&"undefined"!=typeof $http,o="function"==typeof require&&!n,s=(()=>{if(o){const e=require("request");return{request:e}}return null})(),i=(e,s,i)=>{r&&$notify(e,s,i),t&&$notification.post(e,s,i),o&&a(e+s+i),n&&$push.schedule({title:e,body:s?s+"\n"+i:i})},u=(e,n)=>r?$prefs.setValueForKey(e,n):t?$persistentStore.write(e,n):void 0,d=e=>r?$prefs.valueForKey(e):t?$persistentStore.read(e):void 0,l=e=>(e&&(e.status?e.statusCode=e.status:e.statusCode&&(e.status=e.statusCode)),e),f=(e,i)=>{r&&("string"==typeof e&&(e={url:e}),e.method="GET",$task.fetch(e).then(e=>{i(null,l(e),e.body)},e=>i(e.error,null,null))),t&&$httpClient.get(e,(e,t,r)=>{i(e,l(t),r)}),o&&s.request(e,(e,t,r)=>{i(e,l(t),r)}),n&&("string"==typeof e&&(e={url:e}),e.header=e.headers,e.handler=function(e){let t=e.error;t&&(t=JSON.stringify(e.error));let r=e.data;"object"==typeof r&&(r=JSON.stringify(e.data)),i(t,l(e.response),r)},$http.get(e))},p=(e,i)=>{r&&("string"==typeof e&&(e={url:e}),e.method="POST",$task.fetch(e).then(e=>{i(null,l(e),e.body)},e=>i(e.error,null,null))),t&&$httpClient.post(e,(e,t,r)=>{i(e,l(t),r)}),o&&s.request.post(e,(e,t,r)=>{i(e,l(t),r)}),n&&("string"==typeof e&&(e={url:e}),e.header=e.headers,e.handler=function(e){let t=e.error;t&&(t=JSON.stringify(e.error));let r=e.data;"object"==typeof r&&(r=JSON.stringify(e.data)),i(t,l(e.response),r)},$http.post(e))},a=e=>console.log(e),y=(t={})=>{e?$done(t):$done()};return{isQuanX:r,isSurge:t,isJSBox:n,isRequest:e,notify:i,write:u,read:d,get:f,post:p,log:a,done:y}}

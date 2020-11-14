@@ -17,23 +17,23 @@ const $ = new API("Domino");
 $.debug = [true, "true"].includes($.read("debug")) || false;
 $.boxlink = $.read("#boxjs_host") || "http://boxjs.com";
 
-if ($.isRequest) {
-    getRequestBody();
-    $.done({});
-} else {
-    $.openid = $.read("openid");
-    $.phonenum = $.read("phonenum");
-    $.sec = $.read("sec");
-    if (!$.phonenum || !$.sec || !$.openid) {
-        $.notify("达美乐 - 验证码", "缺失信息", "请按脚本开头配置获取信息。");
+!(async () => {
+    if ($.isRequest) {
+        getRequestBody();
     } else {
-        getSMS();
+        $.openid = $.read("openid");
+        $.phonenum = $.read("phonenum");
+        $.sec = $.read("sec");
+        if (!$.phonenum || !$.sec || !$.openid) {
+            $.notify("达美乐 - 验证码", "缺失信息", "请按脚本开头配置获取信息。");
+        } else {
+            await getSMS();
+        }
     }
-    $.done()
-}
+})().finally(() => $.done())
 
 function getSMS() {
-    $.post({
+    return $.post({
         url: "http://dominos0915.shjimang.com/Ajax/GetSmsCode",
         headers: {
             "Cookie": "Web2006=controller=Home&action=Default&OpenId=" + $.openid

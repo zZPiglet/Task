@@ -43,13 +43,13 @@ const CookieKey = 'Oclean_mini'
 const reg = /https:\/\/mall\.oclean\.com\/API\/VshopProcess\.ashx\?action=TaskHome&clientType=5&client=5&openId=(.*)&/
 const $cmp = compatibility()
 
-if ($cmp.isRequest) {
-    GetCookie()
-    $cmp.done()
-} else {
-    Checkin()
-    $cmp.done()
-}
+!(async () => {
+    if ($cmp.isRequest) {
+        GetCookie()
+    } else {
+        await Checkin()
+    }
+})().finally(() => $cmp.done())
 
 function GetCookie() {
     if ($request && reg.exec($request.url)[1]) {
@@ -76,7 +76,7 @@ function GetCookie() {
     }
 }
 
-function Checkin() {
+async function Checkin() {
     let subTitle = ''
     let detail = ''
     const oclean_mini = {
@@ -85,44 +85,50 @@ function Checkin() {
     const oclean_mini_draw = {
         url: DrawURL + $cmp.read("Oclean_mini")
     }
-    $cmp.get(oclean_mini_draw, function(error, response, data) {
-        if (!error) {
-            const result = JSON.parse(data)
-            if (result.Status == "OK" || result.Data.AwardGrade) {
-                $cmp.log("Oclean_mini draw succeed response : \n" + result.Data.Msg + '：' + result.Data.AwardSubName + '\n一等奖可能是未中奖。。')
+    await new Promise((resolve, reject) => {
+        $cmp.get(oclean_mini_draw, function(error, response, data) {
+            if (!error) {
+                const result = JSON.parse(data)
+                if (result.Status == "OK" || result.Data.AwardGrade) {
+                    $cmp.log("Oclean_mini draw succeed response : \n" + result.Data.Msg + '：' + result.Data.AwardSubName + '\n一等奖可能是未中奖。。')
+                } else {
+                    $cmp.log("Oclean_mini draw failed response : \n" + JSON.stringify(result))
+                }
             } else {
-                $cmp.log("Oclean_mini draw failed response : \n" + JSON.stringify(result))
+                $cmp.log("Oclean_mini draw failed response : \n" + error)
             }
-        } else {
-            $cmp.log("Oclean_mini draw failed response : \n" + error)
-        }
+            resolve()
+        })
     })
-    $cmp.get(oclean_mini, function(error, response, data) {
-        if (!error) {
-            const result = JSON.parse(data)
-            if (result.Status == "OK" && result.Code == 1) {
-                subTitle += '签到成功！🦷'
-                let todayget = result.Data.points
-                let total = result.Data.integral
-                detail += '签到获得 ' + todayget + ' 积分，账户共有 ' + total + ' 积分。'
-            } else if (result.Status == "OK" && result.Code == 2) {
-                subTitle += '重复签到！🥢'
-                let total = result.Data.integral
-                detail += '账户共有 ' + total + ' 积分。'
-            } else if (result.Status == "NO") {
-                subTitle += 'Cookie 失效或未获取'
-                detail += '请按照脚本开头注释获取 Cookie。'
+    await new Promise((resolve, reject) => { 
+        $cmp.get(oclean_mini, function(error, response, data) {
+            if (!error) {
+                const result = JSON.parse(data)
+                if (result.Status == "OK" && result.Code == 1) {
+                    subTitle += '签到成功！🦷'
+                    let todayget = result.Data.points
+                    let total = result.Data.integral
+                    detail += '签到获得 ' + todayget + ' 积分，账户共有 ' + total + ' 积分。'
+                } else if (result.Status == "OK" && result.Code == 2) {
+                    subTitle += '重复签到！🥢'
+                    let total = result.Data.integral
+                    detail += '账户共有 ' + total + ' 积分。'
+                } else if (result.Status == "NO") {
+                    subTitle += 'Cookie 失效或未获取'
+                    detail += '请按照脚本开头注释获取 Cookie。'
+                } else {
+                    subTitle += '未知错误，详情请见日志。'
+                    detail += result.Message
+                    $cmp.log("Oclean_mini failed response : \n" + JSON.stringify(result))
+                }
             } else {
-                subTitle += '未知错误，详情请见日志。'
-                detail += result.Message
-                $cmp.log("Oclean_mini failed response : \n" + JSON.stringify(result))
+                subTitle += '签到接口请求失败，详情请见日志。'
+                detail += error
+                $cmp.log("Oclean_mini failed response : \n" + error)
             }
-        } else {
-            subTitle += '签到接口请求失败，详情请见日志。'
-            detail += error
-            $cmp.log("Oclean_mini failed response : \n" + error)
-        }
-        $cmp.notify(CookieName, subTitle, detail)
+            $cmp.notify(CookieName, subTitle, detail)
+            resolve()
+        })
     })
 }
 

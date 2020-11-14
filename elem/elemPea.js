@@ -26,7 +26,6 @@ const mainURL = "https://h5.ele.me/restapi";
 const $cmp = compatibility();
 const token = $cmp.read("cookie_elem");
 Checkin();
-$cmp.done();
 
 function Checkin() {
 	let listURL = mainURL + "/biz.svip_core/v1/foodie/homepage";
@@ -79,6 +78,7 @@ function Checkin() {
 			$cmp.notify("饿了么 - 遗忘的吃货豆", "领取接口请求失败，详情请见日志。", error);
 			$cmp.log("elem_pea failed response : \n" + error);
 		}
+		$cmp.done();
 	});
 }
 

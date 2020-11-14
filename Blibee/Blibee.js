@@ -98,14 +98,14 @@ async function Sign() {
 
 }
 
-if ($cmp.isRequest) {
-    GetCookie()
-    $cmp.done()
-} else {
-    makeHeaders()
-    Sign()
-    $cmp.done()
-}
+!(async () => {
+    if ($cmp.isRequest) {
+        GetCookie()
+    } else {
+         makeHeaders()
+        await Sign()
+    }
+})().finally(() => $cmp.done())
 
 function GetCookie() {
     if ($request && $request.method == 'POST') {

@@ -20,7 +20,6 @@ const CookieName = "欧可林";
 const CheckinURL = "https://mall.oclean.com/API/VshopProcess.ashx";
 const $cmp = compatibility();
 Lottery();
-$cmp.done();
 
 function Lottery() {
 	let subTitle = "";
@@ -55,6 +54,7 @@ function Lottery() {
 			$cmp.log("Oclean failed response : \n" + error);
 		}
 		//$cmp.notify(CookieName, subTitle, detail)
+	$cmp.done();		
 	});
 }
 

@@ -21,7 +21,6 @@ const CheckinURL =
 const CookieName = "欧可林商城";
 const $cmp = compatibility();
 Lottery();
-$cmp.done();
 
 function Lottery() {
 	let subTitle = "";
@@ -52,6 +51,7 @@ function Lottery() {
 			$cmp.log("Oclean_mini failed response : \n" + error);
 		}
 		//$cmp.notify(CookieName, subTitle, detail)
+		$cmp.done();
 	});
 }
 

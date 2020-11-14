@@ -51,13 +51,13 @@ async function Sign() {
     await notify()
 }
 
-if ($cmp.isRequest) {
-    Get()
-    $cmp.done()
-} else {
-    Sign()
-    $cmp.done()
-}
+!(async () => {
+    if ($cmp.isRequest) {
+        Get()
+    } else {
+        await Sign()
+    }
+})().finally(() => $cmp.done())
 
 function Get() {
     if ($request && $request.method == "POST" && $request.url.indexOf('Level') >= 0) {

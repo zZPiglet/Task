@@ -28,7 +28,6 @@ cron "1 0 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/mas
 const CheckInURL = 'https://h5.ele.me/restapi/acquisition/dailyCheckIn/v1/checkIn'
 const $cmp = compatibility()
 Checkin()
-$cmp.done()
 
 function Checkin() {
     let subTitle = ''
@@ -66,6 +65,7 @@ function Checkin() {
             $cmp.log("elem failed response : \n" + error)
         }
         $cmp.notify('饿了么 - 打卡领红包', subTitle, detail)
+        $cmp.done()
     })
 }
 
