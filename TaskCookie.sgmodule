@@ -49,7 +49,7 @@
 豆瓣电影日历Cookie = type=http-request,pattern=^https:\/\/frodo\.douban\.com\/api\/v\d\/calendar\/today,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
 
 # 微信公众号 - 达美乐比萨
-达美乐披萨Cookie = type=http-request,pattern=^https?:\/\/dominos\d{4}\.shjimang\.com\/Ajax\/GetSmsCode,requires-body=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js
+达美乐披萨Cookie = type=http-request,pattern=^https?:\/\/dominos\d{4}\.shjimang\.com\/ajax\/getgiftD,requires-body=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getGift.js
 
 # 航旅纵横(Pro)
 航旅纵横Cookie = type=http-request,pattern=^https:\/\/cloud\.umetrip\.com\/gateway\/api\/web\/rest\/polite\/app\/sign\/signpageinitdata,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/umetrip/umetrip.js
