@@ -20,14 +20,14 @@ $.openid = $.read("openid");
 $.phonenum = $.read("phonenum");
 $.sec = $.read("sec");
 //$.smscode = $.read("smscode");
-$.score = Number($.read("score") || 180);
+$.score = Number($.read("score") || 200);
 
 const gift =
-	"\n一等奖：免费 9″ 手拍台式香溢烤肠比萨 1 个（共6000个）（需任意消费）" +
-	"\n二等奖：半价 9″ 手拍台式香溢烤肠比萨 1 个（共8000个）（需任意消费）" +
-	"\n三等奖：免费椰香咖喱鸡肉意面一份（需购买任意比萨后使用） （共20000份）" +
-	"\n四等奖：免费酥香嫩鱼块一份（需购买任意比萨后使用） （共50000份）" +
-	"\n五等奖：免费黄金薯角一份（需购买任意比萨后使用）（人人有礼，未获得1-4等奖的参与者均可得）";
+	"\n一等奖：免费 9″ 手拍巴伐利亚风味猪肘比萨 1 个（共3000个）（需任意消费）" +
+	"\n二等奖：半价 9″ 手拍巴伐利亚风味猪肘比萨 1 个（共5000个）（需任意消费）" +
+	"\n三等奖：免费芝香培根菌菇焗饭一份（需购买任意比萨后使用） （共 15000 份）" +
+	"\n四等奖：免费蜜汁烤翅一对（需购买任意比萨后使用） （共 40000 份）" +
+	"\n五等奖：免费热饮一份（需购买任意比萨后使用）（人人有礼，未获得 1-4 等奖的参与者均可得）";
 
 const giftname = {
 	1: "一等奖",
@@ -38,29 +38,33 @@ const giftname = {
 };
 
 !(async () => {
-	if (!$.phonenum || !$.sec || !$.openid) {
-		throw new ERR.RequestBodyError("❌ 请按 Domino_getGift.js 脚本开头配置获取信息。");
-		//} else if (!$.smscode) {
-		//    throw new ERR.SMSCodeError("❌ 验证码未填写或未保存。");
+	if ($.isRequest) {
+		getRequestBody();
 	} else {
-		$.detail = "";
-		$.last = false;
-		$.times = 0;
-		while (!$.last && $.times < 3) {
-			$.flag = false;
-			await getRank();
-			if ($.flag) {
-				await getGift();
-				await getGiftCode();
-			} else {
-				throw new ERR.BodyError("❌ 信息错误，请重新按 README.md 获取。");
+		if (!$.phonenum || !$.sec || !$.openid) {
+			throw new ERR.RequestBodyError("❌ 请按 README.md 配置获取信息。");
+			//} else if (!$.smscode) {
+			//    throw new ERR.SMSCodeError("❌ 验证码未填写或未保存。");
+		} else {
+			$.detail = "";
+			$.last = false;
+			$.times = 0;
+			while (!$.last && $.times < 3) {
+				$.flag = false;
+				await getRank();
+				if ($.flag) {
+					await getGift();
+					await getGiftCode();
+				} else {
+					throw new ERR.BodyError("❌ 信息错误，请重新按 README.md 获取。");
+				}
 			}
+			await $.notify(
+				"达美乐 - 奖励",
+				"领取成功 🍕",
+				"恭喜获得：" + $.detail + "\n\n奖项详情：" + gift
+			);
 		}
-		await $.notify(
-			"达美乐 - 奖励",
-			"领取成功 🍕",
-			"恭喜获得：" + $.detail + "\n\n奖项详情：" + gift
-		);
 	}
 })()
 	.catch((err) => {
@@ -83,12 +87,12 @@ const giftname = {
 
 function getRank() {
 	return $.post({
-		url: "http://dominos0915.shjimang.com/Ajax/GetRank",
+		url: "https://dominos1102.shjimang.com/ajax/getrank",
 		headers: {
-			Cookie:
-				"Web2006=controller=Home&action=Default&OpenId=" + $.openid + "&m=" + $.phonenum,
+			"Content-Type": "application/json;charset=utf-8",
+			Cookie: "Web2007=controller=Home&action=Default&OpenId=" + $.openid,
 		},
-		body: "score=" + $.score + "&sec=" + $.sec,
+		body: '{"score":' + $.score + ',"sec":"' + $.sec + '"}',
 	})
 		.then((resp) => {
 			if (resp.statusCode == 200) {
@@ -112,25 +116,24 @@ function getRank() {
 
 function getGift() {
 	return $.post({
-		url: "http://dominos0915.shjimang.com/Ajax/GetGiftD",
+		url: "https://dominos1102.shjimang.com/ajax/getgiftD",
 		headers: {
-			Cookie:
-				"Web2006=controller=Home&action=Default&OpenId=" +
-				$.openid +
-				"&m=" +
-				$.phonenum +
-				"&id=",
+			"Content-Type": "application/json;charset=utf-8",
+			Cookie: "Web2007=controller=Home&action=Default&OpenId=" + $.openid + "&id=",
 		},
-		body: "sec=" + $.sec + "&mobile=" + $.phonenum,
+		body: '{"mobile":"' + $.phonenum + '","sec":"' + $.sec + '"}',
 	})
 		.then((resp) => {
 			$.log("getGift: " + JSON.stringify(resp.body));
 			let obj = JSON.parse(resp.body);
 			if (obj.Code == "1000") {
 				$.giftcode = obj.Data.Id;
-			} else if (obj.Code == "1001") {
-				throw new ERR.BodyError(obj.Msg + "\n请检查 BoxJs 中验证码是否正确或删除重填。");
 			} else if (obj.Code == "1001.4") {
+				/*
+			else if (obj.Code == "1001") {
+				throw new ERR.BodyError(obj.Msg + "\n请检查 BoxJs 中验证码是否正确或删除重填。");
+			}
+			*/
 				$.last = true;
 				$.detail += "今天领取次数用完啦～";
 				throw new ERR.BodyError("今天领取次数用完啦～");
@@ -148,12 +151,12 @@ function getGift() {
 
 function getGiftCode() {
 	return $.post({
-		url: "http://dominos0915.shjimang.com/Ajax/GetGiftCode",
+		url: "https://dominos1102.shjimang.com/ajax/getgiftcode",
 		headers: {
-			Cookie:
-				"Web2006=controller=Home&action=Default&OpenId=" + $.openid + "&m=" + $.phonenum,
+			"Content-Type": "application/json;charset=utf-8",
+			Cookie: "Web2007=controller=Home&action=Default&OpenId=" + $.openid,
 		},
-		body: "id=" + $.giftcode,
+		body: '{"id":"' + $.giftcode + '"}',
 	})
 		.then((resp) => {
 			$.log("getGiftCode: " + JSON.stringify(resp.body));
@@ -172,6 +175,35 @@ function getGiftCode() {
 		.catch((err) => {
 			throw err;
 		});
+}
+
+function getRequestBody() {
+	const reg = /OpenId=((\w|-)*)/;
+	if ($request && $request.method == "POST" && $request.url.indexOf("getgiftD") >= 0) {
+		let openidValue = reg.exec($request.headers["Cookie"])[1];
+		let body = JSON.parse($.request.body);
+		let phonenumValue = body.mobile;
+		let secValue = body.sec;
+		if ($.read("openid") != (undefined || null)) {
+			if (
+				$.read("openid") != openidValue ||
+				$.read("phonenum") != phonenumValue ||
+				$.read("sec") != secValue
+			) {
+				$.write(openidValue, "openid");
+				$.write(phonenumValue, "phonenum");
+				$.write(secValue, "sec");
+				$.notify("更新 " + $.name + " RequestBody 成功 🎉", "", "");
+			}
+		} else {
+			$.write(openidValue, "openid");
+			$.write(phonenumValue, "phonenum");
+			$.write(secValue, "sec");
+			$.notify("首次写入 " + $.name + " RequestBody 成功 🎉", "", "");
+		}
+	} else {
+		$.notify("写入" + $.name + "RequestBody 失败‼️", "", "配置错误, 无法读取请求头。");
+	}
 }
 
 function MYERR() {
