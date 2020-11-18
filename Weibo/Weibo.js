@@ -92,7 +92,7 @@ if ($.isRequest) {
         } else {
             await checkCookie()
             if ($.validCookie) {
-                if ($.choosegroup.includes('Special')) Special()
+                if ($.choosegroup.includes('Special')) await Special()
                 // if ($.choosegroup.includes('Circle')) await Circle()
                 // if ($.choosegroup.includes('Timeline')) await Timeline()
                 if ($.choosegroup.includes('Spider')) await Spider()
@@ -135,7 +135,7 @@ function ParseWeibo(obj) {
     let wbs = obj.data.statuses
     for (let i = wbs.length - 1; i >= 0; i--) { // 试图改变时间线顺序，都是混乱的
 //  for (let i = 0; i< wbs.length; i++) {
-        $.wait($.interval).then(()=>{
+        //$.wait($.interval).then(()=>{
             let Title = '@' + wbs[i].user.screen_name
             let releaseTime = new Date(wbs[i].created_at).getTime()
             let subTitile = '⌚️ ' + new Date(wbs[i].created_at).Format("MM/dd hh:mm:ss")
@@ -177,7 +177,7 @@ function ParseWeibo(obj) {
             }
             detail += '\n\n👉🏼 点击跳转至全文及原微博。'
             if (releaseTime > $.update) $.notify(Title, subTitile, detail, open, showimg)
-        })
+        //})
     }
 }
 
