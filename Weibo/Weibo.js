@@ -136,17 +136,20 @@ function ParseWeibo(obj) {
     for (let i = wbs.length - 1; i >= 0; i--) { // 试图改变时间线顺序，都是混乱的
 //  for (let i = 0; i< wbs.length; i++) {
         //$.wait($.interval).then(()=>{
-            let Title = '@' + wbs[i].user.screen_name
+            let Title = '@'
+            if (wbs[i].user) Title += wbs[i].user.screen_name
             let releaseTime = new Date(wbs[i].created_at).getTime()
             let subTitile = '⌚️ ' + new Date(wbs[i].created_at).Format("MM/dd hh:mm:ss")
             let open = $.openlink + wbs[i].bid
-            let showimg = wbs[i].user.profile_image_url
+            let showimg = wbs[i].user ? wbs[i].user.profile_image_url : 'https://tvax2.sinaimg.cn/crop.0.0.1006.1006.1024/4242e8adly8gdirb4e9q2j20ry0rytbp.jpg'
             let detail = ''
             let newlineReg = /<br \/>/g
             let ignoreReg = /<[^>]+>/g
             detail += wbs[i].text.replace(newlineReg, '\n').replace(ignoreReg, '').trim()
             if (wbs[i].retweeted_status) {
-                detail += '\n\n↪️ 转发自 @' + wbs[i].retweeted_status.user.screen_name + '：\n' + wbs[i].retweeted_status.text.replace(newlineReg, '\n').replace(ignoreReg, '').trim()
+                detail += '\n\n'
+                if (wbs[i].retweeted_status.user) detail += '↪️ 转发自 @' + wbs[i].retweeted_status.user.screen_name + '：\n' 
+                detail += wbs[i].retweeted_status.text.replace(newlineReg, '\n').replace(ignoreReg, '').trim()
                 if (wbs[i].retweeted_status.live_photo) {
                     showimg = wbs[i].retweeted_status.live_photo[0]
                 } else if (wbs[i].retweeted_status.original_pic) {
