@@ -9,12 +9,40 @@
       "id": "zZ.DiDi",
       "name": "滴滴出行",
       "descs_html": [
-        "<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js\">滴滴出行</a>及<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_reward.js\">遗忘的福利金</a>分别为自动每日签到领取福利金及自动领取打车后忘记开的福利金红包的脚本。",
-        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js\">脚本注释</a>进行配置，然后进入\"滴滴出行\"，若弹出\"首次写入滴滴出行 Token 成功\"即可正常食用。",
-        "若无法通过上述方法获取 Token，可使用<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_ticket.js\">此脚本脚本</a>获取 Token，并按照此脚本注释进行配置。"
+        "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js\">脚本注释</a>进行配置，然后进入\"滴滴出行\"，若弹出\"首次写入滴滴出行 Token 成功\"即可正常食用。",
+        "若无法通过上述方法获取 Token，可使用<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_ticket.js\">此脚本脚本</a>获取 Token，并按照此脚本注释进行配置。",
+        "如需使用抢券功能，请设置好抢券时间，同时在抢券前运行一次脚本存储券编号，如不知如何操作请勿修改建议的 cron 设置，请参考 <a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/README.md\">README</a> 。"
       ],
-      "keys": ["DiDi", "DiDi_city"],
+      "keys": ["DiDi", "DiDi_city", "@Didi.drawdelay", "@Didi.actIdPM"],
       "settings": [
+        {
+          "id": "@Didi.debug",
+          "name": "测试环境",
+          "val": false,
+          "type": "boolean",
+          "desc": "如未出现特殊报错等问题请保持关闭。"
+        },
+        {
+          "id": "@Didi.noaff",
+          "name": "不支持作者",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后不使用内置的邀请码，但无法获得需要持续维护的活动编号。"
+        },
+        {
+          "id": "@Didi.isFinance",
+          "name": "滴滴金融",
+          "val": false,
+          "type": "boolean",
+          "desc": "钱包 - 金融服务 - 天天有奖自动签到，即使开启也只自动领取奖品，不使用奖品不会开启滴滴金融服务。由于需要持续维护活动编号，需开启支持作者后使用。"
+        },
+        {
+          "id": "@Didi.isExpenddrawlids",
+          "name": "可能亏损的抽奖",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后，会参与可能亏损的抽奖。由于需要持续维护活动编号，需开启支持作者后使用。"
+        },
         {
           "id": "DiDi",
           "name": "Token",
@@ -30,20 +58,28 @@
           "val": "",
           "type": "number",
           "desc": "滴滴出行城市编号，可更改至别的城市进行测试。"
+        },
+        {
+          "id": "@Didi.drawdelay",
+          "name": "抽奖延迟",
+          "val": "",
+          "type": "number",
+          "placeholder": "2000", 
+          "desc": "每次抽奖之间的间隔，单位为毫秒，不填默认为 2000 毫秒。如提示抽奖过快请加大延迟。"
+        },
+        {
+          "id": "@Didi.actIdPM",
+          "name": "晚八点券",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "晚八点的优惠券编号组（如果有）。"
         }
       ],
       "author": "@zZPiglet",
       "repo": "https://github.com/zZPiglet/Task/blob/master/DiDi/README.md",
-      "scripts": [
-        {
-          "name": "滴滴出行",
-          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js"
-        },
-        {
-          "name": "遗忘的福利金",
-          "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_reward.js"
-        }
-      ],
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/didi.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/didi.png"

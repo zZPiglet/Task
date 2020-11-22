@@ -1,7 +1,7 @@
 # 滴滴出行
 
-"滴滴出行" app 自动签到，支持 Quantumult X（理论上也支持 Surge、Loon，未尝试）。  
-请先按下述方法进行配置，进入"滴滴出行"，若弹出"首次写入滴滴出行 Token 成功"即可正常食用，先手动运行一次脚本，弹出成功后回到"滴滴出行"，点击右上角"天天领福利"查看福利金是否到账，其他提示或无提示请发送日志信息至 issue。  
+"滴滴出行" app 自动签到，支持 Quantumult X、Surge、Loon（理论上也支持 Shadowrocket，未尝试）。  
+请先按下述方法进行配置，进入"滴滴出行"，若弹出"首次写入滴滴出行 Token 成功"即可正常食用，其他提示或无提示请发送日志信息至 issue。  
 到 cron 设定时间自动签到时，若弹出"滴滴出行 - 签到成功"即完成签到，其他提示或无提示请发送日志信息至 issue。
 
 ## ⚠️免责声明：
@@ -16,6 +16,17 @@
 
 ----------
 ## 版本记录：
+- 2020/11/23：  
+重写脚本，请使用 [`DiDi_new.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js) 脚本。  
+测试阶段，可能会出现各种问题，希望因脚本出现问题可及时反馈。  
+若使用此脚本则可以去掉原有的滴滴相关所有脚本，此脚本为整合集，以后也只更新此脚本。  
+aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一些关于抽奖、滴滴金融等之类的功能，因为这些功能需要持续维护活动编号。  
+若希望使用关于“滴滴金融”方面的签到，请在 BoxJs 中开启，此功能默认关闭。  
+相对之前的脚本，此脚本整合进了福利金签到、遗忘的福利金领取、遗忘的积分领取、稳赚的抽奖、金融签到以及抢券（此功能目前只写入了晚八点的券，如需使用请保证 cron 含有晚八点）。  
+由于 iOS 14 通知字数的限制，通知可能不完全（尤其是出行已省、现有部分优惠券及福利金优惠券即将过期的信息），请在日志中查看完整信息。  
+&emsp;待办： 
+  1. 瓜分福利金
+  2. 滴滴公交
 - 2020 / 06 / 13  
     修正 DiDi_reward.js 通知中领取福利金总额的错误。由于暂时想偷懒所以没有采取 `async`、`await` 的写法，若后续考虑合并至主脚本，会更改写法。
 - 2020 / 06 / 12  
@@ -33,6 +44,28 @@
     2. 提示"签到失败‼️ 详情请见日志。"，可将日志信息私发给我。若日志信息含有"500 Server internal error"，且着急签到，可尝试将 aff 改为 false 后运行一次脚本，并反馈是否还存在问题。
 ----------
 ## 配置
+### Quantumult X:
+```properties
+[task_local]
+0 1,20 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js, tag=滴滴出行
+
+[rewrite_local]
+^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+```
+### Surge & Loon:
+```properties
+[Script]
+cron "0 1,20 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+http-request ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+```
+### All apps:
+```properties
+[mitm]
+hostname = as.xiaojukeji.com
+```
+
+
+## 配置（归档）
 ### Quantumult X (App Store:1.0.5+, TestFlight 190+):
 ```properties
 [task_local]
