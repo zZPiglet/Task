@@ -96,25 +96,33 @@ if ($.isRequest) {
 			throw new ERR.TokenError("❌ 未获取或填写 Token");
 		} else {
 			if ($.now >= EIGHT_O_CLOCK_PM - 10 * 1000 && $.now <= EIGHT_O_CLOCK_PM + 60 * 1000) {
-				$.pmids = $.read("actIdPM");
-				await Promise.all(
-					$.pmids.map(async (id) => {
-						await grabCoupons(id);
-					})
-				);
+				$.pmids = isJSON($.read("actIdPM"));
+				if ($.pmids && $.pmids.length) {
+					await Promise.all(
+						$.pmids.map(async (id) => {
+							await grabCoupons(id);
+						})
+					);
+					await $.info("滴滴出行\n" + $.subTitle + "\n" + $.detail);
+					await $.notify("滴滴出行 🚕", $.subTitle, $.detail);
+				}
 				await getIds();
 				if ($.activity_instance_id && Math.random() < $.probability) {
 					await instance();
 				}
 			} else {
 				/* 
-			else if ($.now >= NINE_O_CLOCK_AM - 2 * 1000 && $.now <= NINE_O_CLOCK_AM + 20 * 1000) {
-				$.amids = $.read("actIdAM");
-				await Promise.all(
-					$.amids.map(async (id) => {
-						await grabCoupons(id);
-					})
-				);
+			else if ($.now >= NINE_O_CLOCK_AM - 2 * 1000 && $.now <= NINE_O_CLOCK_AM + 60 * 1000) {
+				$.amids = isJSON($.read("actIdAM"));
+				if ($.amids && $.amids.length) {
+					await Promise.all(
+						$.amids.map(async (id) => {
+							await grabCoupons(id);
+						})
+					);
+					await $.info("滴滴出行\n" + $.subTitle + "\n" + $.detail);
+					await $.notify("滴滴出行 🚕", $.subTitle, $.detail);
+				}
 				await getIds();
 				if ($.activity_instance_id && Math.random() < $.probability) {
 					await instance();
@@ -162,11 +170,15 @@ if ($.isRequest) {
 						await finance();
 					}
 				}
+				await $.info(
+					"滴滴出行\n" + $.subTitle + "\n" + $.detail + $.drawgifts + $.tail + $.expire
+				);
+				await $.notify(
+					"滴滴出行 🚕",
+					$.subTitle,
+					$.detail + $.drawgifts + $.tail + $.expire
+				);
 			}
-			await $.info(
-				"滴滴出行\n" + $.subTitle + "\n" + $.detail + $.drawgifts + $.tail + $.expire
-			);
-			await $.notify("滴滴出行 🚕", $.subTitle, $.detail + $.drawgifts + $.tail + $.expire);
 		}
 	})()
 		.catch((err) => {
@@ -215,14 +227,14 @@ function getIds() {
 		});
 }
 
-function checkin() {
+async function checkin() {
 	let params = "&city_id=" + $.city;
 	if ($.source_id) {
-		let s_i = Choose($.source_id);
-		$.info("Thanks aff to : \n" + s_i);
-		params += "&share_source_id=" + s_i + "&share_date=" + today;
+		$.s_i = await Choose($.source_id);
+		$.info("Thanks aff to : \n" + $.s_i);
+		params += "&share_source_id=" + $.s_i + "&share_date=" + today;
 	}
-	return $.get({
+	await $.get({
 		url: mainURL + "/wechat/benefit/public/index?" + params,
 		headers: {
 			"Didi-Ticket": $.Ticket,
@@ -424,9 +436,7 @@ function pointInfo() {
 function storeActId() {
 	let params = "&city_id=" + $.city;
 	if ($.source_id) {
-		let s_i = Choose($.source_id);
-		$.info("Thanks aff to : \n" + s_i);
-		params += "&share_source_id=" + s_i + "&share_date=" + today;
+		params += "&share_source_id=" + $.s_i + "&share_date=" + today;
 	}
 	return $.get({
 		url:
@@ -440,6 +450,8 @@ function storeActId() {
 		.then((resp) => {
 			$.log("storeActId: " + JSON.stringify(resp.body));
 			let obj = isJSON(resp.body);
+			$.delete("actIdAM");
+			$.delete("actIdPM");
 			if (obj && obj.errno == 0) {
 				for (let a of obj.data.calendar[today]) {
 					if (a.act_conf.receive_start_at) {
@@ -458,8 +470,8 @@ function storeActId() {
 						} else {
 							$.detail += " 未存 ❌";
 						}
-						$.write(actIdAM, "actIdAM");
-						$.write(actIdPM, "actIdPM");
+						$.write(JSON.stringify(actIdAM), "actIdAM");
+						$.write(JSON.stringify(actIdPM), "actIdPM");
 					}
 				}
 				$.tail +=
