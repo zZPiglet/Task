@@ -16,7 +16,9 @@ Author：zZPiglet
 
 ----------
 版本记录：
-- 2020/11/23：
+- 2020 / 11 / 24
+增加从小程序获取 Token。
+- 2020 / 11 / 23
 测试阶段，可能会出现各种问题，希望因脚本出现问题可及时反馈。
 若使用此脚本则可以去掉原有的滴滴相关所有脚本，此脚本为整合集，以后也只更新此脚本。
 aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一些关于抽奖、滴滴金融等之类的功能，因为这些功能需要持续维护活动编号。
@@ -33,15 +35,25 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
 Quantumult X:
 [task_local]
 0 1,20 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js, tag=滴滴出行
-
 [rewrite_local]
+# APP
 ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+# WeChat-MiniApp
+^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 
+Surge:
+[Script]
+滴滴出行 = type=cron,cronexp="0 1,20 * * *",wake-system=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+滴滴出行APPCookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js
+滴滴出行小程序Cookie = type=http-request,pattern=^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js
 
-Surge & Loon:
+Loon、Shadowrocket:
 [Script]
 cron "0 1,20 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+# APP
 http-request ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+# WeChat-MiniApp
+http-request ^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 
 All app:
 [mitm]
@@ -152,12 +164,12 @@ if ($.isRequest) {
 						})
 					);
 				}
+				await reward();
 				await checkin();
 				await pointCollect();
 				await pointSign();
 				await pointInfo();
 				await storeActId();
-				await reward();
 				//await lucina();
 				//await didibus();
 				if ($.activity_instance_id && Math.random() < $.probability) {
@@ -508,7 +520,7 @@ async function reward() {
 	$.rewardtotal = 0;
 	await rewardList();
 	if ($.rewardList) await getReward();
-	if ($.rewardtotal) $.detail += "\n捡回遗忘的 " + $.rewardtotal.toFixed(2) + " 元福利金。";
+	if ($.rewardtotal) $.detail += "捡回遗忘的 " + $.rewardtotal.toFixed(2) + " 元福利金。";
 }
 
 function rewardList() {
@@ -778,10 +790,25 @@ function grabCoupons(id) {
 }
 
 function getToken() {
-	let reg = /^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?.*city=(\d+)&.*ticket=(.*)&/;
-	if (reg.exec($request.url)) {
-		let CityValue = reg.exec($request.url)[1];
-		let TokenValue = decodeURIComponent(reg.exec($request.url)[2]);
+	let appreg = /^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?.*city=(\d+)&.*ticket=(.*?)&/;
+	let minireg = /^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\?.*token=(.*?)&.*cityid=(\d+)/;
+	if (appreg.exec($request.url)) {
+		let CityValue = appreg.exec($request.url)[1];
+		let TokenValue = decodeURIComponent(appreg.exec($request.url)[2]);
+		if ($.read("#DiDi") != (undefined || null)) {
+			if ($.read("#DiDi") != TokenValue || $.read("#DiDi_city") != CityValue) {
+				$.write(TokenValue, "#DiDi");
+				$.write(CityValue, "#DiDi_city");
+				$.notify("更新 " + $.name + " Token 成功 🎉", "", "");
+			}
+		} else {
+			$.write(TokenValue, "#DiDi");
+			$.write(CityValue, "#DiDi_city");
+			$.notify("首次写入 " + $.name + " Token 成功 🎉", "", "");
+		}
+	} else if (minireg.exec($request.url)) {
+		let CityValue = minireg.exec($request.url)[1];
+		let TokenValue = decodeURIComponent(minireg.exec($request.url)[2]);
 		if ($.read("#DiDi") != (undefined || null)) {
 			if ($.read("#DiDi") != TokenValue || $.read("#DiDi_city") != CityValue) {
 				$.write(TokenValue, "#DiDi");
@@ -794,7 +821,7 @@ function getToken() {
 			$.notify("首次写入 " + $.name + " Token 成功 🎉", "", "");
 		}
 	} else {
-		$.notify("写入" + $.name + " Token 失败‼️", "", "配置错误, 无法读取请求头, ");
+		$.notify("写入" + $.name + " Token 失败‼️", "", "请开启定位权限，重开软件重新获取。");
 	}
 }
 

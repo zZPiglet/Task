@@ -16,7 +16,9 @@
 
 ----------
 ## 版本记录：
-- 2020/11/23：  
+- 2020 / 11 / 24  
+增加从小程序获取 Token。
+- 2020 / 11 / 23   
 重写脚本，请使用 [`DiDi_new.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js) 脚本。  
 测试阶段，可能会出现各种问题，希望因脚本出现问题可及时反馈。  
 若使用此脚本则可以去掉原有的滴滴相关所有脚本，此脚本为整合集，以后也只更新此脚本。  
@@ -38,7 +40,7 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
     _**测试阶段**_，可能会出现各种问题，希望因脚本出现问题可及时反馈。  
     增加自动签到领取福利金。  
     脚本中使用了我的邀请打卡 aff（每日最多 5 次，每次 60 福利金。），若不希望使用，可将 aff 改为 false。  
-    **代办**：增加自动领取打车后未领取的福利金/打车金。  
+    **待办**：增加自动领取打车后未领取的福利金/打车金。  
     **常见错误**：
     1. 若是 Token 获取问题请先自行排查重写及主机名是否正确，若均正确且日志无报错的情况下无法获取，请反馈，并最好能提供抓包记录（打开抓包软件，然后再进入滴滴，进入打车的界面之后关闭抓包的软件，导出这个包私发给我就行）。
     2. 提示"签到失败‼️ 详情请见日志。"，可将日志信息私发给我。若日志信息含有"500 Server internal error"，且着急签到，可尝试将 aff 改为 false 后运行一次脚本，并反馈是否还存在问题。
@@ -48,15 +50,27 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
 ```properties
 [task_local]
 0 1,20 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js, tag=滴滴出行
-
 [rewrite_local]
+# APP
 ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+# WeChat-MiniApp
+^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 ```
-### Surge & Loon:
+### Surge:
+```properties
+[Script]
+滴滴出行 = type=cron,cronexp="0 1,20 * * *",wake-system=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+滴滴出行APPCookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js
+滴滴出行小程序Cookie = type=http-request,pattern=^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js
+```
+### Loon、Shadowrocket:
 ```properties
 [Script]
 cron "0 1,20 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+# APP
 http-request ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+# WeChat-MiniApp
+http-request ^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 ```
 ### All apps:
 ```properties
