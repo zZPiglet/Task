@@ -44,8 +44,8 @@ Quantumult X:
 Surge:
 [Script]
 滴滴出行 = type=cron,cronexp="0 1,20 * * *",wake-system=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
-滴滴出行APPCookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js
-滴滴出行小程序Cookie = type=http-request,pattern=^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js
+滴滴出行APPCookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+滴滴出行小程序Cookie = type=http-request,pattern=^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 
 Loon、Shadowrocket:
 [Script]
@@ -68,6 +68,7 @@ const ERR = MYERR();
 $.subTitle = "";
 $.detail = "";
 $.drawgifts = "";
+$.couponids = "";
 $.tail = "";
 $.expire = "";
 const mainURL = "https://bosp-api.xiaojukeji.com";
@@ -142,6 +143,14 @@ if ($.isRequest) {
 			}  
 			*/
 				if (aff) await getIds();
+				$.checkinParams = "&city_id=" + $.city;
+				if ($.source_id) {
+					let s_i = await Choose($.source_id);
+					$.info("Thanks try to aff to : \n" + s_i);
+					$.checkinParams += "&share_source_id=" + s_i + "&share_date=" + today;
+				}
+				await checkin();
+				await storeActId();
 				if ($.drawlids) {
 					await Promise.all(
 						$.drawlids.map(async (lid) => {
@@ -165,11 +174,9 @@ if ($.isRequest) {
 					);
 				}
 				await reward();
-				await checkin();
 				await pointCollect();
 				await pointSign();
 				await pointInfo();
-				await storeActId();
 				//await lucina();
 				//await didibus();
 				if ($.activity_instance_id && Math.random() < $.probability) {
@@ -183,12 +190,19 @@ if ($.isRequest) {
 					}
 				}
 				await $.info(
-					"滴滴出行\n" + $.subTitle + "\n" + $.detail + $.drawgifts + $.tail + $.expire
+					"滴滴出行\n" +
+						$.subTitle +
+						"\n" +
+						$.detail +
+						$.couponids +
+						$.drawgifts +
+						$.tail +
+						$.expire
 				);
 				await $.notify(
 					"滴滴出行 🚕",
 					$.subTitle,
-					$.detail + $.drawgifts + $.tail + $.expire
+					$.detail + $.couponids + $.drawgifts + $.tail + $.expire
 				);
 			}
 		}
@@ -241,15 +255,9 @@ function getIds() {
 		});
 }
 
-async function checkin() {
-	let params = "&city_id=" + $.city;
-	if ($.source_id) {
-		$.s_i = await Choose($.source_id);
-		$.info("Thanks aff to : \n" + $.s_i);
-		params += "&share_source_id=" + $.s_i + "&share_date=" + today;
-	}
-	await $.get({
-		url: mainURL + "/wechat/benefit/public/index?" + params,
+function checkin() {
+	return $.get({
+		url: mainURL + "/wechat/benefit/public/index?" + $.checkinParams,
 		headers: {
 			"Didi-Ticket": $.Ticket,
 		},
@@ -273,8 +281,11 @@ async function checkin() {
 					}
 					let total = obj.data.welfare.balance;
 					$.detail += "账户共有 " + total + " 福利金，可抵扣 " + total / 100 + " 元。";
-					for (let message of obj.data.notification.reverse()) {
-						$.expire += "\n" + message;
+					if (obj.data.message && obj.data.message.text) $.info(obj.data.message.text);
+					if (obj.data.notification) {
+						for (let message of obj.data.notification.reverse()) {
+							$.expire += "\n" + message;
+						}
 					}
 				} else if (obj && obj.errno == 101) {
 					throw new ERR.TokenError("签到失败‼️ 城市代码错误。");
@@ -285,6 +296,76 @@ async function checkin() {
 							JSON.stringify(resp.body)
 					);
 				}
+			}
+		})
+		.catch((err) => {
+			throw err;
+		});
+}
+
+function storeActId() {
+	return $.get({
+		url:
+			mainURL +
+			"/wechat/benefit/public/v2/index?%7B%22resource_name%22:%22welfare_through_train_calendar%22%7D" +
+			$.checkinParams,
+		headers: {
+			"Didi-Ticket": $.Ticket,
+		},
+	})
+		.then((resp) => {
+			$.log("storeActId: " + JSON.stringify(resp.body));
+			let obj = isJSON(resp.body);
+			$.delete("actIdAM");
+			$.delete("actIdPM");
+			if (obj && obj.errno == 0) {
+				let actIdAM = [];
+				let actIdPM = [];
+				for (let a of obj.data.calendar[today]) {
+					if (a.act_conf.receive_start_at) {
+						if (a.act_conf.receive_start_at.match("09:00:00")) {
+							actIdAM.push(a.act_id);
+							$.info(a.act_conf.receive_start_at + ": " + a.act_id + " 已存 ✅");
+							//$.detail += "\n券编号：" + a.act_conf.receive_start_at + ": " + a.act_id;
+							//$.couponids += " 已存 ✅";
+						} else if (a.act_conf.receive_start_at.match("20:00:00")) {
+							actIdPM.push(a.act_id);
+							$.info(a.act_conf.receive_start_at + ": " + a.act_id + " 已存 ✅");
+							$.couponids +=
+								"\n券编号：" + a.act_conf.receive_start_at + ": " + a.act_id;
+							$.couponids += " 已存 ✅";
+						} else {
+							$.info(a.act_conf.receive_start_at + ": " + a.act_id + " 未存 ❌");
+							//$.couponids += "\n券编号：" + a.act_conf.receive_start_at + ": " + a.act_id;
+							//$.couponids += " 未存 ❌";
+						}
+					}
+				}
+				$.write(JSON.stringify(actIdAM), "actIdAM");
+				$.write(JSON.stringify(actIdPM), "actIdPM");
+				$.tail +=
+					"\n\n" +
+					obj.data.greeting.text.substr(3) +
+					"，现有" +
+					obj.data.coupon.carousel_text[0].slice(0, -1) +
+					" 张";
+				if (obj.data.coupon.carousel_text.length == 1) {
+					$.tail += "。";
+				} else {
+					$.tail += "，含：";
+					for (let i = 1; i < obj.data.coupon.carousel_text.length; i++) {
+						$.tail += obj.data.coupon.carousel_text[i].substr(1) + "、";
+					}
+					$.tail += "...";
+				}
+				$.info("DiDi source_id : \n" + obj.data.share.source_id);
+				$.info("DiDi new_source_id : \n" + obj.data.share.new_source_id);
+			} else {
+				$.error(resp.body);
+				throw new ERR.BodyError(
+					"查询优惠券返回错误，请在 BoxJs 中开启调试模式运行后反馈日志。\n" +
+						JSON.stringify(resp.body)
+				);
 			}
 		})
 		.catch((err) => {
@@ -374,7 +455,7 @@ function getPointSignDay() {
 		.then((resp) => {
 			$.log("getPointSignDay: " + JSON.stringify(resp.body));
 			let obj = JSON.parse(resp.body);
-			$.pointSignDay = obj.signins.length + 1;
+			$.pointSignDay = obj.signins.length + 1 > 7 ? 7 : obj.signins.length + 1;
 		})
 		.catch((err) => {
 			throw err;
@@ -447,80 +528,6 @@ function pointInfo() {
 		})
 		.catch((err) => {
 			$.error(err);
-		});
-}
-
-function storeActId() {
-	let params = "&city_id=" + $.city;
-	if ($.source_id) {
-		params += "&share_source_id=" + $.s_i + "&share_date=" + today;
-	}
-	return $.get({
-		url:
-			mainURL +
-			"/wechat/benefit/public/v2/index?%7B%22resource_name%22:%22welfare_through_train_calendar%22%7D" +
-			params,
-		headers: {
-			"Didi-Ticket": $.Ticket,
-		},
-	})
-		.then((resp) => {
-			$.log("storeActId: " + JSON.stringify(resp.body));
-			let obj = isJSON(resp.body);
-			$.delete("actIdAM");
-			$.delete("actIdPM");
-			if (obj && obj.errno == 0) {
-				let actIdAM = [];
-				let actIdPM = [];
-				for (let a of obj.data.calendar[today]) {
-					if (a.act_conf.receive_start_at) {
-						if (a.act_conf.receive_start_at.match("09:00:00")) {
-							actIdAM.push(a.act_id);
-							$.info(a.act_conf.receive_start_at + ": " + a.act_id + " 已存 ✅");
-							//$.write(a.act_id, "actIdAM");
-							//$.detail += " 已存 ✅";
-						} else if (a.act_conf.receive_start_at.match("20:00:00")) {
-							actIdPM.push(a.act_id);
-							//$.write(a.act_id, "actIdPM");
-							$.info(a.act_conf.receive_start_at + ": " + a.act_id + " 已存 ✅");
-							$.detail +=
-								"\n券编号：" + a.act_conf.receive_start_at + ": " + a.act_id;
-							$.detail += " 已存 ✅";
-						} else {
-							$.info(a.act_conf.receive_start_at + ": " + a.act_id + " 未存 ❌");
-							//$.detail += " 未存 ❌";
-						}
-					}
-				}
-				$.write(JSON.stringify(actIdAM), "actIdAM");
-				$.write(JSON.stringify(actIdPM), "actIdPM");
-				$.tail +=
-					"\n\n" +
-					obj.data.greeting.text.substr(3) +
-					"，现有" +
-					obj.data.coupon.carousel_text[0].slice(0, -1) +
-					" 张";
-				if (obj.data.coupon.carousel_text.length == 1) {
-					$.tail += "。";
-				} else {
-					$.tail += "，含：";
-					for (let i = 1; i < obj.data.coupon.carousel_text.length; i++) {
-						$.tail += obj.data.coupon.carousel_text[i].substr(1) + "、";
-					}
-					$.tail += "...";
-				}
-				$.info("DiDi source_id : \n" + obj.data.share.source_id);
-				$.info("DiDi new_source_id : \n" + obj.data.share.new_source_id);
-			} else {
-				$.error(resp.body);
-				throw new ERR.BodyError(
-					"查询优惠券返回错误，请在 BoxJs 中开启调试模式运行后反馈日志。\n" +
-						JSON.stringify(resp.body)
-				);
-			}
-		})
-		.catch((err) => {
-			throw err;
 		});
 }
 
