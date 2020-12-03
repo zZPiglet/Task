@@ -71,6 +71,7 @@ $.drawgifts = "";
 $.couponids = "";
 $.tail = "";
 $.expire = "";
+$.times = {};
 const mainURL = "https://bosp-api.xiaojukeji.com";
 const awardURL = "https://api.udache.com/gulfstream/passenger/v2/other";
 const financeURL =
@@ -154,8 +155,8 @@ if ($.isRequest) {
 				if ($.drawlids) {
 					await Promise.all(
 						$.drawlids.map(async (lid) => {
-							$.times = 1;
-							while ($.times) {
+							$.times[lid] = 1;
+							while ($.times[lid]) {
 								await draw(lid);
 								await share(lid);
 							}
@@ -165,8 +166,8 @@ if ($.isRequest) {
 				if ($.isExpenddrawlids && $.expenddrawlids) {
 					await Promise.all(
 						$.expenddrawlids.map(async (lid) => {
-							$.times = 1;
-							while ($.times) {
+							$.times[lid] = 1;
+							while ($.times[lid]) {
 								await draw(lid);
 								await share(lid);
 							}
@@ -612,9 +613,9 @@ function draw(lid) {
 			let obj = JSON.parse(resp.body);
 			if (obj.code == 0) {
 				$.drawgifts += "\n" + obj.data.prize.name + "：" + obj.data.prize.win_content;
-				$.times = obj.data.userinfo.draw_times;
+				$.times[lid] = obj.data.userinfo.draw_times;
 			} else {
-				$.times = 0;
+				$.times[lid] = 0;
 				$.info(lid + ": " + obj.message);
 			}
 		})
@@ -638,7 +639,7 @@ function share(lid) {
 		.then((resp) => {
 			$.log(lid + " share: " + JSON.stringify(resp.body));
 			let obj = JSON.parse(resp.body);
-			$.times += obj.data.incr_num;
+			$.times[lid] += obj.data.incr_num;
 		})
 		.catch((err) => {
 			$.error("share " + lid + ": \n");
