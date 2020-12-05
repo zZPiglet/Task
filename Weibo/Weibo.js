@@ -158,6 +158,8 @@ function ParseWeibo(obj) {
                     let type = wbs[i].retweeted_status.page_info.type
                     if (type == 'video') {
                         showimg = wbs[i].retweeted_status.page_info.media_info.stream_url_hd
+                    } else if (type == 'story') {
+                        showimg = wbs[i].retweeted_status.page_info.slide_cover[0].pic
                     } else {
                         showimg = wbs[i].retweeted_status.page_info.page_pic.url
                         $.log(JSON.stringify(wbs[i].retweeted_status.page_info))
@@ -172,6 +174,8 @@ function ParseWeibo(obj) {
                     let type = wbs[i].page_info.type
                     if (type == 'video') {
                         showimg = wbs[i].page_info.media_info.stream_url_hd
+                    } else if (type == 'story') {
+                        showimg = wbs[i].page_info.slide_cover[0].pic
                     } else {
                         showimg = wbs[i].page_info.page_pic.url
                         $.log(JSON.stringify(wbs[i].page_info))
