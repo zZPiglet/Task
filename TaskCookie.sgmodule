@@ -18,17 +18,11 @@
 # 便利蜂
 便利蜂Cookie = type=http-request,pattern=^https:\/\/h5\.bianlifeng\.com\/meepo\/taskCenter\/home\/v\d,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Blibee/Blibee.js
 
-# 微信小程序 - 奈雪点单
-奈雪点单Cookie = type=http-request,pattern=^https:\/\/webapi\.qmai\.cn\/web\/cy\/v\d\/store\/template-scene,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Naixue/Naixue.js
-
 # 滴滴出行
 滴滴出行Cookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js
 
 # 网易云音乐
 网易云音乐Cookie = type=http-request,pattern=^https:\/\/music.163.com\/weapi\/user\/level,requires-body=1,script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/neteasemusic/neteasemusic.cookie.js
-
-# 115
-115Cookie = type=http-request,pattern=^https?:\/\/proapi\.115\.com\/ios\/user\/takespc\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/115/115.js
 
 # 万达电影
 万达电影Cookie = type=http-request,pattern=^https:\/\/user-api-prd-mx\.wandafilm\.com,script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/wanda/wanda.cookie.js
@@ -42,12 +36,6 @@
 # 微博通知
 微博通知Cookie = type=http-request,pattern=^https:\/\/m\.weibo\.cn\/feed\/,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Weibo/Weibo.js
 
-# 小黑盒
-小黑盒Cookie = type=http-request,pattern=^https:\/\/api\.xiaoheihe\.cn\/account\/home_v\d\/\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/heybox/heybox.js
-
-# 豆瓣·电影日历
-豆瓣电影日历Cookie = type=http-request,pattern=^https:\/\/frodo\.douban\.com\/api\/v\d\/calendar\/today,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js
-
 # 微信公众号 - 达美乐比萨
 达美乐披萨Cookie = type=http-request,pattern=^https?:\/\/dominos\d{4}\.shjimang\.com\/ajax\/getgiftD,requires-body=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getGift.js
 
@@ -58,4 +46,4 @@
 小米运动Cookie = type=http-response,pattern=^https:\/\/account\.huami\.com\/v2\/client\/login,requires-body=1,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/backUp/xmSports.js
 
 [MITM]
-hostname = %APPEND% api.m.jd.com, ifac*.iqiyi.com, h5.ele.me, teacherapi.zmlearn.com, h5.bianlifeng.com, webapi.qmai.cn, as.xiaojukeji.com, music.163.com, proapi.115.com, user-api-prd-mx.wandafilm.com, mall.oclean.com, m.weibo.cn, api.xiaoheihe.cn, frodo.douban.com, dominos*.shjimang.com, cloud.umetrip.com, account.huami.com
+hostname = %APPEND% api.m.jd.com, ifac*.iqiyi.com, h5.ele.me, *.rr.tv, teacherapi.zmlearn.com, superapp.kiwa-tech.com, activity-1.m.duiba.com.cn, h5.bianlifeng.com, as.xiaojukeji.com, music.163.com, user-api-prd-mx.wandafilm.com, mall.oclean.com, m.weibo.cn, dominos*.shjimang.com, cloud.umetrip.com, account.huami.com
