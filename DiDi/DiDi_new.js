@@ -17,7 +17,7 @@ Author：zZPiglet
 ----------
 版本记录：
 - 2020 / 11 / 24
-增加从小程序获取 Token。
+增加从微信小程序获取 Token，从 App 或微信小程序获取任选一个即可。
 - 2020 / 11 / 23
 测试阶段，可能会出现各种问题，希望因脚本出现问题可及时反馈。
 若使用此脚本则可以去掉原有的滴滴相关所有脚本，此脚本为整合集，以后也只更新此脚本。
@@ -57,7 +57,7 @@ http-request ^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? scr
 
 All app:
 [mitm]
-hostname = as.xiaojukeji.com
+hostname = as.xiaojukeji.com, common.diditaxi.com.cn // 前者为 App 获取，或者为微信小程序获取
 
 获取完 Token 后可不注释 rewrite / hostname，Token 更新时会弹窗。若因 MitM 导致该软件或小程序网络不稳定，可注释掉 hostname。
 */
@@ -834,8 +834,8 @@ function getToken() {
 			$.notify("首次写入 " + $.name + " Token 成功 🎉", "", "");
 		}
 	} else if (minireg.exec($request.url)) {
-		let CityValue = minireg.exec($request.url)[1];
-		let TokenValue = decodeURIComponent(minireg.exec($request.url)[2]);
+		let CityValue = minireg.exec($request.url)[2];
+		let TokenValue = decodeURIComponent(minireg.exec($request.url)[1]);
 		if ($.read("#DiDi") != (undefined || null)) {
 			if ($.read("#DiDi") != TokenValue || $.read("#DiDi_city") != CityValue) {
 				$.write(TokenValue, "#DiDi");

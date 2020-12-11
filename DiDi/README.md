@@ -17,7 +17,7 @@
 ----------
 ## 版本记录：
 - 2020 / 11 / 24  
-增加从小程序获取 Token。
+增加从微信小程序获取 Token，从 App 或微信小程序获取任选一个即可。
 - 2020 / 11 / 23   
 重写脚本，请使用 [`DiDi_new.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js) 脚本。  
 测试阶段，可能会出现各种问题，希望因脚本出现问题可及时反馈。  
@@ -75,7 +75,7 @@ http-request ^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? scr
 ### All apps:
 ```properties
 [mitm]
-hostname = as.xiaojukeji.com
+hostname = as.xiaojukeji.com, common.diditaxi.com.cn // 前者为 App 获取，或者为微信小程序获取
 ```
 
 
