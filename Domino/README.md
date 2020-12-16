@@ -17,6 +17,8 @@
 
 ----------
 ## 版本记录：
+- 2020 / 12 / 17
+    更新至 1214 活动，已获取过信息的可能需要在公众号进入一次有奖游戏界面后再运行脚本（无需重新获取）。
 - 2020 / 11 / 16
     此版本活动无需每次输入验证码，首次活动绑定后即可。故此次为自动版本，请对[`Domino_getGift.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getGift.js) 设置定时任务。  
     >> 注意：此次更新需要更改定时任务脚本，且更改 rewrite 正则，rewrite 脚本需更改为[`Domino_getGift.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getGift.js)。
@@ -27,7 +29,7 @@
     由于每次获取奖励均需要验证码，故此为半自动版本。  
     且由于验证码有效期为 10 分钟，请对 [`Domino_getSMS.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js) 设置使用手机时段对 cron，到 cron 设定时间自动签到时，若弹出"达美乐 - 点击填写验证码"表示成功，请点击通知跳转至 BoxJs 填写验证码并保存，再手动执 行「获取奖励」脚本即可，其他提示或无提示请发送日志信息至 issue。注意每日可以获取三次奖励。  
 ----------
-## 配置 (1102 活动，全自动)
+## 配置 (1214 / 1102 活动，全自动)
 ### Quantumult X:
 ```properties
 [task_local]

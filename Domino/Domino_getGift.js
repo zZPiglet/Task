@@ -20,14 +20,15 @@ $.openid = $.read("openid");
 $.phonenum = $.read("phonenum");
 $.sec = $.read("sec");
 //$.smscode = $.read("smscode");
-$.score = Number($.read("score") || 200);
+$.score = Number($.read("score") || 1000) + Math.floor(Math.random() * 10);
 
 const gift =
-	"\n一等奖：免费 9″ 手拍巴伐利亚风味猪肘比萨 1 个（共3000个）（需任意消费）" +
-	"\n二等奖：半价 9″ 手拍巴伐利亚风味猪肘比萨 1 个（共5000个）（需任意消费）" +
-	"\n三等奖：免费芝香培根菌菇焗饭一份（需购买任意比萨后使用） （共 15000 份）" +
-	"\n四等奖：免费蜜汁烤翅一对（需购买任意比萨后使用） （共 40000 份）" +
-	"\n五等奖：免费热饮一份（需购买任意比萨后使用）（人人有礼，未获得 1-4 等奖的参与者均可得）";
+	"\n一等奖：免费 9″ 手拍日式照烧滋烤鳗鱼比萨 1 个（共3000个）（需任意消费）" +
+	"\n二等奖：半价 9″ 手拍日式照烧滋烤鳗鱼比萨 1 个（共5000个）（需任意消费）" +
+	"\n三等奖：免费椰香咖喱鸡肉意面一份（需购买任意比萨后使用） （共 15000 份）" +
+	"\n四等奖：免费樟茶风味烤翅一对（需购买任意比萨后使用） （共 40000 份）" +
+	"\n五等奖：免费蛋挞一对（需购买任意比萨后使用）（人人有礼，未获得 1-4 等奖的参与者均可得）" +
+	"\n1-4 等奖抽完即止，中奖率为实际抽出奖项个数与参与抽奖人数之比，未获得 1-4 等奖的参与者均可得 5 等奖。所有电子券兑换截止日期：2021 年 2 月 14 日。";
 
 const giftname = {
 	1: "一等奖",
@@ -87,21 +88,27 @@ const giftname = {
 
 function getRank() {
 	return $.post({
-		url: "https://dominos1102.shjimang.com/ajax/getrank",
+		url: "http://dominos1214.shjimang.com/ajax/GetRank",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
-			Cookie: "Web2007=controller=Home&action=Default&OpenId=" + $.openid,
+			Cookie: "Web2008=controller=Home&action=Default&OpenId=" + $.openid,
 		},
 		body: '{"score":' + $.score + ',"sec":"' + $.sec + '"}',
 	})
 		.then((resp) => {
 			if (resp.statusCode == 200) {
 				$.log("getRank: " + JSON.stringify(resp.body));
-				let obj = JSON.parse(resp.body);
-				if (obj.Code == "1000") {
-					$.flag = true;
+				let obj = isJSON(resp.body);
+				if (obj) {
+					if (obj.Code == "1000") {
+						$.flag = true;
+					} else {
+						$.flag = false;
+					}
 				} else {
-					$.flag = false;
+					throw new ERR.RequestBodyError(
+						'验证信息已过期，请再次访问公众号"达美乐比萨" - "优惠｜咨询" - "有奖游戏"，无需进行游戏，访问后即可执行脚本。'
+					);
 				}
 			} else {
 				throw new ERR.RequestBodyError(
@@ -116,10 +123,10 @@ function getRank() {
 
 function getGift() {
 	return $.post({
-		url: "https://dominos1102.shjimang.com/ajax/getgiftD",
+		url: "http://dominos1214.shjimang.com/ajax/GetGiftD",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
-			Cookie: "Web2007=controller=Home&action=Default&OpenId=" + $.openid + "&id=",
+			Cookie: "Web2008=controller=Home&action=Default&OpenId=" + $.openid + "&id=",
 		},
 		body: '{"mobile":"' + $.phonenum + '","sec":"' + $.sec + '"}',
 	})
@@ -151,10 +158,10 @@ function getGift() {
 
 function getGiftCode() {
 	return $.post({
-		url: "https://dominos1102.shjimang.com/ajax/getgiftcode",
+		url: "http://dominos1214.shjimang.com/ajax/GetGiftCode",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
-			Cookie: "Web2007=controller=Home&action=Default&OpenId=" + $.openid,
+			Cookie: "Web2008=controller=Home&action=Default&OpenId=" + $.openid,
 		},
 		body: '{"id":"' + $.giftcode + '"}',
 	})
@@ -235,6 +242,9 @@ function MYERR() {
 	};
 }
 
+// prettier-ignore
+// isJSON
+function isJSON(t){if("string"==typeof t)try{let r=JSON.parse(t);return!("object"!=typeof r||!r)&&r}catch(t){return!1}return!1}
 // prettier-ignore
 // OpenAPI by Peng-YM, modified by zZPiglet
 function API(s="untitled",t=!1){return new class{constructor(s,t){this.name=s,this.debug=t,this.isRequest="undefined"!=typeof $request,this.isQX="undefined"!=typeof $task,this.isLoon="undefined"!=typeof $loon,this.isSurge="undefined"!=typeof $httpClient&&!this.isLoon,this.isNode="function"==typeof require,this.isJSBox=this.isNode&&"undefined"!=typeof $jsbox,this.node=(()=>{if(this.isNode){const s="undefined"!=typeof $request?void 0:require("request"),t=require("fs");return{request:s,fs:t}}return null})(),this.initCache();const e=(s,t)=>new Promise(function(e){setTimeout(e.bind(null,t),s)});Promise.prototype.delay=function(s){return this.then(function(t){return e(s,t)})}}get(s){return this.isQX?("string"==typeof s&&(s={url:s,method:"GET"}),$task.fetch(s)):new Promise((t,e)=>{this.isLoon||this.isSurge?$httpClient.get(s,(s,i,o)=>{s?e(s):t({statusCode:i.status,headers:i.headers,body:o})}):this.node.request(s,(s,i,o)=>{s?e(s):t({...i,statusCode:i.statusCode,body:o})})})}post(s){return this.isQX?("string"==typeof s&&(s={url:s}),s.method="POST",$task.fetch(s)):new Promise((t,e)=>{this.isLoon||this.isSurge?$httpClient.post(s,(s,i,o)=>{s?e(s):t({statusCode:i.status,headers:i.headers,body:o})}):this.node.request.post(s,(s,i,o)=>{s?e(s):t({...i,statusCode:i.statusCode,body:o})})})}initCache(){if(this.isQX&&(this.cache=JSON.parse($prefs.valueForKey(this.name)||"{}")),(this.isLoon||this.isSurge)&&(this.cache=JSON.parse($persistentStore.read(this.name)||"{}")),this.isNode){let s="root.json";this.node.fs.existsSync(s)||this.node.fs.writeFileSync(s,JSON.stringify({}),{flag:"wx"},s=>console.log(s)),this.root={},s=`${this.name}.json`,this.node.fs.existsSync(s)?this.cache=JSON.parse(this.node.fs.readFileSync(`${this.name}.json`)):(this.node.fs.writeFileSync(s,JSON.stringify({}),{flag:"wx"},s=>console.log(s)),this.cache={})}}persistCache(){const s=JSON.stringify(this.cache);this.isQX&&$prefs.setValueForKey(s,this.name),(this.isLoon||this.isSurge)&&$persistentStore.write(s,this.name),this.isNode&&(this.node.fs.writeFileSync(`${this.name}.json`,s,{flag:"w"},s=>console.log(s)),this.node.fs.writeFileSync("root.json",JSON.stringify(this.root),{flag:"w"},s=>console.log(s)))}write(s,t){this.log(`SET ${t}`),-1!==t.indexOf("#")?(t=t.substr(1),(this.isSurge||this.isLoon)&&$persistentStore.write(s,t),this.isQX&&$prefs.setValueForKey(s,t),this.isNode&&(this.root[t]=s)):this.cache[t]=s,this.persistCache()}read(s){return this.log(`READ ${s}`),-1===s.indexOf("#")?this.cache[s]:(s=s.substr(1),this.isSurge||this.isLoon?$persistentStore.read(s):this.isQX?$prefs.valueForKey(s):this.isNode?this.root[s]:void 0)}delete(s){this.log(`DELETE ${s}`),-1!==s.indexOf("#")?(s=s.substr(1),(this.isSurge||this.isLoon)&&$persistentStore.write(null,s),this.isQX&&$prefs.removeValueForKey(s),this.isNode&&delete this.root[s]):delete this.cache[s],this.persistCache()}notify(t=s,e="",i="",o,n){if(this.isSurge){let s=i+(null==n?"":`\n\n多媒体链接：${n}`),r={};o&&(r.url=o),"{}"==JSON.stringify(r)?$notification.post(t,e,s):$notification.post(t,e,s,r)}if(this.isQX){let s={};o&&(s["open-url"]=o),n&&(s["media-url"]=n),"{}"==JSON.stringify(s)?$notify(t,e,i):$notify(t,e,i,s)}if(this.isLoon){let s={};o&&(s.openUrl=o),n&&(s.mediaUrl=n),"{}"==JSON.stringify(s)?$notification.post(t,e,i):$notification.post(t,e,i,s)}if(this.isNode){let s=i+(null==o?"":`\n\n跳转链接：${o}`)+(null==n?"":`\n\n多媒体链接：${n}`);if(this.isJSBox){const i=require("push");i.schedule({title:t,body:e?e+"\n"+s:s})}else console.log(`${t}\n${e}\n${s}\n\n`)}}log(s){this.debug&&console.log(s)}info(s){console.log(s)}error(s){console.log("ERROR: "+s)}wait(s){return new Promise(t=>setTimeout(t,s))}done(s={}){this.isQX||this.isLoon||this.isSurge?this.isRequest?$done(s):$done():this.isNode&&!this.isJSBox&&"undefined"!=typeof $context&&($context.headers=s.headers,$context.statusCode=s.statusCode,$context.body=s.body)}}(s,t)}
