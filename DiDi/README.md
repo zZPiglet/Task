@@ -17,7 +17,7 @@
 ----------
 ## 版本记录：
 - 2020 / 11 / 24  
-增加从微信小程序获取 Token，从 App 或微信小程序获取任选一个即可。
+增加从小程序获取 Token，从 App 或小程序获取任选一个即可。
 - 2020 / 11 / 23   
 重写脚本，请使用 [`DiDi_new.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js) 脚本。  
 测试阶段，可能会出现各种问题，希望因脚本出现问题可及时反馈。  
@@ -53,7 +53,7 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
 [rewrite_local]
 # APP
 ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
-# WeChat-MiniApp
+# MiniApp
 ^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 ```
 ### Surge:
@@ -69,7 +69,7 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
 cron "0 1,20 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 # APP
 http-request ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
-# WeChat-MiniApp
+# MiniApp
 http-request ^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 ```
 ### All apps:

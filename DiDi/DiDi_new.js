@@ -38,7 +38,7 @@ Quantumult X:
 [rewrite_local]
 # APP
 ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
-# WeChat-MiniApp
+# MiniApp
 ^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 
 Surge:
@@ -152,6 +152,7 @@ if ($.isRequest) {
 				}
 				await checkin();
 				await storeActId();
+				await reward();
 				if ($.drawlids) {
 					await Promise.all(
 						$.drawlids.map(async (lid) => {
@@ -174,7 +175,6 @@ if ($.isRequest) {
 						})
 					);
 				}
-				await reward();
 				await pointCollect();
 				await pointSign();
 				await pointInfo();
