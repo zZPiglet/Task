@@ -1,6 +1,17 @@
 #!name=Q-Search(zZPiglet, for personal use)
 #!desc=Safari Search Add-ons, modified from 🐩️哥 (https://raw.githubusercontent.com/Neurogram-R/Surge/master/module/Q-Search.sgmodule)
 
+[Script]
+# dlc xxx (DeepL 译至中)
+DeepLtoChinese = type=http-request,pattern=^https:\/\/duckduckgo.com\/\?q=dlc(\+|%20)([^&]+).+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+
+# dle xxx (DeepL 译至英)
+DeepLtoEnglish = type=http-request,pattern=^https:\/\/duckduckgo.com\/\?q=dle(\+|%20)([^&]+).+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+
+# dlj xxx (DeepL 译至日)
+DeepLtoJapanese = type=http-request,pattern=^https:\/\/duckduckgo.com\/\?q=dlj(\+|%20)([^&]+).+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+
+
 [URL Rewrite]
 # wiki xxx (Wikipedia)
 ^https:\/\/duckduckgo.com\/\?q=wiki(\+|%20)([^&]+).+ https://wikipedia.org/wiki/$2 302
@@ -34,15 +45,6 @@
 
 # trj xxx (Google 译至日)
 ^https:\/\/duckduckgo.com\/\?q=trj(\+|%20)([^&]+).+ https://translate.google.com/#view=home&op=translate&sl=auto&tl=ja&text=$2 302
-
-# dlc xxx (DeepL 译至中)
-^https:\/\/duckduckgo.com\/\?q=dlc(\+|%20)([^&]+).+ https://www.deepl.com/translator#auto/zh/$2 302
-
-# dle xxx (DeepL 译至英)
-^https:\/\/duckduckgo.com\/\?q=dle(\+|%20)([^&]+).+ https://www.deepl.com/translator#auto/en/$2 302
-
-# dlj xxx (DeepL 译至日)
-^https:\/\/duckduckgo.com\/\?q=dlj(\+|%20)([^&]+).+ https://www.deepl.com/translator#auto/ja/$2 302
 
 # sspai xxx (少数派站内搜索)
 ^https:\/\/duckduckgo.com\/\?q=sspai(\+|%20)([^&]+).+ https://sspai.com/search/post/$2 302
@@ -87,7 +89,7 @@
 ^https:\/\/duckduckgo.com\/\?q=ddg(\+|%20)([^&]+).+ https://duckduckgo.com/?ia=about&q=$2 302
 
 # xxx （无指令默认为 Google）
-^https:\/\/duckduckgo.com\/\?q=([^&]+).+ https://www.google.com/search?q=$1 302
+^https:\/\/duckduckgo.com\/\?q=(?!dl(c|e|j)(\+|%20))([^&]+).+ https://www.google.com/search?q=$3 302
 
 [MITM]
 hostname = %APPEND% duckduckgo.com
