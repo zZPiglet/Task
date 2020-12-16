@@ -4,15 +4,15 @@ Skip the redirect page.
 Quantumult X:
 [rewrite_local]
 # 简书
-^https:\/\/links\.jianshu\.com\/go\?to= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-^https:\/\/www\.jianshu\.com\/go-wild\?ac=\d&url= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+^https:\/\/links\.jianshu\.com\/go\?to= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
+^https:\/\/www\.jianshu\.com\/go-wild\?ac=\d&url= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
 # 知乎
 ^https:\/\/link\.zhihu\.com\/\?target=(https?)?(%3A|:)?(\/\/|%2F%2F)?(.*?)(&source.*)?$ url 302 http://$4
-# ^https:\/\/link\.zhihu\.com\/\?target= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+# ^https:\/\/link\.zhihu\.com\/\?target= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
 # 微博
-^https?:\/\/weibo\.cn\/sinaurl\?(.*&)?(u|toasturl|goto)= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-^https:\/\/shop\.sc\.weibo\.com\/h5\/jump\/error\?(.*&)?url= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-^https?:\/\/(sinaurl|t)\.cn\/ url script-response-header https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+^https?:\/\/weibo\.cn\/sinaurl\?(.*&)?(u|toasturl|goto)= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
+^https:\/\/shop\.sc\.weibo\.com\/h5\/jump\/error\?(.*&)?url= url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
+^https?:\/\/(sinaurl|t)\.cn\/ url script-response-header https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
 
 Surge:
 [URL Rewrite]
@@ -20,14 +20,14 @@ Surge:
 
 [Script]
 # 简书
-Jianshunoredirect = type=http-request,pattern=^https:\/\/links\.jianshu\.com\/go\?to=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-Jianshunoredirect2 = type=http-request,pattern=^https:\/\/www\.jianshu\.com\/go-wild\?ac=\d&url=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+Jianshunoredirect = type=http-request,pattern=^https:\/\/links\.jianshu\.com\/go\?to=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
+Jianshunoredirect2 = type=http-request,pattern=^https:\/\/www\.jianshu\.com\/go-wild\?ac=\d&url=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
 # 知乎
-# Zhihunoredirect = type=http-request,pattern=^https:\/\/link\.zhihu\.com\/\?target=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+# Zhihunoredirect = type=http-request,pattern=^https:\/\/link\.zhihu\.com\/\?target=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
 # 微博
-Weibonoredirect = type=http-request,pattern=^https?:\/\/weibo\.cn\/sinaurl\?(.*&)?(u|toasturl|goto)=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-Weibonoredircet2 = type=http-request,pattern=^https:\/\/shop\.sc\.weibo\.com\/h5\/jump\/error\?(.*&)?url=(.*),script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
-Weibonoredirect3 = type=http-response,pattern=^https?:\/\/(sinaurl|t)\.cn\/,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/noredirect.js
+Weibonoredirect = type=http-request,pattern=^https?:\/\/weibo\.cn\/sinaurl\?(.*&)?(u|toasturl|goto)=,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
+Weibonoredircet2 = type=http-request,pattern=^https:\/\/shop\.sc\.weibo\.com\/h5\/jump\/error\?(.*&)?url=(.*),script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
+Weibonoredirect3 = type=http-response,pattern=^https?:\/\/(sinaurl|t)\.cn\/,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/noredirect.js
 
 [mitm]
 hostname = links.jianshu.com, www.jianshu.com, link.zhihu.com, weibo.cn, t.cn, sinaurl.cn, shop.sc.weibo.com

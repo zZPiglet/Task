@@ -1,13 +1,13 @@
 /*
-From 🐩️哥 (https://raw.githubusercontent.com/Neurogram-R/Surge/master/Q-Search.js)
+From 🐩️哥 (https://raw.githubusercontent.com/Neurogram-R/Surge/master/asset/Q-Search.js)
 
 Quantumult X:
 [rewrite_local]
-^https:\/\/duckduckgo.com\/\?q=.+ url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/Q-Search.js
+^https:\/\/duckduckgo.com\/\?q=.+ url script-echo-response https://raw.githubusercontent.com/zZPiglet/Task/master/asset/Q-Search.js
 
 Surge:
 [Script]
-Q-Search = type=http-request,pattern=^https:\/\/duckduckgo.com\/\?q=.+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Q-Search.js
+Q-Search = type=http-request,pattern=^https:\/\/duckduckgo.com\/\?q=.+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/Q-Search.js
 
 [mitm]
 hostname = duckduckgo.com

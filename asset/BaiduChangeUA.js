@@ -2,7 +2,7 @@
 仅更改手机端百度全站的 User-Agent。
 [Script]
 # 百度（全站替换为手机百度 Quark 的 User-Agent）
-BaiduChangeUA = type=http-request,pattern=^https?:\/\/(?!d\.pcs).*(?<!map)\.baidu\.com,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/BaiduChangeUA.js
+BaiduChangeUA = type=http-request,pattern=^https?:\/\/(?!d\.pcs).*(?<!map)\.baidu\.com,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/BaiduChangeUA.js
 
 [MITM]
 hostname = *.baidu.com
