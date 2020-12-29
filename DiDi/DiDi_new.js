@@ -320,7 +320,7 @@ function storeActId() {
 			let obj = isJSON(resp.body);
 			$.delete("actIdAM");
 			$.delete("actIdPM");
-			if (obj && obj.errno == 0) {
+			if (obj && (obj.errno == 0 || obj.errno == 500)) {
 				let actIdAM = [];
 				let actIdPM = [];
 				for (let a of obj.data.calendar[today]) {
