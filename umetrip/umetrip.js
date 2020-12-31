@@ -52,7 +52,7 @@ if ($.isRequest) {
             throw new ERR.IdError("❌ 未获取或填写 id");
         } else {
             await sign();
-            await getInfo();
+            //await getInfo();
             await $.notify("航旅纵横", $.subTitle, $.detail);
         }
     })().catch((err) => {
