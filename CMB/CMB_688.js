@@ -14,8 +14,8 @@ $.wait_188 = $.read('CMB_wait_188') * 1000 || 15000
 $.wait_out = $.read('CMB_wait_out') * 1000 || 15000
 const transfer_in = 'alipays://platformapi/startapp?appId=60000126&url=/www/transfer_in.html'
 const transfer_out = 'alipays://platformapi/startapp?appId=60000126&url=/www/transfer_out.html'
-const cmb_688 = 'cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20200511170340nbDomUNv&shorturl=http%3A%2F%2Fcmbt.cn%2FQQmnzR'
-const cmb_188 = 'cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20200511170310bmhNWMhO&shorturl=http%3A%2F%2Fcmbt.cn%2FQQmnzR'
+const cmb_688 = 'cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20201231115927hrJ7vvyu&shorturl=http%3A%2F%2Fcmbt.cn%2FQQmnzR'
+const cmb_188 = 'cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20201231114539LWG5kfNa&shorturl=http%3A%2F%2Fcmbt.cn%2FQQmnzR'
 
 let delay = function(s){
     return new Promise(function(resolve,reject){
