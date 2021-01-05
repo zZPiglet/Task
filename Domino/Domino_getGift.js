@@ -20,7 +20,7 @@ $.openid = $.read("openid");
 $.phonenum = $.read("phonenum");
 $.sec = $.read("sec");
 //$.smscode = $.read("smscode");
-$.score = Number($.read("score") || 1000) + Math.floor(Math.random() * 10);
+$.score = Number($.read("score") || 990) + Math.floor(Math.random() * 10);
 
 const gift =
 	"\n一等奖：免费 9″ 手拍日式照烧滋烤鳗鱼比萨 1 个（共3000个）（需任意消费）" +
@@ -128,7 +128,7 @@ function getGift() {
 			"Content-Type": "application/json;charset=utf-8",
 			Cookie: "Web2008=controller=Home&action=Default&OpenId=" + $.openid + "&id=",
 		},
-		body: '{"mobile":"' + $.phonenum + '","sec":"' + $.sec + '"}',
+		body: '{"mobile":"' + $.phonenum + '","score":"' + $.score + '","sec":"' + $.sec + '"}',
 	})
 		.then((resp) => {
 			$.log("getGift: " + JSON.stringify(resp.body));
