@@ -281,7 +281,7 @@ function checkin() {
 					} else {
 						$.subTitle += "福利金🔄";
 					}
-					let total = obj.data.welfare.balance;
+					let total = Number(obj.data.welfare.carousel_text[0].slice(4));
 					$.detail += "账户共有 " + total + " 福利金，可抵扣 " + total / 100 + " 元。";
 					if (obj.data.message && obj.data.message.text) $.info(obj.data.message.text);
 					if (obj.data.notification) {

@@ -148,11 +148,13 @@ function Checkin() {
                     } else {
                         subTitle += '重复签到！🚖'
                     }
-                    let total = result.data.welfare.balance
+                    let total = Number(result.data.welfare.carousel_text[0].slice(4))
                     detail += '账户共有 ' + total + ' 福利金，可抵扣 ' + total/100 + ' 元。'
-                    for (let message of result.data.notification.reverse()) {
-                        detail += '\n' + message
-                    }
+                    if (result.data.notification) {
+						for (let message of result.data.notification.reverse()) {
+							$.expire += "\n" + message;
+						}
+					}
                     $cmp.log("DiDi source_id : \n" + result.data.share.source_id)
                 } else if (result && result.errno == 101) {
                     subTitle += '签到失败‼️ 城市代码错误。'
@@ -168,6 +170,7 @@ function Checkin() {
             detail += error
             $cmp.log("DiDi failed response : \n" + error)
         }
+        detail += "\n请将 DiDi.js 更改为 DiDi_new.js 使用，此脚本仅作为备份。"
         $cmp.notify(TokenName, subTitle, detail)
         resolve()
     })
