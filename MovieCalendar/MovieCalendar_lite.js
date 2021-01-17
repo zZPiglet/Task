@@ -6,13 +6,13 @@
 1. 网上找别人之前申请的（关键字：豆瓣 API Key）
 2. 下载 app 自行抓包 / 重写获取本机上的
 
-若选择利用重写获得，请先按下述方法进行配置，进入  widget 界面（iOS 13 负一屏），添加「豆瓣·电影日历」，并重新进入此界面使其刷新获取内容，若弹出"首次写入 MovieCalendar APIKey 成功"即可正常食用，其他提示或无提示请使用其他方法获取 APIKey 并填入 BoxJs。
+若选择利用重写获得，请先按下述方法进行配置，进入  widget 界面（负一屏），添加「豆瓣·电影日历」，并重新进入此界面使其刷新获取内容，若弹出"首次写入 MovieCalendar APIKey 成功"即可正常食用，其他提示或无提示请使用其他方法获取 APIKey 并填入 BoxJs。
 
 本脚本在 Quantumult X(build 316+) 及 Loon(build 201+) 中中可做到显示多媒体，并可点击通知跳转。
 本脚本在 Surge(build 1807+) 中可做到显示多媒体链接，并可点击通知跳转。
 
 多媒体可选择为「电影剧照」、「电影海报」、「预告片」，默认为「电影剧照」，可在 BoxJs 中更改配置。
-跳转可选定指定客户端，默认为 Safari，可在 BoxJs 中更改至豆瓣官方客户端。
+跳转可选定指定客户端或自定义链接（比如一些特殊的提醒url scheme），默认为 Safari，可在 BoxJs 中更改至豆瓣官方客户端。
 
 ⚠️免责声明：
 1. 此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，本人对此不承担任何保证责任。
@@ -101,7 +101,7 @@ if ($.isRequest) {
 
 function getCalendar() {
     return $.get({
-        url: "https://frodo.douban.com/api/v2/calendar/today?alt=json&apikey=" + $.apikey + "&date=" + today,
+        url: "https://frodo.douban.com/api/v2/calendar/today?alt=json&apikey=" + $.apikey + "&date=" + today + "&_ts=1610709519&_sig=S8ZOczZH2xe3HppJ/QxVt79NgKw%3D",
         headers: {
             "User-Agent": "api-client/0.1.3 com.douban.frodo/6.40.0"
         }
