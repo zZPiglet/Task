@@ -431,7 +431,7 @@
         "若选择利用重写获得，请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/MovieCalendar/MovieCalendar.js\">脚本注释</a>进行配置，进入  widget 界面（负一屏），添加「豆瓣·电影日历」，并重新进入此界面使其刷新获取内容，若弹出\"首次写入 MovieCalendar APIKey 成功\"即可正常食用，其他提示或无提示请使用其他方法获取 APIKey。",
         "注意：重试次数请勿填写过大，会导致<font class=\"red--text\">内存爆炸</font>💥！",
         "当客户端选择「自定义跳转」时，可在下方填入需要跳转的链接，也可为 URL Scheme。需注意的是，普通链接应带 <font class=\"red--text\">http(s)://</font>。",
-        "URL Scheme 如：<ul type=\"disc\"><li>钉钉打卡：dingtalk://dingtalkclient/page/link?url=https://attend.dingtalk.com/attend/index.html</li><li>支付宝领积分：alipays://platformapi/startapp?appId=20000160&url=/www/myPoints.html</li><li>支付宝收能量：alipay://platformapi/startapp?appId=60000002</li><li>支付宝喂小鸡：alipays://platformapi/startapp?appId=66666674</li><li>支付宝消费券：alipays://platformapi/startapp?appId=2021001162654785</li><li>招行便民刮刮乐：cmbmobilebank://cmbls/functionjump?action=gocorpno&corpno=100891&shorturl=https%3A%2F%2Fcmb-scratchers.weijuju.com%2Fapp%2Findex</li><li>招行 188 抽奖：cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20201231114539LWG5kfNa&shorturl=http%3A%2F%2Fcmbt.cn%2FQQmnzR</li><li>招行 688 抽奖：cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20201231115927hrJ7vvyu&shorturl=http%3A%2F%2Fcmbt.cn%2FQQmnzR</li><li>小黑盒签到：heybox://</li><li>115 摇一摇：wx9b74cc2b355eef5f://</li></ul>"
+        "URL Scheme 如：<ul type=\"disc\"><li>钉钉打卡：dingtalk://dingtalkclient/page/link?url=https://attend.dingtalk.com/attend/index.html</li><li>支付宝领积分：alipays://platformapi/startapp?appId=20000160&url=/www/pointSignIn.html</li><li>支付宝领家庭积分：alipays://platformapi/startapp?appId=2019052365379124</li><li>支付宝收能量：alipay://platformapi/startapp?appId=60000002</li><li>支付宝喂小鸡：alipays://platformapi/startapp?appId=66666674</li><li>支付宝消费券：alipays://platformapi/startapp?appId=2021001162654785</li><li>招行便民刮刮乐：cmbmobilebank://cmbls/functionjump?action=gocorpno&corpno=100891&shorturl=https%3A%2F%2Fcmb-scratchers.weijuju.com%2Fapp%2Findex</li><li>招行 188 抽奖：cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20201231114539LWG5kfNa&shorturl=http%3A%2F%2Fcmbt.cn%2FQQmnzR</li><li>招行 688 抽奖：cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20201231115927hrJ7vvyu&shorturl=http%3A%2F%2Fcmbt.cn%2FQQmnzR</li><li>小黑盒签到：heybox://</li><li>115 摇一摇：wx9b74cc2b355eef5f://</li></ul>"
       ],
       "keys": ["@MovieCalendar.apikey", "@MovieCalendar.diylink", "@MovieCalendar.time", "@MovieCalendar.choosePic", "@MovieCalendar.chooseClient"],
       "settings": [
@@ -710,14 +710,21 @@
     {
       "id": "zZ.Alipay",
       "name": "支付宝 - 积分能量",
-      "keys": ["Alipay_wait_mayi"],
+      "keys": ["Alipay_wait_family","Alipay_wait_mayi"],
       "settings": [
+        {
+          "id": "Alipay_wait_family",
+          "name": "等待跳转至领家庭积分时间",
+          "val": "",
+          "type": "number",
+          "desc": "从「领积分」通知到「领家庭积分」通知之间间隔时间，单位为秒，不填默认 5 秒"
+        },
         {
           "id": "Alipay_wait_mayi",
           "name": "等待跳转至收能量时间",
           "val": "",
           "type": "number",
-          "desc": "从「领积分」通知到「收能量」通知之间间隔时间，单位为秒，不填默认 8 秒"
+          "desc": "从「领家庭积分」通知到「收能量」通知之间间隔时间，单位为秒，不填默认 5 秒"
         }
       ],
       "author": "@zZPiglet",
