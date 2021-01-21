@@ -1,9 +1,9 @@
 const $ = new compatibility();
 
 !(async () => {
-	const cmb_gold =
-		"cmbmobilebank://cmbls/functionjump?action=gocorpno&corpno=852216&cmb_app_trans_parms_start=here";
-	$.notify("招商银行-年终奖理财分会场", "", "点击跳转去领黄金啦", cmb_gold);
+	const cmb_meow =
+		"cmbmobilebank://cmbls/functionjump?action=gocorpno&corpno=100682&cmb_app_trans_parms_start=here";
+	$.notify("招商银行-年终奖理财分会场", "", "点击跳转去领喵喵啦", cmb_meow);
 })().finally(() => $done());
 
 function compatibility() {
