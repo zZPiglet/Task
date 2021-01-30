@@ -79,6 +79,7 @@ const financeURL =
 const pointURL = "https://quartz.xiaojukeji.com/volcano/quartz";
 const signgiftURL = "https://gsh5act.xiaojukeji.com/dpub_data_api/activities";
 const busURL = "https://market.bus.xiaojukeji.com/api/transit";
+const stepURL = "https://sigma.xiaojukeji.com/api/step";
 let noaff = $.read("noaff");
 const aff = noaff == undefined ? true : ![true, "true"].includes(noaff);
 const today =
@@ -117,13 +118,18 @@ if ($.isRequest) {
 							await grabCoupons(id);
 						})
 					);
-					await $.info("滴滴出行\n" + $.subTitle + "\n" + $.detail);
-					await $.notify("滴滴出行 🚕", $.subTitle, $.detail);
 				}
+				if (aff) await getIds();
+				await steps();
+				await $.info("滴滴出行\n" + $.subTitle + "\n" + $.detail);
+				await $.notify("滴滴出行 🚕", $.subTitle, $.detail);
+				//await plant();
+				/*
 				await getIds();
 				if ($.activity_instance_id && Math.random() < $.probability) {
 					await instance();
 				}
+				*/
 			} else {
 				/* 
 			else if ($.now >= NINE_O_CLOCK_AM - 2 * 1000 && $.now <= NINE_O_CLOCK_AM + 60 * 1000) {
@@ -180,9 +186,11 @@ if ($.isRequest) {
 				await pointInfo();
 				//await lucina();
 				//await didibus();
+				/*
 				if ($.activity_instance_id && Math.random() < $.probability) {
 					await instance();
 				}
+				*/
 				if ($.isFinance && $.financeActId) {
 					await finance();
 					while ($.fbroken) {
@@ -243,13 +251,14 @@ function getIds() {
 			$.source_id = obj.source_id;
 			let other_source_id = obj.other_source_id;
 			$.source_id.push(Choose(other_source_id));
+			$.step_share_source_id = obj.step_share_source_id;
 			$.drawlids = obj.drawlids;
 			$.expenddrawlids = obj.expenddrawlids;
 			$.financeActId = obj.financeActId;
-			$.instanceScene = obj.instanceScene;
-			$.activity_instance_id = [];
-			$.activity_instance_id.push(obj.activity_instance_id1);
-			$.activity_instance_id.push(obj.activity_instance_id2);
+			//$.instanceScene = obj.instanceScene;
+			//$.activity_instance_id = [];
+			//$.activity_instance_id.push(obj.activity_instance_id1);
+			//$.activity_instance_id.push(obj.activity_instance_id2);
 		})
 		.catch((err) => {
 			throw err;
@@ -799,9 +808,9 @@ function grabCoupons(id) {
 			$.log("time: " + $.now + "\naward[" + id + "]: " + JSON.stringify(resp.body));
 			let obj = JSON.parse(resp.body);
 			if (obj.errno == 0) {
-				$.detail += "抢到：" + obj.data.act_name + "。";
+				$.detail += "\n抢到：" + obj.data.act_name + "。";
 			} else if (obj.errno == 12000 || obj.errno == 13000) {
-				$.detail += id + ": 此券" + obj.errmsg + "。";
+				$.detail += "\n" + id + ": 此券" + obj.errmsg + "。";
 			} else if (obj.errno == 114514) {
 				throw new ERR.BodyError("请求体错误，请开启抓包运行脚本后反馈抓包内容。");
 			} else {
@@ -814,6 +823,126 @@ function grabCoupons(id) {
 		.catch((err) => {
 			throw err;
 		});
+}
+
+async function steps() {
+	$.stepFlag = true;
+	$.stepInfoBody = aff
+		? '{"step_count":"' +
+		  Math.round(Math.random() * 5000 + 10000) +
+		  '","share_source_id":"' +
+		  Choose($.step_share_source_id) +
+		  '","share_date":"' +
+		  today.replace(/-/g, "") +
+		  '"}'
+		: '{"step_count":"' +
+		  Math.round(Math.random() * 5000 + 10000) +
+		  '","share_source_id":"","share_date":""}';
+	await stepInfo();
+	if ($.stepFlag) {
+		await stepBonus();
+		await stepSign();
+	}
+}
+
+function stepInfo() {
+	return $.post({
+		url: stepURL + "/info",
+		headers: {
+			"Content-Type": "application/json",
+			ticket: $.Ticket,
+		},
+		body: $.stepInfoBody,
+	})
+		.then((resp) => {
+			$.log("stepInfo: " + JSON.stringify(resp.body));
+			let obj = JSON.parse(resp.body);
+			if (obj.errno == 0) {
+				$.log("DiDi step share_source_id: " + obj.data.share.share_source_id);
+				$.todayStep = obj.data.greeting.today_step;
+			} else {
+				$.stepFlag = false;
+				$.info(
+					"stepInfo: " + JSON.stringify(resp.body) + "\n" + "请检查是否有走路赚钱活动。"
+				);
+			}
+		})
+		.catch((err) => {
+			$.error("stepInfo: \n");
+			$.error(err);
+		});
+}
+
+function stepBonus() {
+	return $.post({
+		url: stepURL + "/getBonus",
+		headers: {
+			"Content-Type": "application/json",
+			ticket: $.Ticket,
+		},
+		body: "{}",
+	})
+		.then((resp) => {
+			$.log("stepBonus: " + JSON.stringify(resp.body));
+			let obj = JSON.parse(resp.body);
+			if (obj.errno == 0) {
+				if (obj.data.bonus_amount) {
+					let stepBonus = obj.data.bonus_amount;
+					$.detail += "上传 " + $.todayStep + " 步，已领取 " + stepBonus + " 福利金。";
+				} else {
+					$.detail += "步数达标福利金" + obj.data.message_text + "。";
+				}
+			} else {
+				$.info("stepBonus: " + JSON.stringify(resp.body));
+			}
+		})
+		.catch((err) => {
+			$.error("stepBonus: \n");
+			$.error(err);
+		});
+}
+
+function stepSign() {
+	return $.post({
+		url: stepURL + "/sign",
+		headers: {
+			"Content-Type": "application/json",
+			ticket: $.Ticket,
+		},
+		body: '{"city_id":"' + $.city + '"}',
+	})
+		.then((resp) => {
+			$.log("stepSign: " + JSON.stringify(resp.body));
+			let obj = JSON.parse(resp.body);
+			if (obj.errno == 0) {
+				if (obj.data.type == 1) {
+					let stepSignBonus = obj.data.amount;
+					$.detail +=
+						"步数签到奖励 " + stepSignBonus + " 福利金。\n" + obj.data.sign_text;
+				} else if (obj.data.type == 4) {
+					let stepSignBonus = obj.data.amount / 100;
+					$.detail += "步数签到奖励 " + stepSignBonus + " 元。\n" + obj.data.sign_text;
+				} else if (obj.data.type == 0) {
+					$.detail += "步数签到奖励" + obj.data.message_text + "。";
+				} else {
+					$.detail += "步数签到奖励未知类型：" + JSON.stringify(resp.body);
+				}
+			} else {
+				$.info("stepSign: " + JSON.stringify(resp.body));
+			}
+		})
+		.catch((err) => {
+			$.error("stepSign: \n");
+			$.error(err);
+		});
+}
+
+async function plant() {
+	await plantInit();
+	await plantTask();
+	await plantWater();
+	await plantFertilize();
+	await plantDbox();
 }
 
 function getToken() {
