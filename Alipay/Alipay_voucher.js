@@ -19,7 +19,7 @@ https://www.icloud.com/shortcuts/2c37e7de80a24a6cbe9ca80e96337e1f
 const $ = new cmp()
 
 !(async () => {
-    let voucher = "alipays://platformapi/startapp?appId=2021001162654785"
+    let voucher = "alipays://platformapi/startapp?appId=68687742"
     $.notify("支付宝", "", "点击跳转抢消费券啦", voucher)
 })().finally(() => $done())
 
