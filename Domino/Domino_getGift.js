@@ -19,16 +19,16 @@ $.debug = [true, "true"].includes($.read("debug")) || false;
 $.openid = $.read("openid");
 $.phonenum = $.read("phonenum");
 $.sec = $.read("sec");
-//$.smscode = $.read("smscode");
-$.score = Number($.read("score") || 990) + Math.floor(Math.random() * 10);
+$.smscode = $.read("smscode");
+$.score = Number($.read("score") || 900);
 
 const gift =
-	"\n一等奖：免费 9″ 手拍日式照烧滋烤鳗鱼比萨 1 个（共3000个）（需任意消费）" +
-	"\n二等奖：半价 9″ 手拍日式照烧滋烤鳗鱼比萨 1 个（共5000个）（需任意消费）" +
-	"\n三等奖：免费椰香咖喱鸡肉意面一份（需购买任意比萨后使用） （共 15000 份）" +
-	"\n四等奖：免费樟茶风味烤翅一对（需购买任意比萨后使用） （共 40000 份）" +
+	"\n一等奖：免费 9″ 手拍澳洲和牛芝香菌菇比萨 1 个（共5000个）（需任意消费）" +
+	"\n二等奖：半价 9″ 手拍澳洲和牛芝香菌菇比萨 1 个（共8000个）（需任意消费）" +
+	"\n三等奖：免费意大利风情肉酱面一份（需购买任意比萨后使用） （共 15000 份）" +
+	"\n四等奖：免费任意口味鸡翅一对（四种口味可选 BBQ烧烤风味/樟茶风味/蜜汁风味/奥尔良风味，需购买任意比萨后使用） （共 40000 份）" +
 	"\n五等奖：免费蛋挞一对（需购买任意比萨后使用）（人人有礼，未获得 1-4 等奖的参与者均可得）" +
-	"\n1-4 等奖抽完即止，中奖率为实际抽出奖项个数与参与抽奖人数之比，未获得 1-4 等奖的参与者均可得 5 等奖。所有电子券兑换截止日期：2021 年 2 月 14 日。";
+	"\n1-4 等奖抽完即止，中奖率为实际抽出奖项个数与参与抽奖人数之比，未获得 1-4 等奖的参与者均可得 5 等奖。所有电子券兑换截止日期：2021 年 3 月 31 日。";
 
 const giftname = {
 	1: "一等奖",
@@ -44,10 +44,18 @@ const giftname = {
 	} else {
 		if (!$.phonenum || !$.sec || !$.openid) {
 			throw new ERR.RequestBodyError("❌ 请按 README.md 配置获取信息。");
-			//} else if (!$.smscode) {
-			//    throw new ERR.SMSCodeError("❌ 验证码未填写或未保存。");
+		} else if (!$.smscode) {
+			throw new ERR.SMSCodeError("❌ 验证码未填写或未保存。");
 		} else {
 			$.detail = "";
+			await getGift();
+			await getGiftCode();
+			await $.notify(
+				"达美乐 - 奖励",
+				"领取成功 🍕",
+				"恭喜获得：" + $.detail + "\n\n奖项详情：" + gift
+			);
+			/*
 			$.last = false;
 			$.times = 0;
 			while (!$.last && $.times < 3) {
@@ -65,14 +73,15 @@ const giftname = {
 				"领取成功 🍕",
 				"恭喜获得：" + $.detail + "\n\n奖项详情：" + gift
 			);
+			*/
 		}
 	}
 })()
 	.catch((err) => {
 		if (err instanceof ERR.RequestBodyError) {
 			$.notify("达美乐 - 奖励", "缺失信息", err.message);
-			//} else if (err instanceof ERR.SMSCodeError) {
-			//    $.notify("达美乐 - 奖励", "无验证码", err.message);
+		} else if (err instanceof ERR.SMSCodeError) {
+			$.notify("达美乐 - 奖励", "无验证码", err.message);
 		} else if (err instanceof ERR.BodyError) {
 			$.notify("达美乐 - 奖励", "响应错误", err.message);
 		} else {
@@ -88,10 +97,10 @@ const giftname = {
 
 function getRank() {
 	return $.post({
-		url: "http://dominos1214.shjimang.com/ajax/GetRank",
+		url: "http://dominos0125.shjimang.com/Ajax/GetRank",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
-			Cookie: "Web2008=controller=Home&action=Default&OpenId=" + $.openid,
+			Cookie: "Web2101=controller=Home&action=Default&OpenId=" + $.openid,
 		},
 		body: '{"score":' + $.score + ',"sec":"' + $.sec + '"}',
 	})
@@ -123,28 +132,38 @@ function getRank() {
 
 function getGift() {
 	return $.post({
-		url: "http://dominos1214.shjimang.com/ajax/GetGiftD",
+		url: "http://dominos0125.shjimang.com/Ajax/GetGift",
 		headers: {
-			"Content-Type": "application/json;charset=utf-8",
-			Cookie: "Web2008=controller=Home&action=Default&OpenId=" + $.openid + "&id=",
+			"Content-Type": "application/json",
+			Cookie: "Web2101=controller=Home&action=Default&OpenId=" + $.openid + "&id=",
 		},
-		body: '{"mobile":"' + $.phonenum + '","score":"' + $.score + '","sec":"' + $.sec + '"}',
+		body:
+			'{"mobile":"' +
+			$.phonenum +
+			'","score":' +
+			$.score +
+			',"sec":"' +
+			$.sec +
+			'","code":"' +
+			$.smscode +
+			'"}',
 	})
 		.then((resp) => {
 			$.log("getGift: " + JSON.stringify(resp.body));
 			let obj = JSON.parse(resp.body);
 			if (obj.Code == "1000") {
 				$.giftcode = obj.Data.Id;
-			} else if (obj.Code == "1001.4") {
-				/*
-			else if (obj.Code == "1001") {
+				$.delete("smscode");
+			} else if (obj.Code == "1001") {
 				throw new ERR.BodyError(obj.Msg + "\n请检查 BoxJs 中验证码是否正确或删除重填。");
-			}
-			*/
+			} else {
+				/*
+			else if (obj.Code == "1001.4") {
 				$.last = true;
 				$.detail += "今天领取次数用完啦～";
 				throw new ERR.BodyError("今天领取次数用完啦～");
-			} else {
+			}
+			*/
 				$.error("getGift ERROR: " + JSON.stringify(resp.body));
 				throw new ERR.BodyError(
 					"❌ 获取奖励返回错误，请查看日志并反馈。\n" + JSON.stringify(resp.body)
@@ -158,10 +177,14 @@ function getGift() {
 
 function getGiftCode() {
 	return $.post({
-		url: "http://dominos1214.shjimang.com/ajax/GetGiftCode",
+		url: "http://dominos0125.shjimang.com/Ajax/GetGiftCode",
 		headers: {
-			"Content-Type": "application/json;charset=utf-8",
-			Cookie: "Web2008=controller=Home&action=Default&OpenId=" + $.openid,
+			"Content-Type": "application/json",
+			Cookie:
+				"Web2101=controller=Home&action=Default&OpenId=" +
+				$.openid +
+				"&id=&m=" +
+				$.phonenum,
 		},
 		body: '{"id":"' + $.giftcode + '"}',
 	})
@@ -171,7 +194,7 @@ function getGiftCode() {
 			if (obj.Code == "1000") {
 				let id = obj.Data.GiftId;
 				$.detail += giftname[id] + " ";
-				$.times += 1;
+				//$.times += 1;
 			} else {
 				$.error("getGiftCode ERROR: " + JSON.stringify(resp.body));
 				throw new ERR.BodyError(
@@ -220,14 +243,14 @@ function MYERR() {
 			this.name = "RequestBodyError";
 		}
 	}
-	/*
-    class SMSCodeError extends Error {
-        constructor(message) {
-            super(message);
-            this.name = "SMSCodeError";
-        }
-    };
-    */
+
+	class SMSCodeError extends Error {
+		constructor(message) {
+			super(message);
+			this.name = "SMSCodeError";
+		}
+	}
+
 	class BodyError extends Error {
 		constructor(message) {
 			super(message);
@@ -237,7 +260,7 @@ function MYERR() {
 
 	return {
 		RequestBodyError,
-		//    SMSCodeError,
+		SMSCodeError,
 		BodyError,
 	};
 }

@@ -17,6 +17,10 @@
 
 ----------
 ## 版本记录：
+- 2021 / 02 / 20
+    更新至 0125 活动，同 20200724 活动一致，由于每次获取奖励均需要验证码，故此为半自动版本。  
+    且由于验证码有效期为 10 分钟，请对 [`Domino_getSMS.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js) 设置使用手机时段对 cron，到 cron 设定时间自动签到时，若弹出"达美乐 - 点击填写验证码"表示成功，请点击通知跳转至 BoxJs 填写验证码并保存，再手动执 行「获取奖励」脚本即可，其他提示或无提示请发送日志信息至 issue。注意每日可以获取三次奖励。 
+     >> 注意：此次更新需要更改定时任务脚本，且更改 rewrite 正则，定时任务及 rewrite 脚本均需更改为[`Domino_getSMS.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js)。 
 - 2020 / 12 / 17
     更新至 1214 活动，已获取过信息的可能需要在公众号进入一次有奖游戏界面后再运行脚本（无需重新获取）。
 - 2020 / 11 / 16
@@ -29,6 +33,28 @@
     由于每次获取奖励均需要验证码，故此为半自动版本。  
     且由于验证码有效期为 10 分钟，请对 [`Domino_getSMS.js`](https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js) 设置使用手机时段对 cron，到 cron 设定时间自动签到时，若弹出"达美乐 - 点击填写验证码"表示成功，请点击通知跳转至 BoxJs 填写验证码并保存，再手动执 行「获取奖励」脚本即可，其他提示或无提示请发送日志信息至 issue。注意每日可以获取三次奖励。  
 ----------
+## 配置 (0125 活动，半自动)
+### Quantumult X:
+```properties
+[task_local]
+0 15 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js, tag=达美乐
+; cron 时间请设置为使用手机的时间，验证码有效期为 10 分钟。
+
+[rewrite_local]
+^https?:\/\/dominos\d{4}\.shjimang\.com\/Ajax\/GetSmsCode url script-request-body https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js
+```
+### Surge 4.0+ & Loon:
+```properties
+[Script]
+cron "0 15 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js
+http-request ^https?:\/\/dominos\d{4}\.shjimang\.com\/Ajax\/GetSmsCode requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js
+```
+### All apps:
+```properties
+[mitm]
+hostname = dominos*.shjimang.com
+```
+
 ## 配置 (1214 / 1102 活动，全自动)
 ### Quantumult X:
 ```properties
