@@ -63,6 +63,9 @@ function API(name = "untitled", debug = false) {
         }
 
         post(options) {
+            if (options.body && options.headers && !options.headers['Content-Type']) {
+                options.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+            }
             if (this.isQX) {
                 if (typeof options == "string") options = { url: options };
                 options["method"] = "POST";
