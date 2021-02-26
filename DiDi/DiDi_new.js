@@ -394,6 +394,9 @@ function storeActId() {
 function pointCollect() {
 	return $.post({
 		url: pointURL + "/points/collect",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
 		body: "app_id=common&token=" + encodeURIComponent($.Ticket),
 	})
 		.then((resp) => {
@@ -421,6 +424,9 @@ async function pointSign() {
 function getPointSignURL() {
 	return $.post({
 		url: "https://res.xiaojukeji.com/resapi/activity/getMulti",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
 		body: "resource_name=dcoin_mall_carousel",
 	})
 		.then((resp) => {
@@ -487,6 +493,9 @@ function getPointSignDay() {
 function doPointSign() {
 	return $.post({
 		url: signgiftURL + "/" + $.pointSignActivityId + "/signin",
+		headers: {
+			"Content-Type": "application/json; charset=utf-8",
+		},
 		body:
 			'{"signin_day":' +
 			$.pointSignDay +
@@ -506,6 +515,9 @@ function doPointSign() {
 function rewardPointSign() {
 	return $.post({
 		url: signgiftURL + "/" + $.pointSignActivityId + "/reward_lottery",
+		headers: {
+			"Content-Type": "application/json; charset=utf-8",
+		},
 		body:
 			'{"user_token":"' +
 			$.Ticket +
@@ -738,6 +750,9 @@ function joinInstance() {
 	$.log($.instancechoose);
 	return $.post({
 		url: mainURL + "/toggle/api/instance/join?ticket=" + encodeURIComponent($.Ticket),
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
 		body: "scene=" + $.instanceScene + "&activity_instance_id=" + $.instancechoose,
 	})
 		.then((resp) => {
