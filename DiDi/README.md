@@ -16,6 +16,12 @@
 
 ----------
 ## 版本记录：
+- 2021 / 02 / 26
+增加“走路赚钱”中“天天步数赛”活动，并将“走路赚钱”系列移至 20:01 之后所有时间运行有效，且这段时间不再执行主任务。 
+默认 cron 更改为 `0 1,20,21 * * *`  
+注：20:00 时段保留，滴滴有可能还会发晚八点优惠券。  
+- 2021 / 01 / 30  
+增加“走路赚钱”活动，限晚八点运行。  
 - 2020 / 11 / 24  
 增加从小程序获取 Token，从 App 或小程序获取任选一个即可。
 - 2020 / 11 / 23   
@@ -26,9 +32,6 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
 若希望使用关于“滴滴金融”方面的签到，请在 BoxJs 中开启，此功能默认关闭。  
 相对之前的脚本，此脚本整合进了福利金签到、遗忘的福利金领取、遗忘的积分领取、稳赚的抽奖、金融签到以及抢券（此功能目前只写入了晚八点的券，如需使用请保证 cron 含有晚八点）。  
 由于 iOS 14 通知字数的限制，通知可能不完全（尤其是出行已省、现有部分优惠券及福利金优惠券即将过期的信息），请在日志中查看完整信息。  
-&emsp;待办： 
-  1. 瓜分福利金
-  2. 滴滴公交
 - 2020 / 06 / 13  
     修正 DiDi_reward.js 通知中领取福利金总额的错误。由于暂时想偷懒所以没有采取 `async`、`await` 的写法，若后续考虑合并至主脚本，会更改写法。
 - 2020 / 06 / 12  
@@ -39,7 +42,7 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
 - 2020 / 06 / 09  
     _**测试阶段**_，可能会出现各种问题，希望因脚本出现问题可及时反馈。  
     增加自动签到领取福利金。  
-    脚本中使用了我的邀请打卡 aff（每日最多 5 次，每次 60 福利金。），若不希望使用，可将 aff 改为 false。  
+    ~~脚本中使用了我的邀请打卡 aff（每日最多 5 次，每次 60 福利金。），若不希望使用，可将 aff 改为 false~~   
     **待办**：增加自动领取打车后未领取的福利金/打车金。  
     **常见错误**：
     1. 若是 Token 获取问题请先自行排查重写及主机名是否正确，若均正确且日志无报错的情况下无法获取，请反馈，并最好能提供抓包记录（打开抓包软件，然后再进入滴滴，进入打车的界面之后关闭抓包的软件，导出这个包私发给我就行）。
@@ -49,7 +52,7 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
 ### Quantumult X:
 ```properties
 [task_local]
-0 1,20 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js, tag=滴滴出行
+0 1,20,21 * * * https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js, tag=滴滴出行
 [rewrite_local]
 # APP
 ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? url script-request-header https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
@@ -59,14 +62,14 @@ aff 默认开启，可在 BoxJs 中关闭，如关闭 aff，将无法使用一�
 ### Surge:
 ```properties
 [Script]
-滴滴出行 = type=cron,cronexp="0 1,20 * * *",wake-system=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+滴滴出行 = type=cron,cronexp="0 1,20,21 * * *",wake-system=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 滴滴出行APPCookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 滴滴出行小程序Cookie = type=http-request,pattern=^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 ```
 ### Loon、Shadowrocket:
 ```properties
 [Script]
-cron "0 1,20 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
+cron "0 1,20,21 * * *" script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 # APP
 http-request ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\? script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 # MiniApp
