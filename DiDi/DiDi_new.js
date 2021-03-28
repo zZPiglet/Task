@@ -849,14 +849,14 @@ async function steps() {
 	$.stepFlag = true;
 	$.stepInfoBody = aff
 		? '{"step_count":"' +
-		  Math.round(Math.random() * 5000 + 10001) +
+		  Math.round(Math.random() * 5000 + 20001) +
 		  '","share_source_id":"' +
 		  Choose($.step_share_source_id) +
 		  '","share_date":"' +
 		  today.replace(/-/g, "") +
 		  '"}'
 		: '{"step_count":"' +
-		  Math.round(Math.random() * 5000 + 10001) +
+		  Math.round(Math.random() * 5000 + 20001) +
 		  '","share_source_id":"","share_date":""}';
 	await stepInfo();
 	if ($.stepFlag) {
