@@ -1,4 +1,5 @@
 const $ = new compatibility();
+$.wait_in2 = $.read("CMB_wait_in2") * 1000 || 15000;
 $.wait_6888 = $.read("CMB_wait_6888") * 1000 || 15000;
 $.wait_688 = $.read("CMB_wait_688") * 1000 || 15000;
 $.wait_188 = $.read("CMB_wait_188") * 1000 || 15000;
@@ -22,8 +23,17 @@ delay()
 	.then(function () {
 		$.notify(
 			"招商银行-6888、888、188活动",
-			"步骤 1：余额宝从招行卡转入 6888",
-			"点击跳转去余额宝转入",
+			"步骤 1：余额宝从招行卡转入",
+			"点击跳转去余额宝转入()",
+			transfer_in
+		);
+		return delay($.wait_in2);
+	})
+	.then(function () {
+		$.notify(
+			"招商银行-6888、888、188活动",
+			"步骤 1'：余额宝从招行卡转入",
+			"点击跳转去余额宝转入(每月一次6888，每日可拆500+388)",
 			transfer_in
 		);
 		return delay($.wait_6888);
