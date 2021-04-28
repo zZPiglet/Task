@@ -1041,6 +1041,8 @@ function stepMatchInfo() {
 			}
 		})
 		.catch((err) => {
+			$.stepMatchState = -1;
+			$.detail += "\n步数赛接口错误。";
 			$.error("stepMatchInfo: \n");
 			$.error(err);
 		});
