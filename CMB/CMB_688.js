@@ -7,11 +7,11 @@ $.wait_out = $.read("CMB_wait_out") * 1000 || 15000;
 const transfer_in = "alipays://platformapi/startapp?appId=60000126&url=/www/transfer_in.html";
 const transfer_out = "alipays://platformapi/startapp?appId=60000126&url=/www/transfer_out.html";
 const cmb_6888 =
-	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=flase&cmb_app_trans_parms_start=here&ActGroupID=AGP20210330165147bYyr2My5&shorturl=https%3a%2f%2ft.cmbchina.com%2fAfANJ3%3fActGroupID%3dAGP20210330165147bYyr2My5%26behavior_entryid%3dYYD002001";
+	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20210430211109d7CB7C4c";
 const cmb_888 =
-	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20210330164443TSsdTso4&shorturl=https%3a%2f%2ft.cmbchina.com%2fAfANJ3%3fActGroupID%3dAGP20210330164443TSsdTso4%26behavior_entryid%3dYYD002001";
+	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20210330164443TSsdTso4";
 const cmb_188 =
-	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP202103301639305YhKf512&shorturl=https%3a%2f%2ft.cmbchina.com%2fAfANJ3%3fActGroupID%3dAGP202103301639305YhKf512%26behavior_entryid%3dYYD002001";
+	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP202103301639305YhKf512";
 
 let delay = function (s) {
 	return new Promise(function (resolve, reject) {
@@ -24,7 +24,7 @@ delay()
 		$.notify(
 			"招商银行-6888、888、188活动",
 			"步骤 1：余额宝从招行卡转入",
-			"点击跳转去余额宝转入()",
+			"点击跳转去余额宝转入(每月一次6888，每日可拆500+388)",
 			transfer_in
 		);
 		return delay($.wait_in2);
@@ -68,7 +68,7 @@ delay()
 	.then(function () {
 		$.notify(
 			"招商银行-6888、888、188活动",
-			"步骤 5：余额宝转回招行卡 6888",
+			"步骤 5：余额宝转回招行卡",
 			"点击跳转去余额宝转出",
 			transfer_out
 		);
