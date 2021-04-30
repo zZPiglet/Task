@@ -19,7 +19,7 @@
 便利蜂Cookie = type=http-request,pattern=^https:\/\/h5\.bianlifeng\.com\/meepo\/taskCenter\/home\/v\d,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Blibee/Blibee.js
 
 # 滴滴出行
-滴滴出行Cookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi.js
+滴滴出行Cookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 滴滴出行小程序Cookie = type=http-request,pattern=^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 
 # 网易云音乐
