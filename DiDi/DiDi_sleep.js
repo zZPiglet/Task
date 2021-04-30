@@ -44,6 +44,8 @@ async function sleep() {
         await goSleep();
     } else if ($.button_type == 3) {
         await wake();
+    } else if ($.button_type == 1) {
+        $.detail += $.button_text;
     } else {
         /*
 		$.wait(3000).then(() => {
@@ -67,7 +69,7 @@ function sleepInfo() {
             let obj = JSON.parse(resp.body);
             if (obj.errno == 0) {
                 $.button_type = obj.data.button_type;
-                //$.button_text = obj.data.button_text;
+                $.button_text = obj.data.button_text;
                 $.tips_text = obj.data.tips_text;
                 $.tail = obj.data.text;
             } else {
