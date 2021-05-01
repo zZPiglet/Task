@@ -9,9 +9,9 @@ const transfer_out = "alipays://platformapi/startapp?appId=60000126&url=/www/tra
 const cmb_6888 =
 	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20210430211109d7CB7C4c";
 const cmb_888 =
-	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20210330164443TSsdTso4";
+	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20210430205516fiCXKXQP";
 const cmb_188 =
-	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP202103301639305YhKf512";
+	"cmbmobilebank://cmbls/functionjump?action=gofuncid&funcid=16335001&needlogin=true&cmb_app_trans_parms_start=here&ActGroupID=AGP20210430202444utFfLmja";
 
 let delay = function (s) {
 	return new Promise(function (resolve, reject) {
