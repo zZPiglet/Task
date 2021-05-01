@@ -64,7 +64,8 @@ function drinkInfo() {
 			let obj = JSON.parse(resp.body);
 			if (obj.errno == 0) {
 				$.tail += obj.data.button_title.replace(/_/g, " ") + ": " + obj.data.text;
-				$.turn_id = obj.data.cups.filter((vo) => vo.staus == 3)[0]?.turn_id;
+				let turn = obj.data.cups.filter((vo) => vo.staus == 3)[0];
+				if (turn) $.turn_id = turn.turn_id;
 				$.drinkts = obj.data.time_stamp;
 			} else {
 				$.info("drinkInfo: " + JSON.stringify(resp.body) + "\n请检查是否有喝水赚钱活动。");
