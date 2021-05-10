@@ -11,155 +11,157 @@ $.subTitle = "";
 $.detail = "";
 $.tail = "";
 const sleepURL = "https://sigma.xiaojukeji.com/api/sleep";
+const wsgsig =
+	"dd03-WziVdQy4iGgitH6QYwu5IonNqWzQXTOhZOz958WIqWzRsP5ZRLfFHop1hf8Rs1ejzHvIKynNrjowrHqroLzg5yWJ%2Fj%2BQsHIRpwQCIy4BUGfuq12nv2QDHoQL";
 
 !(async () => {
-    $.Ticket = $.read("#DiDi");
-    if (!$.Ticket) {
-        throw new ERR.TokenError("❌ 未获取或填写 Token");
-    } else {
-        await sleep();
-        await $.info("滴滴睡觉\n" + $.subTitle + "\n" + $.detail + "\n" + $.tail);
-        await $.notify("滴滴睡觉 🥟", $.subTitle, $.detail + "\n" + $.tail);
-    }
+	$.Ticket = $.read("#DiDi");
+	if (!$.Ticket) {
+		throw new ERR.TokenError("❌ 未获取或填写 Token");
+	} else {
+		await sleep();
+		await $.info("滴滴睡觉\n" + $.subTitle + "\n" + $.detail + "\n" + $.tail);
+		await $.notify("滴滴睡觉 🥟", $.subTitle, $.detail + "\n" + $.tail);
+	}
 })()
-    .catch((err) => {
-        if (err instanceof ERR.TokenError) {
-            $.notify("滴滴出行 - Token 错误", "", err.message, "OneTravel://");
-        } else if (err instanceof ERR.BodyError) {
-            $.notify("滴滴出行 - 返回错误", "", err.message);
-        } else {
-            $.notify(
-                "滴滴出行 - 出现错误",
-                "",
-                JSON.stringify(err, Object.getOwnPropertyNames(err))
-            );
-            $.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
-        }
-    })
-    .finally(() => $.done());
+	.catch((err) => {
+		if (err instanceof ERR.TokenError) {
+			$.notify("滴滴出行 - Token 错误", "", err.message, "OneTravel://");
+		} else if (err instanceof ERR.BodyError) {
+			$.notify("滴滴出行 - 返回错误", "", err.message);
+		} else {
+			$.notify(
+				"滴滴出行 - 出现错误",
+				"",
+				JSON.stringify(err, Object.getOwnPropertyNames(err))
+			);
+			$.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
+		}
+	})
+	.finally(() => $.done());
 
 async function sleep() {
-    await sleepInfo();
-    if ($.button_type == 2) {
-        await goSleep();
-    } else if ($.button_type == 3) {
-        await wake();
-    } else if ($.button_type == 1) {
-        $.detail += $.button_text;
-    } else {
-        /*
+	await sleepInfo();
+	if ($.button_type == 2) {
+		await goSleep();
+	} else if ($.button_type == 3) {
+		await wake();
+	} else if ($.button_type == 1) {
+		$.detail += $.button_text;
+	} else {
+		/*
 		$.wait(3000).then(() => {
 			sleep();
 		});
 		*/
-    }
+	}
 }
 
 function sleepInfo() {
-    return $.post({
-        url: sleepURL + "/info",
-        headers: {
-            "Content-Type": "application/json",
-            ticket: $.Ticket,
-        },
-        body: "{}",
-    })
-        .then((resp) => {
-            $.log("sleepInfo: " + JSON.stringify(resp.body));
-            let obj = JSON.parse(resp.body);
-            if (obj.errno == 0) {
-                $.button_type = obj.data.button_type;
-                $.button_text = obj.data.button_text;
-                $.tips_text = obj.data.tips_text;
-                $.tail = obj.data.text;
-            } else {
-                $.info("sleepInfo: " + JSON.stringify(resp.body) + "\n请检查是否有睡觉赚钱活动。");
-                throw new ERR.BodyError("请检查是否有睡觉赚钱活动\n" + JSON.stringify(resp.body));
-            }
-        })
-        .catch((err) => {
-            $.error("sleepInfo: \n");
-            $.error(err);
-            throw new ERR.BodyError("睡觉赚钱查询信息接口错误\n" + JSON.stringify(err));
-        });
+	return $.post({
+		url: sleepURL + "/info?wsgsig=" + wsgsig,
+		headers: {
+			"Content-Type": "application/json",
+			ticket: $.Ticket,
+		},
+		body: "{}",
+	})
+		.then((resp) => {
+			$.log("sleepInfo: " + JSON.stringify(resp.body));
+			let obj = JSON.parse(resp.body);
+			if (obj.errno == 0) {
+				$.button_type = obj.data.button_type;
+				$.button_text = obj.data.button_text;
+				$.tips_text = obj.data.tips_text;
+				$.tail = obj.data.text;
+			} else {
+				$.info("sleepInfo: " + JSON.stringify(resp.body) + "\n请检查是否有睡觉赚钱活动。");
+				throw new ERR.BodyError("请检查是否有睡觉赚钱活动\n" + JSON.stringify(resp.body));
+			}
+		})
+		.catch((err) => {
+			$.error("sleepInfo: \n");
+			$.error(err);
+			throw new ERR.BodyError("睡觉赚钱查询信息接口错误\n" + JSON.stringify(err));
+		});
 }
 
 function goSleep() {
-    return $.post({
-        url: sleepURL + "/sleep",
-        headers: {
-            "Content-Type": "application/json",
-            ticket: $.Ticket,
-        },
-        body: "{}",
-    })
-        .then((resp) => {
-            $.log("sleepBonus: " + JSON.stringify(resp.body));
-            let obj = JSON.parse(resp.body);
-            if (obj.errno == 0) {
-                $.subTitle = "晚安 🌃";
-                $.detail += "睡觉了，" + $.tips_text;
-            } else {
-                $.info("sleepBonus: " + JSON.stringify(resp.body));
-            }
-        })
-        .catch((err) => {
-            $.error("sleepBonus: \n");
-            $.error(err);
-            throw new ERR.BodyError("睡觉赚钱领取奖励接口错误\n" + JSON.stringify(err));
-        });
+	return $.post({
+		url: sleepURL + "/sleep?wsgsig=" + wsgsig,
+		headers: {
+			"Content-Type": "application/json",
+			ticket: $.Ticket,
+		},
+		body: "{}",
+	})
+		.then((resp) => {
+			$.log("sleepBonus: " + JSON.stringify(resp.body));
+			let obj = JSON.parse(resp.body);
+			if (obj.errno == 0) {
+				$.subTitle = "晚安 🌃";
+				$.detail += "睡觉了，" + $.tips_text;
+			} else {
+				$.info("sleepBonus: " + JSON.stringify(resp.body));
+			}
+		})
+		.catch((err) => {
+			$.error("sleepBonus: \n");
+			$.error(err);
+			throw new ERR.BodyError("睡觉赚钱领取奖励接口错误\n" + JSON.stringify(err));
+		});
 }
 
 function wake() {
-    return $.post({
-        url: sleepURL + "/wake",
-        headers: {
-            "Content-Type": "application/json",
-            ticket: $.Ticket,
-        },
-        body: "{}",
-    })
-        .then((resp) => {
-            $.log("sleepBonus: " + JSON.stringify(resp.body));
-            let obj = JSON.parse(resp.body);
-            if (obj.errno == 0) {
-                if (obj.data.bonus_amount) {
-                    $.subTitle = "早安 🌆";
-                    let sleepBonus = obj.data.bonus_amount;
-                    $.detail += "该起床了，已领取 " + sleepBonus + " 福利金。";
-                } else {
-                    $.detail += "睡觉福利金: " + obj.data.message_text + "。";
-                }
-            } else {
-                $.info("sleepBonus: " + JSON.stringify(resp.body));
-            }
-        })
-        .catch((err) => {
-            $.error("sleepBonus: \n");
-            $.error(err);
-            throw new ERR.BodyError("睡觉赚钱领取奖励接口错误\n" + JSON.stringify(err));
-        });
+	return $.post({
+		url: sleepURL + "/wake?wsgsig=" + wsgsig,
+		headers: {
+			"Content-Type": "application/json",
+			ticket: $.Ticket,
+		},
+		body: "{}",
+	})
+		.then((resp) => {
+			$.log("sleepBonus: " + JSON.stringify(resp.body));
+			let obj = JSON.parse(resp.body);
+			if (obj.errno == 0) {
+				if (obj.data.bonus_amount) {
+					$.subTitle = "早安 🌆";
+					let sleepBonus = obj.data.bonus_amount;
+					$.detail += "该起床了，已领取 " + sleepBonus + " 福利金。";
+				} else {
+					$.detail += "睡觉福利金: " + obj.data.message_text + "。";
+				}
+			} else {
+				$.info("sleepBonus: " + JSON.stringify(resp.body));
+			}
+		})
+		.catch((err) => {
+			$.error("sleepBonus: \n");
+			$.error(err);
+			throw new ERR.BodyError("睡觉赚钱领取奖励接口错误\n" + JSON.stringify(err));
+		});
 }
 
 function MYERR() {
-    class TokenError extends Error {
-        constructor(message) {
-            super(message);
-            this.name = "TokenError";
-        }
-    }
+	class TokenError extends Error {
+		constructor(message) {
+			super(message);
+			this.name = "TokenError";
+		}
+	}
 
-    class BodyError extends Error {
-        constructor(message) {
-            super(message);
-            this.name = "BodyError";
-        }
-    }
+	class BodyError extends Error {
+		constructor(message) {
+			super(message);
+			this.name = "BodyError";
+		}
+	}
 
-    return {
-        TokenError,
-        BodyError,
-    };
+	return {
+		TokenError,
+		BodyError,
+	};
 }
 
 // prettier-ignore

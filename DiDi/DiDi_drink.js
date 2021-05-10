@@ -12,9 +12,20 @@ $.detail = "";
 $.tail = "";
 const drinkURL = "https://sigma.xiaojukeji.com/api/drink";
 
+const wsgsig = [
+	"dd03-WziVdQy4iGgitH6QYwu5IonNqWzQXTOhZOz958WIqWzRsP5ZRLfFHop1hf8Rs1ejzHvIKynNrjowrHqroLzg5yWJ%2Fj%2BQsHIRpwQCIy4BUGfuq12nv2QDHoQL",
+	"dd03-a2ifIDDRQV6xRJBL%2B3upd0JyYFlVppkgNNztBm4ZYFlUQRA85Qfme0bOPleUQ3IeHovufgfRSBLTzuTg1pRXgg%2BuwlVwRJxM2JiiAgDZRl6qQz2a2%2BtqdnCQPq",
+	"dd03-B%2FyO1X2wla9z7PYK8jmaFt9PXhYX3LM97Xj69bBoXhYW8HZ1LD3HEtHzmB1W8Z%2Fb10nE0jLwjlBpJ2eCHtNaEDHZmaHWKSkc5fW9Gt1ZtBAWJwScIWv3Et5Xk9",
+	"dd03-pF2DcL%2Fh%2BnQFIXeVhGauNHZU6gC6MCqy%2Fbdm4ZOt6gC5HGdmsmxt%2BHriLXs5Hn6wmi9pL1VhIcve6gYRWjLn%2BOrlL0cM6nEOjGLhM6hi2gjIIb2Zjj6XMHxlLA",
+	"dd03-Qur1lMz%2BMJ3bmguTkZPrOIm38QiJii%2BmlTSTxYX68QiKnmvyXIFYPIoLN3bKn0ikjMOkQ2Q%2BKoKCsXfkkPeyxSn7L%2BbNn0DXsP9POPuML3bJsgDXnwwPP27JN9",
+	"dd03-%2B7P%2BwqiIHSaFXWn4a6rmrUv53LZ6tDCA9IUukeQ43LZ5W0mHCTMpqUtJKw25WmzCfPqttkXINHAejf39GTUyrdnIKL27Wmubc61xkhnb8522Wfog0Y%2FvqdtL7q",
+	"dd03-2s%2Fs%2Fe6KDvHN09bZ0rY4Tad7a4qfDlXsGlxgYqF2a4qgGhcQdadCSaLHARAgGA3qAeZNpBHKF827cqyt9kSDYBH9ByLgGVGZEhkESE1Le41aEecnaETgTaF3AA",
+	"dd03-eolT%2Bs3JdEhpXFT0KTxdbWc8GU2ntq15JZY10gC1GU2mWUSd16aMcWKIgdZmWeV7L2wB9m%2BJbqqzjlB7HHrJ0fzJgkZnWqYLIHVNbtcHDExpU9T25OP%2BGW09eA",
+	"dd03-2B5viFB%2FBRwM2%2FWq0CdCpBHVcKde6ecvGfaNu%2F2scKdd1aXjdiY4oB9jCvkd1qoZAmegTad%2F0%2BT6MAJxECFHvdBVfKOaM9mZaXe%2Burarf4qcLA7y0C52pheVDq",
+];
+
 !(async () => {
 	$.Ticket = $.read("#DiDi");
-	$.now = new Date().getTime();
 	if (!$.Ticket) {
 		throw new ERR.TokenError("❌ 未获取或填写 Token");
 	} else {
@@ -52,7 +63,7 @@ async function drink() {
 
 function drinkInfo() {
 	return $.post({
-		url: drinkURL + "/info",
+		url: drinkURL + "/info?wsgsig=" + wsgsig[0],
 		headers: {
 			"Content-Type": "application/json",
 			ticket: $.Ticket,
@@ -81,7 +92,7 @@ function drinkInfo() {
 
 function drinkBonus() {
 	return $.post({
-		url: drinkURL + "/getBonus",
+		url: drinkURL + "/getBonus?wsgsig=" + wsgsig[$.turn_id],
 		headers: {
 			"Content-Type": "application/json",
 			ticket: $.Ticket,
