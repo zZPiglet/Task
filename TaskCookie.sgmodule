@@ -3,24 +3,8 @@
 #!system=ios
 
 [Script]
-# 京东
-获取京东Cookie = type=http-request,pattern=https:\/\/api\.m\.jd\.com\/client\.action.*functionId=signBean,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
-
 # 爱奇艺
 爱奇艺Cookie = type=http-request,pattern=^https?:\/\/iface(\d)?\.iqiyi\.com\/,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
-
-# 饿了么
-饿了么Cookie = type=http-request,pattern=^https:\/\/h5\.ele\.me\/restapi\/eus\/v\d\/current_user$,script-path=https://raw.githubusercontent.com/songyangzz/QuantumultX/master/elem/elemGetCookies.js
-
-# 掌门好老师
-掌门好老师Cookie = type=http-request,pattern=^https:\/\/teacherapi\.zmlearn\.com\/v1\/teacherApp\/app\/points\/taskCenter,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/ZMTeacher/ZMTeacher.js
-
-# 便利蜂
-便利蜂Cookie = type=http-request,pattern=^https:\/\/h5\.bianlifeng\.com\/meepo\/taskCenter\/home\/v\d,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Blibee/Blibee.js
-
-# 滴滴出行
-滴滴出行Cookie = type=http-request,pattern=^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
-滴滴出行小程序Cookie = type=http-request,pattern=^https:\/\/common\.diditaxi\.com\.cn\/webapp\/config\/sidebar\?,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/DiDi/DiDi_new.js
 
 # 网易云音乐
 网易云音乐Cookie = type=http-request,pattern=^https:\/\/music.163.com\/weapi\/user\/level,requires-body=1,script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/neteasemusic/neteasemusic.cookie.js
@@ -34,10 +18,6 @@
 # 微博通知
 微博通知Cookie = type=http-request,pattern=^https:\/\/m\.weibo\.cn\/feed\/,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Weibo/Weibo.js
 
-# 微信公众号 - 达美乐比萨
-达美乐披萨Cookie = type=http-request,pattern=^https?:\/\/dominos\d{4}\.shjimang\.com\/ajax\/getgiftD,requires-body=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getGift.js
-达美乐披萨SMSCookie = type=http-request,pattern=^https?:\/\/dominos\d{4}\.shjimang\.com\/Ajax\/GetSmsCode,requires-body=1,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/Domino/Domino_getSMS.js
-
 # 航旅纵横(Pro)
 航旅纵横Cookie = type=http-request,pattern=^https:\/\/cloud\.umetrip\.com\/gateway\/api\/web\/rest\/polite\/app\/sign\/signpageinitdata,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/umetrip/umetrip.js
 
@@ -45,4 +25,4 @@
 小米运动Cookie = type=http-response,pattern=^https:\/\/account\.huami\.com\/v2\/client\/login,requires-body=1,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/xmSports.js
 
 [MITM]
-hostname = %APPEND% api.m.jd.com, ifac*.iqiyi.com, h5.ele.me, *.rr.tv, teacherapi.zmlearn.com, superapp.kiwa-tech.com, activity-1.m.duiba.com.cn, h5.bianlifeng.com, as.xiaojukeji.com, common.diditaxi.com.cn, music.163.com, user-api-prd-mx.wandafilm.com, mall.oclean.com, m.weibo.cn, dominos*.shjimang.com, cloud.umetrip.com, account.huami.com
+hostname = %APPEND% ifac*.iqiyi.com, music.163.com, mall.oclean.com, m.weibo.cn, cloud.umetrip.com, account.huami.com
