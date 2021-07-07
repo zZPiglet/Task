@@ -131,7 +131,7 @@ if ($.isRequest) {
 					await instance();
 				}
 				*/
-			} else if ($.now) {
+			} else if ($.now >= EIGHT_O_CLOCK_PM + 60 * 1000) {
 				if (aff) await getIds();
 				await steps();
 				await $.info("滴滴走路\n" + $.subTitle + "\n" + $.detail);
