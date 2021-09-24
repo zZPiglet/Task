@@ -1,4 +1,4 @@
-const notifyJump = true; //是否开启淘宝通知跳转
+const notifyJump = false; //是否开启淘宝通知跳转，测试阶段微信已可跳转淘宝，故默认改为 false
 const useGoogleCache = true; //是否在微信中用谷歌快照显示被封禁的链接
 const wechatExportKey = ""; //微信的一个 key，暂未研究如何生成，测试中仅 macOS 微信打开链接跳转浏览器时会缺失，导致无法解析原始链接
 const respBody = $response.body;
@@ -27,8 +27,9 @@ if (cgiData.type === "newgray" || cgiData.type === "empty") {
             Location: trueURL,
         },
     };
-    if (notifyJump && /\.taobao|tb|tmall\./.test(trueURL)) {
-        notify("", "点击跳转到淘宝打开", trueURL, taobaoScheme + encodeURIComponent(trueURL));
+    if (/\.taobao|tb|tmall\./.test(trueURL)) {
+        if (notifyJump)
+            notify("", "点击跳转到淘宝打开", trueURL, taobaoScheme + encodeURIComponent(trueURL));
     } else if (/qr\.alipay/.test(trueURL)) {
         notify("", "点击跳转到支付宝打开", trueURL, alipayScheme + encodeURIComponent(trueURL));
     } else {
