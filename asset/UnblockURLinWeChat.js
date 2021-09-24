@@ -7,6 +7,7 @@ const taobaoScheme = "taobao://m.taobao.com/tbopen/index.html?action=ali.open.na
 const alipayScheme = "alipays://platformapi/startapp?appId=20000067&url=";
 const isQuanX = typeof $notify != "undefined";
 const isSurgeiOS = typeof $environment != "undefined" ? $environment.system == "iOS" : false;
+const isLoon = typeof $loon != "undefined";
 const redirectStatus = isQuanX ? "HTTP/1.1 302 Temporary Redirect" : 302;
 const cgiDataReg = /var cgiData = ([\s\S]*);\s*<\/script>/;
 let cgiData = JSON.parse(cgiDataReg.exec(respBody)[1].replace(/\\/g, ""));
@@ -91,6 +92,14 @@ function notify(title = "", subtitle = "", content = "", open_url) {
     } else if (isSurgeiOS) {
         let opts = {};
         if (open_url) opts["url"] = open_url;
+        if (JSON.stringify(opts) == "{}") {
+            $notification.post(title, subtitle, content);
+        } else {
+            $notification.post(title, subtitle, content, opts);
+        }
+    } else if (isLoon) {
+        let opts = {};
+        if (open_url) opts["openUrl"] = open_url;
         if (JSON.stringify(opts) == "{}") {
             $notification.post(title, subtitle, content);
         } else {
