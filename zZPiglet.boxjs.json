@@ -6,6 +6,41 @@
   "repo": "https://github.com/zZPiglet/Task",
   "apps": [
     {
+      "id": "zZ.UnblockURLinWeChat",
+      "name": "解除微信链接限制",
+      "keys": ["@UnblockURLinWeChat.taobaoNotifyJump", "@UnblockURLinWeChat.useGoogleCache", "@UnblockURLinWeChat.wechatExportKey"],
+      "settings": [
+        {
+          "id": "@UnblockURLinWeChat.taobaoNotifyJump",
+          "name": "淘宝通知跳转",
+          "val": true,
+          "type": "boolean",
+          "desc": "淘宝链接是否弹窗通知跳转。"
+        },
+        {
+          "id": "@UnblockURLinWeChat.useGoogleCache",
+          "name": "在微信中用谷歌快照显示被封禁的链接",
+          "val": true,
+          "type": "boolean",
+          "desc": "是否以谷歌快照的形式（如果有）在微信浏览器中直接显示封禁的链接。"
+        },
+        {
+          "id": "@UnblockURLinWeChat.wechatExportKey",
+          "name": "微信 exportKey",
+          "val": "",
+          "type": "text",
+          "desc": "微信的一个 key，macOS 部分封禁链接跳转 Safari 后缺失微信的 exportKey 参数，无法解析出原始链接，这个暂未解决。"
+        }
+      ],
+      "author": "@zZPiglet",
+      "repo": "https://github.com/zZPiglet/Task/tree/master/",
+      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/asset/UnblockURLinWeChat.js",
+      "icons": [
+        "https://raw.githubusercontent.com/RayPS/WeChat-Logo/master/shape_white.svg",
+        "https://raw.githubusercontent.com/RayPS/WeChat-Logo/master/icon1024x1024.svg"
+      ]
+    },
+    {
       "id": "zZ.Weibo",
       "name": "微博通知",
       "descs_html": [
