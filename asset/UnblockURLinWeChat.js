@@ -13,7 +13,7 @@ const googleCache = "https://webcache.googleusercontent.com/search?q=cache:";
 const taobaoScheme = "taobao://m.taobao.com/tbopen/index.html?action=ali.open.nav&module=h5&h5Url=";
 const alipayScheme = "alipays://platformapi/startapp?appId=20000067&url=";
 const isQuanX = typeof $notify != "undefined";
-const isSurgeiOS = typeof $environment != "undefined" ? $environment.system == "iOS" : false;
+const isSurgeiOS = typeof $utils != "undefined" ? $environment.system == "iOS" : false;
 const isLoon = typeof $loon != "undefined";
 const redirectStatus = isQuanX ? "HTTP/1.1 302 Temporary Redirect" : 302;
 const cgiDataReg = /var cgiData = ([\s\S]*);\s*<\/script>/;
