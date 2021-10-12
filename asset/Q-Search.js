@@ -71,7 +71,7 @@ const engineData = {
 	// DuckDuckGo
 	ddg: "https://duckduckgo.com/?ia=about&q=%@",
 	// Google
-	gl: "https://www.google.com/search?q=%@",
+	gl: "https://www.google.com/search?q=%@&num=100",
 	"@default": "gl",
 };
 
