@@ -89,7 +89,7 @@ if (cgiData.type === "gray" || cgiData.type === "newgray" || cgiData.type === "e
 }
 
 function notify(title = "", subtitle = "", content = "", open_url) {
-    if (isQuanX) {
+    if (isQuanX && /iOS/.test($environment.version)) {
         let opts = {};
         if (open_url) opts["open-url"] = open_url;
         if (JSON.stringify(opts) == "{}") {
