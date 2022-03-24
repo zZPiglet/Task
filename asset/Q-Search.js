@@ -67,7 +67,13 @@ const engineData = {
 	// Google 搜索 Google Drive 资源
 	gd: "https://www.google.com/search?q=%22Google+Drive%22+%@",
 	// t.me/gdurl 搜索 Google Drive 资源
-	tgd: "https://t.me/s/gdurl?q=%@",
+	tgd: "https://t.me/s/gdsharing?q=%@",
+	// t.me/shareAliyun 搜索阿里云盘资源
+	tal: "https://t.me/s/shareAliyun?q=%@",
+	// t.me/YunPanPan 搜索阿里云盘资源
+	tal2: "https://t.me/s/YunPanPan?q=%@",
+	// Google 搜索 rutracker
+	rut: "https://www.google.com/search?as_q=%@&as_sitesearch=rutracker.org",
 	// DuckDuckGo
 	ddg: "https://duckduckgo.com/?ia=about&q=%@",
 	// Google
