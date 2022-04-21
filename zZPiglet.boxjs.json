@@ -8,21 +8,21 @@
     {
       "id": "zZ.UnblockURLinWeChat",
       "name": "解除微信链接限制",
-      "keys": ["@UnblockURLinWeChat.taobaoNotifyJump", "@UnblockURLinWeChat.useGoogleCache", "@UnblockURLinWeChat.wechatExportKey"],
+      "keys": ["@UnblockURLinWeChat.useCache", "@UnblockURLinWeChat.forceRedirect", "@UnblockURLinWeChat.wechatExportKey"],
       "settings": [
         {
-          "id": "@UnblockURLinWeChat.taobaoNotifyJump",
-          "name": "淘宝通知跳转",
+          "id": "@UnblockURLinWeChat.useCache",
+          "name": "在微信中用快照显示被封禁的链接",
           "val": true,
           "type": "boolean",
-          "desc": "淘宝链接是否弹窗通知跳转。"
+          "desc": "是否以快照的形式（如果有）在微信浏览器中直接显示封禁的链接。"
         },
         {
-          "id": "@UnblockURLinWeChat.useGoogleCache",
-          "name": "在微信中用谷歌快照显示被封禁的链接",
+          "id": "@UnblockURLinWeChat.forceRedirect",
+          "name": "在微信中进行强制重定向",
           "val": true,
           "type": "boolean",
-          "desc": "是否以谷歌快照的形式（如果有）在微信浏览器中直接显示封禁的链接。"
+          "desc": "是否在微信中进行强制重定向，允许的情况下可能出现循环重定向。"
         },
         {
           "id": "@UnblockURLinWeChat.wechatExportKey",

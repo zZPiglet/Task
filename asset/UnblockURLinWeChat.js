@@ -1,16 +1,15 @@
 let persisVal = read("UnblockURLinWeChat");
-let taobaoNotifyJump = persisVal.taobaoNotifyJump === "false" ? false : true; //是否开启淘宝通知跳转，测试阶段微信已可跳转淘宝
-let useGoogleCache = persisVal.useGoogleCache === "true"; //是否在微信中用谷歌快照显示被封禁的链接
+let useCache = persisVal.useCache === "true"; //是否在微信中用快照显示被封禁的链接
+let forceRedirect = persisVal.forceRedirect === "true"; //是否在微信中进行强制重定向，允许的情况下可能出现循环重定向
 let wechatExportKey = persisVal.wechatExportKey || ""; //微信的一个 key，暂未研究如何生成，测试中仅 macOS 微信打开链接跳转浏览器时会缺失，导致无法解析原始链接
 if (typeof $argument != "undefined") {
     let arg = Object.fromEntries($argument.split("&").map((item) => item.split("=")));
-    console.log(JSON.stringify(arg));
-    taobaoNotifyJump = arg.taobaoNotifyJump === "true";
-    useGoogleCache = arg.useGoogleCache === "true";
+    useCache = arg.useCache === "true";
+    forceRedirect = arg.forceRedirect === "ture";
 }
 const respBody = $response.body;
-const googleCache = "https://webcache.googleusercontent.com/search?q=cache:";
-const taobaoScheme = "taobao://m.taobao.com/tbopen/index.html?action=ali.open.nav&module=h5&h5Url=";
+//const cacheURL = "https://webcache.googleusercontent.com/search?q=cache:";
+const cacheURL = "https://web.archive.org/web/20991231999999/";
 const alipayScheme = "alipays://platformapi/startapp?appId=20000067&url=";
 const isQuanX = typeof $notify != "undefined";
 const isSurgeiOS = typeof $utils != "undefined" && $environment.system == "iOS";
@@ -32,24 +31,22 @@ if (cgiData.type === "gray" || cgiData.type === "newgray" || cgiData.type === "e
         `${cgiData.hasOwnProperty("url") ? cgiData.url : /http(.*)/.exec(cgiData.desc)[0]}`
     );
     trueURL = trueURL.indexOf("http") == 0 ? trueURL : "http://" + trueURL;
-    let redirect = {
-        status: redirectStatus,
-        headers: {
-            Location: trueURL,
-        },
-    };
-    if (/\.taobao|tb|tmall\./.test(trueURL)) {
-        if (taobaoNotifyJump)
-            notify("", "点击跳转到淘宝打开", trueURL, taobaoScheme + encodeURIComponent(trueURL));
-    } else if (/qr\.alipay/.test(trueURL)) {
+    if (/qr\.alipay/.test(trueURL)) {
         notify("", "点击跳转到支付宝打开", trueURL, alipayScheme + encodeURIComponent(trueURL));
+        $done({});
     } else {
-        let googleCacheReg = /^https:\/\/webcache\.googleusercontent\.com\/search\?q=cache:(.*)/;
-        let trueURL1 = googleCacheReg.test(trueURL) ? googleCacheReg.exec(trueURL)[1] : trueURL;
-        notify("", "点击跳转到浏览器打开", trueURL1, trueURL1);
+        notify("", "点击跳转到浏览器打开", trueURL, trueURL);
+        if (forceRedirect) {
+            let redirect = {
+                status: redirectStatus,
+                headers: {
+                    Location: trueURL,
+                },
+            };
+            if (isQuanX) redirect.body = respBody;
+            $done(redirect);
+        } else $done({});
     }
-    if (isQuanX) redirect.body = respBody;
-    $done(redirect);
 } else if (cgiData.type === "block") {
     !(async () => {
         let url = cgiData.btns[0].url.replace("newreadtemplate", "redirecthelpcgi");
@@ -69,14 +66,14 @@ if (cgiData.type === "gray" || cgiData.type === "newgray" || cgiData.type === "e
                 );
                 trueURL = trueURL.includes(".") ? trueURL : Base64.decode(trueURL);
                 trueURL = trueURL.indexOf("http") == 0 ? trueURL : "http://" + trueURL;
-                if (!trueURL.includes("webcache.googleusercontent.com")) {
+                if (!trueURL.includes("web.archive.org/web")) {
                     notify("", "点击跳转到浏览器打开", trueURL, trueURL);
-                    if (useGoogleCache) {
-                        let googleCacheURL = googleCache + trueURL;
+                    if (useCache) {
+                        let cacheLink = cacheURL + trueURL;
                         let redirect = {
                             status: redirectStatus,
                             headers: {
-                                Location: googleCacheURL,
+                                Location: cacheLink,
                             },
                         };
                         if (isQuanX) redirect.body = respBody;
