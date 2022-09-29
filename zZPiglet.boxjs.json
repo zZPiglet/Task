@@ -43,15 +43,8 @@
     {
       "id": "zZ.Weibo",
       "name": "微博通知",
-      "descs_html": [
-        "请先进入<a href=\"https://m.weibo.cn\">手机网页版微博</a>并登陆按，再按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/Weibo/Weibo.js\">脚本注释</a>进行配置，然后回到网页刷新即可获取 Cookie。",
-        "请注意：一定要<font class=\"red--text\">先登录</font>，否则获取的为游客 Cookie，无法通知「特别关注」及有查看限制的微博。",
-        "运行后通知为「上一次」运行到「本次」运行之间的微博，其中「第零次」运行及「测试环境」默认为「很久很久很久···」以前（时间戳为0），所以第一次运行为接口返回的所有信息，之后有新微博才会通知。",
-        "需要注意的是：即便因配置错误运行之后有错误信息，此次运行时间戳也已经记录，若想还原到「第零次」的状态，请清空下面的时间戳。",
-        "注意：「特别管组」、「用户 ID」、「用户昵称」三者的通知均<font class=\"red--text\">独立</font>，请勿填写重复，以避免通知重复。",
-        "若有希望添加的点击跳转的客户端，请提供该客户端打开指定微博的 URL Scheme，反馈至 <a href=\"https://t.me/zZPiglet_bot\">@zZPiglet_bot</a>。"
-      ],
-      "keys": ["@Weibo.WeiboNotice", "@Weibo.interval", "@Weibo.Group", "@Weibo.Weibo_uids", "@Weibo.Weibo_nicknames", "@Weibo.chooseClient"],
+      "desc_html": "<font class=\"red--text\">低调使用</font>",
+      "keys": ["@Weibo.WeiboNotice", "@Weibo.Group", "@Weibo.Weibo_uids", "@Weibo.Weibo_nicknames", "@Weibo.chooseClient"],
       "settings": [
         {
           "id": "@Weibo.debug",
@@ -59,14 +52,6 @@
           "val": false,
           "type": "boolean",
           "desc": "如未出现特殊报错等问题请保持关闭。"
-        },
-        {
-          "id": "@Weibo.interval",
-          "name": "间隔",
-          "val": "",
-          "type": "number",
-          "placeholder": "1000", 
-          "desc": "运行时多通知之间时间间隔，单位为毫秒，不填默认为 1000 毫秒。"
         },
         {
           "id": "@Weibo.update",
@@ -277,30 +262,6 @@
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Oclean.png",
         "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Oclean.png"
-      ]
-    },
-    {
-      "id": "zZ.umetrip",
-      "name": "航旅纵横(pro)",
-      "desc_html": "请先按<a href=\"https://raw.githubusercontent.com/zZPiglet/Task/master/umetrip/umetrip.js\">脚本注释</a>进行配置，然后进入\"航旅纵横(Pro)\" - \"出行有礼\" - \"每日签到\"，若弹出\"首次写入 umetrip id 成功\"即可正常食用。",
-      "keys": ["@umetrip.id"],
-      "settings": [
-        {
-          "id": "@umetrip.id",
-          "name": "rsid",
-          "val": "",
-          "type": "text",
-          "autoGrow": true,
-          "rows": 2,
-          "desc": "用户验证信息。若抓包填入请填写 rsid 中「$$」之前的部分。"
-        }
-      ],
-      "author": "@zZPiglet",
-      "repo": "https://github.com/zZPiglet/Task/blob/master/umetrip/umetrip.js",
-      "script": "https://raw.githubusercontent.com/zZPiglet/Task/master/umetrip/umetrip.js",
-      "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/umetrip.png",
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/umetrip.png"
       ]
     },
     {
