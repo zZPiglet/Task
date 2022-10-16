@@ -102,7 +102,7 @@ function getCalendar() {
     return $.get({
         url: "https://frodo.douban.com/api/v2/calendar/today?alt=json&apikey=" + $.apikey + "&date=" + today + "&_ts=1610709519&_sig=S8ZOczZH2xe3HppJ/QxVt79NgKw%3D",
         headers: {
-            "User-Agent": "api-client/0.1.3 com.douban.frodo/6.40.0"
+            "User-Agent": "api-client/0.1.3 com.douban.frodo/7.38.0"
         }
     })
         .then((resp) => {
