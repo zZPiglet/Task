@@ -11,6 +11,8 @@ const respBody = $response.body;
 //const cacheURL = "https://webcache.googleusercontent.com/search?q=cache:";
 const cacheURL = "https://web.archive.org/web/20991231999999/";
 const alipayScheme = "alipays://platformapi/startapp?appId=20000067&url=";
+const ua = $request.headers['User-Agent'] || $request.headers['user-agent']
+const isStashiOS = 'undefined' !== typeof $environment && $environment['stash-version'] && ua.indexOf('Macintosh') === -1
 const isQuanX = typeof $notify != "undefined";
 const isSurgeiOS = typeof $utils != "undefined" && $environment.system == "iOS";
 const isLooniOS = typeof $loon != "undefined" && /iPhone/.test($loon);
@@ -103,7 +105,7 @@ function notify(title = "", subtitle = "", content = "", open_url) {
         } else {
             $notify(title, subtitle, content, opts);
         }
-    } else if (isSurgeiOS) {
+    } else if (isSurgeiOS || isStashiOS) {
         let opts = {};
         if (open_url) opts["url"] = open_url;
         if (JSON.stringify(opts) == "{}") {
