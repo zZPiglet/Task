@@ -12,12 +12,17 @@ const respBody = $response.body;
 const cacheURL = "https://web.archive.org/web/20991231999999/";
 const alipayScheme = "alipays://platformapi/startapp?appId=20000067&url=";
 
-const isStashiOS = 'undefined' !== typeof $environment && $environment['stash-version'];
-const isSurgeiOS = 'undefined' !== typeof $environment && $environment['surge-version'];
-const isShadowrocket = 'undefined' !== typeof $rocket;
-const isLooniOS = 'undefined' != typeof $loon;
-const isLanceX = 'undefined' != typeof $native;
 const isQuanX = typeof $notify != "undefined";
+const isSurgeiOS =
+    typeof $utils != "undefined" && $environment["surge-version"] && $environment.system == "iOS";
+const isLooniOS = typeof $loon != "undefined" && /iPhone/.test($loon);
+const ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
+const isStashiOS =
+    "undefined" !== typeof $environment &&
+    $environment["stash-version"] &&
+    ua.indexOf("Macintosh") === -1;
+const isShadowrocket = "undefined" !== typeof $rocket;
+const isLanceX = "undefined" != typeof $native;
 
 const redirectStatus = isQuanX ? "HTTP/1.1 302 Temporary Redirect" : 302;
 const cgiDataReg = /var cgiData = ([\s\S]*);\s*<\/script>/;
@@ -124,7 +129,7 @@ function notify(title = "", subtitle = "", content = "", open_url) {
         } else {
             $notification.post(title, subtitle, content, opts);
         }
-    } else if (isShadowrocket){
+    } else if (isShadowrocket) {
         let opts = {};
         if (open_url) opts["url"] = open_url;
         if (JSON.stringify(opts) == "{}") {
@@ -132,7 +137,6 @@ function notify(title = "", subtitle = "", content = "", open_url) {
         } else {
             $notification.post(title, subtitle, content, content);
         }
-        
     }
 }
 
