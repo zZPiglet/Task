@@ -47,18 +47,9 @@ if (cgiData.type === "gray" || cgiData.type === "newgray" || cgiData.type === "e
         $done({});
     } else if (trueURL.includes('https://spotify.link')) {
         const pattern = /\$full_url=([^&]+)/;
-        const full_url = url.match(pattern)[1];
+        const full_url = decodeURIComponent(trueURL).match(pattern)[1];
         notify("", "点击跳转到 Spotify 打开", full_url, full_url);
-        if (forceRedirect) {
-            let redirect = {
-                status: redirectStatus,
-                headers: {
-                    Location: trueURL,
-                },
-            };
-            if (isQuanX) redirect.body = respBody;
-            $done(redirect);
-        } else $done({});
+        $done({});
     } else {
         notify("", "点击跳转到浏览器打开", trueURL, trueURL);
         if (forceRedirect) {
