@@ -48,8 +48,7 @@ if (cgiData.type === "gray" || cgiData.type === "newgray" || cgiData.type === "e
     }  else {
         if (trueURL.includes('https://spotify.link')) {
             const pattern = /\$full_url=([^&]+)/;
-            const full_url = decodeURIComponent(trueURL).match(pattern)[1];
-            console.log(full_url);
+            trueURL = decodeURIComponent(trueURL).match(pattern)[1];
         }
         notify("", "点击跳转到浏览器打开", trueURL, trueURL);
         if (forceRedirect) {
