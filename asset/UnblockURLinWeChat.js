@@ -45,12 +45,12 @@ if (cgiData.type === "gray" || cgiData.type === "newgray" || cgiData.type === "e
     if (/qr\.alipay/.test(trueURL)) {
         notify("", "点击跳转到支付宝打开", trueURL, alipayScheme + encodeURIComponent(trueURL));
         $done({});
-    } else if (trueURL.includes('https://spotify.link')) {
-        const pattern = /\$full_url=([^&]+)/;
-        const full_url = decodeURIComponent(trueURL).match(pattern)[1];
-        notify("", "点击跳转到 Spotify 打开", full_url, full_url);
-        $done({});
-    } else {
+    }  else {
+        if (trueURL.includes('https://spotify.link')) {
+            const pattern = /\$full_url=([^&]+)/;
+            const full_url = decodeURIComponent(trueURL).match(pattern)[1];
+            console.log(full_url);
+        }
         notify("", "点击跳转到浏览器打开", trueURL, trueURL);
         if (forceRedirect) {
             let redirect = {
