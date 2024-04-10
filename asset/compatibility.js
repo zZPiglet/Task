@@ -1,10 +1,10 @@
 function API(name = "untitled", debug = false) {
-    return new class {
+    return new (class {
         constructor(name, debug) {
             this.name = name;
             this.debug = debug;
 
-            this.isRequest = typeof $request != "undefined"
+            this.isRequest = typeof $request != "undefined";
             this.isQX = typeof $task != "undefined";
             this.isLoon = typeof $loon != "undefined";
             this.isSurge = typeof $httpClient != "undefined" && !this.isLoon;
@@ -13,8 +13,7 @@ function API(name = "untitled", debug = false) {
 
             this.node = (() => {
                 if (this.isNode) {
-                    const request =
-                        typeof $request != "undefined" ? undefined : require("request");
+                    const request = typeof $request != "undefined" ? undefined : require("request");
                     const fs = require("fs");
 
                     return {
@@ -26,7 +25,6 @@ function API(name = "untitled", debug = false) {
                 }
             })();
             this.initCache();
-
 
             const delay = (t, v) =>
                 new Promise(function (resolve) {
@@ -43,15 +41,19 @@ function API(name = "untitled", debug = false) {
         // http methods
         get(options) {
             if (this.isQX) {
-                if (typeof options == "string")
-                    options = { url: options, method: "GET" };
+                if (typeof options == "string") options = { url: options, method: "GET" };
                 return $task.fetch(options);
             } else {
                 return new Promise((resolve, reject) => {
                     if (this.isLoon || this.isSurge)
                         $httpClient.get(options, (err, response, body) => {
                             if (err) reject(err);
-                            else resolve({ statusCode: response.status, headers: response.headers, body });
+                            else
+                                resolve({
+                                    statusCode: response.status,
+                                    headers: response.headers,
+                                    body,
+                                });
                         });
                     else
                         this.node.request(options, (err, response, body) => {
@@ -63,8 +65,8 @@ function API(name = "untitled", debug = false) {
         }
 
         post(options) {
-            if (options.body && options.headers && !options.headers['Content-Type']) {
-                options.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+            if (options.body && options.headers && !options.headers["Content-Type"]) {
+                options.headers["Content-Type"] = "application/x-www-form-urlencoded";
             }
             if (this.isQX) {
                 if (typeof options == "string") options = { url: options };
@@ -75,7 +77,12 @@ function API(name = "untitled", debug = false) {
                     if (this.isLoon || this.isSurge) {
                         $httpClient.post(options, (err, response, body) => {
                             if (err) reject(err);
-                            else resolve({ statusCode: response.status, headers: response.headers, body });
+                            else
+                                resolve({
+                                    statusCode: response.status,
+                                    headers: response.headers,
+                                    body,
+                                });
                         });
                     } else {
                         this.node.request.post(options, (err, response, body) => {
@@ -94,16 +101,13 @@ function API(name = "untitled", debug = false) {
             if (this.isQX) this.cache = JSON.parse($prefs.valueForKey(this.name) || "{}");
             if (this.isLoon || this.isSurge)
                 this.cache = JSON.parse($persistentStore.read(this.name) || "{}");
- 
+
             if (this.isNode) {
                 // create a json for root cache
                 let fpath = "root.json";
                 if (!this.node.fs.existsSync(fpath)) {
-                    this.node.fs.writeFileSync(
-                        fpath,
-                        JSON.stringify({}),
-                        { flag: "wx" },
-                        (err) => console.log(err)
+                    this.node.fs.writeFileSync(fpath, JSON.stringify({}), { flag: "wx" }, (err) =>
+                        console.log(err)
                     );
                 }
                 this.root = {};
@@ -111,11 +115,8 @@ function API(name = "untitled", debug = false) {
                 // create a json file with the given name if not exists
                 fpath = `${this.name}.json`;
                 if (!this.node.fs.existsSync(fpath)) {
-                    this.node.fs.writeFileSync(
-                        fpath,
-                        JSON.stringify({}),
-                        { flag: "wx" },
-                        (err) => console.log(err)
+                    this.node.fs.writeFileSync(fpath, JSON.stringify({}), { flag: "wx" }, (err) =>
+                        console.log(err)
                     );
                     this.cache = {};
                 } else {
@@ -127,29 +128,26 @@ function API(name = "untitled", debug = false) {
         // store cache
         persistCache() {
             const data = JSON.stringify(this.cache);
-            
+
             if (this.isQX) $prefs.setValueForKey(data, this.name);
             if (this.isLoon || this.isSurge) $persistentStore.write(data, this.name);
             if (this.isNode) {
-                this.node.fs.writeFileSync(
-                    `${this.name}.json`,
-                    data,
-                    { flag: "w" },
-                    (err) => console.log(err)
+                this.node.fs.writeFileSync(`${this.name}.json`, data, { flag: "w" }, (err) =>
+                    console.log(err)
                 );
                 this.node.fs.writeFileSync(
                     "root.json",
                     JSON.stringify(this.root),
                     { flag: "w" },
                     (err) => console.log(err)
-                )
+                );
             }
         }
 
         write(data, key) {
             this.log(`SET ${key}`);
-            if (key.indexOf('#') !== -1) {
-                key = key.substr(1)
+            if (key.indexOf("#") !== -1) {
+                key = key.substr(1);
                 if (this.isSurge || this.isLoon) {
                     $persistentStore.write(data, key);
                 }
@@ -167,8 +165,8 @@ function API(name = "untitled", debug = false) {
 
         read(key) {
             this.log(`READ ${key}`);
-            if (key.indexOf('#') !== -1) {
-                key = key.substr(1)
+            if (key.indexOf("#") !== -1) {
+                key = key.substr(1);
                 if (this.isSurge || this.isLoon) {
                     return $persistentStore.read(key);
                 }
@@ -185,8 +183,8 @@ function API(name = "untitled", debug = false) {
 
         delete(key) {
             this.log(`DELETE ${key}`);
-            if (key.indexOf('#') !== -1) {
-                key = key.substr(1)
+            if (key.indexOf("#") !== -1) {
+                key = key.substr(1);
                 if (this.isSurge || this.isLoon) {
                     $persistentStore.write(null, key);
                 }
@@ -203,12 +201,21 @@ function API(name = "untitled", debug = false) {
         }
 
         // notification
-        notify(title = name, subtitle = '', content = '', open_url, media_url) {
+        notify(title = name, subtitle = "", content = "", open_url, media_url) {
             if (this.isSurge) {
-                let content_Surge = content + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
+                let content_Surge = content;
                 let opts = {};
-                if (open_url) opts["url"] = open_url;
-                if(JSON.stringify(opts) == "{}") {
+                if ($environment["surge-build"] < 3112) {
+                    if (open_url) opts["url"] = open_url;
+                    content_Surge += media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`;
+                } else {
+                    if (open_url) {
+                        opts["action"] = "open-url";
+                        opts["url"] = open_url;
+                    }
+                    if (media_url) opts["media-url"] = media_url;
+                }
+                if (JSON.stringify(opts) == "{}") {
                     $notification.post(title, subtitle, content_Surge);
                 } else {
                     $notification.post(title, subtitle, content_Surge, opts);
@@ -218,24 +225,27 @@ function API(name = "untitled", debug = false) {
                 let opts = {};
                 if (open_url) opts["open-url"] = open_url;
                 if (media_url) opts["media-url"] = media_url;
-                if(JSON.stringify(opts) == "{}") {
+                if (JSON.stringify(opts) == "{}") {
                     $notify(title, subtitle, content);
                 } else {
                     $notify(title, subtitle, content, opts);
                 }
-            } 
+            }
             if (this.isLoon) {
                 let opts = {};
                 if (open_url) opts["openUrl"] = open_url;
                 if (media_url) opts["mediaUrl"] = media_url;
-                if(JSON.stringify(opts) == "{}") {
+                if (JSON.stringify(opts) == "{}") {
                     $notification.post(title, subtitle, content);
                 } else {
                     $notification.post(title, subtitle, content, opts);
                 }
             }
             if (this.isNode) {
-                let content_Node = content + (open_url == undefined ? "" : `\n\n跳转链接：${open_url}`) + (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
+                let content_Node =
+                    content +
+                    (open_url == undefined ? "" : `\n\n跳转链接：${open_url}`) +
+                    (media_url == undefined ? "" : `\n\n多媒体链接：${media_url}`);
                 if (this.isJSBox) {
                     const push = require("push");
                     push.schedule({
@@ -269,13 +279,12 @@ function API(name = "untitled", debug = false) {
             if (this.isQX || this.isLoon || this.isSurge) {
                 this.isRequest ? $done(value) : $done();
             } else if (this.isNode && !this.isJSBox) {
-                if (typeof $context !== 'undefined') {
+                if (typeof $context !== "undefined") {
                     $context.headers = value.headers;
                     $context.statusCode = value.statusCode;
                     $context.body = value.body;
                 }
             }
         }
-    }(name, debug);
-    
+    })(name, debug);
 }
